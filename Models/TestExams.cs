@@ -1,10 +1,6 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace TestBuilder.Models;
-
 public abstract class TestExams
 {
-    [Key]
     public int TestId { get; set; }
     public int ExamId { get; set; }
 

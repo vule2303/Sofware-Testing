@@ -1,10 +1,6 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace TestBuilder.Models;
-
 public abstract class Subject
 {
-    [Key]
     public int SubjectId { get; set; }
     public required string Name { get; set; }
 
