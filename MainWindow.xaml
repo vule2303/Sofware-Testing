@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="Test Builder" Height="450" Width="800">
     <Grid>
-
+        <Button Content="Thêm câu hỏi"
+                Click="ButtonCreateQuestion"></Button>
     </Grid>
 </Window>

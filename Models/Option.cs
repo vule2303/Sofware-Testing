@@ -1,5 +1,5 @@
 namespace TestBuilder.Models;
-public abstract class Option
+public class Option
 {
     public int OptionId { get; set; }
     public int QuestionId { get; set; }
@@ -7,5 +7,5 @@ public abstract class Option
     public string? Image { get; set; }
 
     // Navigation property
-    public required Question Question { get; set; }
+    public Question Question { get; set; }
 }
