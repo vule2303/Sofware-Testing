@@ -6,13 +6,13 @@
         xmlns:components="clr-namespace:TestBuilder.Components"
         mc:Ignorable="d"
         Title="Thêm câu hỏi"
-        Height="250"
-        MaxWidth="350"
+        Height="Auto"
+        Width="500"
         d:DataContext="{ d:DesignInstance }">
     <Grid>
         <StackPanel>
             <components:TextBoxAreaPlaceHolder
-                x:Name="ContentQuestion"/>
+                x:Name="ContentQuestion" />
 
             <StackPanel Orientation="Horizontal">
                 <TextBox
@@ -21,8 +21,19 @@
                     Text="Hình ảnh"
                     VerticalAlignment="Center"
                     Margin="5" />
-                <Button Content="Chọn ảnh trong máy"></Button>
+                <Button Content="Chọn ảnh trong máy"
+                        Click="SelectAndUploadImage" />
             </StackPanel>
+
+            <Image Height="Auto" Width="Auto"
+                   x:Name="ImageQuestion" />
+
+            <ProgressBar
+                x:Name="UploadProgressBar"
+                Height="20"
+                Minimum="0"
+                Maximum="100"
+                Visibility="Collapsed" />
 
             <TextBox
                 IsReadOnly="True"
@@ -50,31 +61,43 @@
                         Width="*" />
                     <DataGridTextColumn
                         Binding="{Binding Image}"
-                        Header="Hình ảnh" />
+                        Header="Hình ảnh"
+                        Width="*"/>
 
-                    <DataGridTemplateColumn Width="50">
+                    <DataGridTemplateColumn Width="105">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button
-                                    Content="Xoá"
-                                    Width="50" 
-                                    Click="ButtonRemoveAnswer"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button
+                                        Content="Chọn ảnh"
+                                        Width="60"
+                                        Click="ButtonAddImageAnswer" 
+                                        Margin="0,0,5,0"/>
+                                    <Button
+                                        Content="Xoá"
+                                        Width="40"
+                                        Click="ButtonRemoveAnswer" />
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
 
-            <StackPanel HorizontalAlignment="Center"
-                        Orientation="Horizontal"
-                        Margin="10">
-                <Button Content="Đóng"
-                        Padding="5"
-                        Margin="0,0,20,0"
-                        Click="ButtonClose" />
-                <Button Content="Thêm"
-                        Padding="5" 
-                        Click="ButtonAddAnswer"/>
+            <StackPanel
+                HorizontalAlignment="Center"
+                Orientation="Horizontal"
+                Margin="10">
+                <Button
+                    Content="Đóng"
+                    Padding="5"
+                    Margin="0,0,20,0"
+                    Click="ButtonClose" />
+                <Button
+                    x:Name="ButtonAdd"
+                    Content="Thêm"
+                    Padding="5"
+                    Click="ButtonAddAnswer" />
             </StackPanel>
         </StackPanel>
     </Grid>
