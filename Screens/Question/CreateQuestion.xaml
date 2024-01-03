@@ -8,10 +8,11 @@
         Title="Thêm câu hỏi"
         Height="250"
         MaxWidth="350"
-        d:DataContext="{d:DesignInstance }">
+        d:DataContext="{ d:DesignInstance }">
     <Grid>
         <StackPanel>
-            <components:TextBoxAreaPlaceHolder />
+            <components:TextBoxAreaPlaceHolder
+                x:Name="ContentQuestion"/>
 
             <StackPanel Orientation="Horizontal">
                 <TextBox
@@ -25,7 +26,6 @@
 
             <TextBox
                 IsReadOnly="True"
-                x:Name="AnswerTextBox"
                 Margin="5"
                 BorderThickness="0"
                 Text="Đáp án" />
@@ -44,10 +44,6 @@
                 </DataGrid.Resources>
 
                 <DataGrid.Columns>
-                    <!-- <DataGridTextColumn -->
-                    <!--     Binding="{Binding Id}" -->
-                    <!--     Header="Id" -->
-                    <!--     IsReadOnly="True"/> -->
                     <DataGridTextColumn
                         Binding="{Binding Content}"
                         Header="Nội dung"
@@ -75,8 +71,9 @@
                         Padding="5"
                         Margin="0,0,20,0"
                         Click="ButtonClose" />
-                <Button Content="Tạo"
-                        Padding="5" />
+                <Button Content="Thêm"
+                        Padding="5" 
+                        Click="ButtonAddAnswer"/>
             </StackPanel>
         </StackPanel>
     </Grid>

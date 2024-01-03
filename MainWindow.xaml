@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TestBuilder"
         mc:Ignorable="d"
         Title="Test Builder" Height="450" Width="800">
     <Grid>
         <Button Content="Thêm câu hỏi"
-                Click="ButtonCreateQuestion"></Button>
+                Click="ButtonCreateQuestion"
+                Width="100"
+                Height="20"></Button>
     </Grid>
 </Window>

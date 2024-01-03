@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace TestBuilder.Models;
-public abstract class Question
+public partial class Question
 {
     [Key]
     public Guid QuestionId { get; set; }

@@ -1,5 +1,5 @@
 namespace TestBuilder.Models;
-public abstract class ExamsSubjects
+public partial class ExamsSubjects
 {
     public int ExamId { get; set; }
     public int SubjectId { get; set; }

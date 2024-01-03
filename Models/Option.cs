@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace TestBuilder.Models;
-public class Option
+public partial class Option
 {
+    [Key]
     public int OptionId { get; set; }
-    public int QuestionId { get; set; }
+    public Guid QuestionId { get; set; }
     public required string Text { get; set; }
     public string? Image { get; set; }
 
