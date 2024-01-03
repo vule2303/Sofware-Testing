@@ -13,12 +13,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Label FontSize="32" 
                HorizontalAlignment="Center" 
-               Margin="20">
+               Margin="20"
+               FontWeight="Bold"
+               Foreground="#F291D0">
             QUẢN LÍ CHƯƠNG
         </Label>
         <GroupBox Grid.Row="1" 
@@ -37,7 +39,7 @@
                 </Grid.RowDefinitions>
                 
                 <TextBox Grid.Column="0"
-                    Width="330"
+                         Width="500"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
                     x:Name="NameChapter"
@@ -45,9 +47,11 @@
                     TextWrapping="Wrap"
                     AcceptsReturn="True"
                     AcceptsTab="True"
-                    BorderThickness="0,0,0,1"/>
+                    BorderThickness="0,0,0,1"
+                         FontSize="16"/>
                 <TextBlock Grid.Column="0"
                     IsHitTestVisible="False"
+                    FontSize="16"
                     Text="Đặt tên chương"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Left"
@@ -70,20 +74,61 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
-                <ComboBox Grid.Column="1" Margin="0,0,20,0" x:Name="SelectedSubject" ItemsSource="{Binding}">
-                </ComboBox>
-                <Button Grid.Column="2" Click="Button_Create">
-                    Tạo
-                </Button>
+               <Border Grid.Column="1"
+                       Width="100"
+                       Background="#F291D0"
+                       Margin="0,0,20,0" 
+                       CornerRadius="10">
+                   <ComboBox 
+                             x:Name="SelectedSubject" 
+                             ItemsSource="{Binding}"
+                             BorderThickness="0,0,0,0"
+                             FontSize="16"
+                             Background="white"
+                   />
+               </Border>
+               
+                <Border Grid.Column="2"
+                        Background="#F291D0"
+                        CornerRadius="10">
+                    <Button
+                            Click="Button_Create"
+                            Width="100"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            BorderThickness="0,0,0,0"
+                            Background="Transparent">
+                        Tạo
+                    </Button>
+                </Border>
             </Grid>
         </GroupBox>
         
-        <DataGrid Grid.Row="2" Margin="20" Height="Auto">
+        <DataGrid Grid.Row="2"
+                  x:Name="GridItems"
+                  Margin="20" 
+                  Height="Auto"
+                  AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header=" Chương" />
-                <DataGridTextColumn Header="Môn học"/>
+                <DataGridTextColumn Header="Chương"
+                                    Binding="{Binding NameChapter}"
+                                    Width="*"
+                                    FontSize="16"/>
+                <DataGridTextColumn Header="Môn học" 
+                                    Binding="{Binding NameSubject}"
+                                    Width="*"
+                                    FontSize="16"/>
+                <DataGridTemplateColumn Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button
+                                Content="Xoá"
+                                Width="50" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        
     </Grid>
 </Window>
