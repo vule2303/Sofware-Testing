@@ -81,10 +81,9 @@
                        CornerRadius="10">
                    <ComboBox 
                              x:Name="SelectedSubject" 
-                             ItemsSource="{Binding}"
+                             ItemsSource="{Binding Name}"   
                              BorderThickness="0,0,0,0"
-                             FontSize="16"
-                             Background="white"
+                             FontSize="16" Background="{x:Null}"
                    />
                </Border>
                
@@ -119,12 +118,27 @@
                                     Binding="{Binding NameSubject}"
                                     Width="*"
                                     FontSize="16"/>
-                <DataGridTemplateColumn Width="50">
+                <DataGridTemplateColumn Width="Auto" Header="Hành động">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button
-                                Content="Xoá"
-                                Width="50" />
+                            <StackPanel Orientation="Horizontal">
+                                <Button
+                                     x:Name="btnInsert"
+                                     Content="Sửa"
+                                     Width="50" 
+                                     BorderThickness="0,0,1,0"
+                                     Background="#F291D0"
+                                     Foreground="White"
+                                     Click="UpdateItem"/>
+                                <Button
+                                     x:Name="btnUpdate"
+                                     Content="Xoá"
+                                     Width="50" 
+                                     BorderThickness="0,0,0,0"
+                                     Background="#F291D0"
+                                     Foreground="White"
+                                     Click="RemoveItem"/>
+                            </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

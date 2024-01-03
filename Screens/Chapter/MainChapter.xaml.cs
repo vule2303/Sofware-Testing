@@ -15,17 +15,21 @@ namespace TestBuilder.Screens.Chapter
         private readonly List<Items> _items;
         public partial class Items
         {
+            public int IdChapter { get; set; }
+            public int IdSubject { get; set; }
             public required string NameChapter { get; set; }
             public required string NameSubject { get; set; }
         }
 
-        private void GetItems()
+        private void Load()
         {
             var items = _context.Chapters!.Include(chapters => chapters.Subject).ToList();
             foreach (var item in items)
             {
                 _items.Add(new Items
                 {
+                    IdChapter = item.ChapterId,
+                    IdSubject = item.SubjectId,
                     NameChapter = item.Name,
                     NameSubject = item.Subject.Name
                 });
@@ -40,20 +44,52 @@ namespace TestBuilder.Screens.Chapter
             SelectedSubject.ItemsSource = _subjects;
             
             _items = new List<Items>(); 
-            GetItems();
+            Load();
             GridItems.ItemsSource = _items;
         }
         
         private void Button_Create(object sender, RoutedEventArgs e)
         {
-            var chapter = new Chapters
+            try
             {
-                SubjectId = _subjects[SelectedSubject.SelectedIndex].SubjectId,
-                Name = NameChapter.Text ?? "",
-                Subject = _subjects[SelectedSubject.SelectedIndex],
-            };
-            _context.Chapters!.Add(chapter);
-            _context.SaveChanges();
+                var chapter = new Chapters
+                {
+                    SubjectId = _subjects[SelectedSubject.SelectedIndex].SubjectId,
+                    Name = NameChapter.Text ?? "",
+                    Subject = _subjects[SelectedSubject.SelectedIndex],
+                };
+                _context.Chapters!.Add(chapter);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+           
+        }
+
+        private void UpdateItem(object sender, RoutedEventArgs e)
+        {
+            var item = (GridItems.SelectedItem as Items)!.IdChapter;
+            var subject = _subjects;
+            Window insert = new UpdateChapter(item);
+            insert.Show();
+        }
+
+        private void RemoveItem(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var item = (GridItems.SelectedItem as Items)!.IdChapter;
+                var chapter = _context.Chapters!.FindAsync(item);
+                _context.Chapters!.Remove((chapter.Result!));
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+           
         }
     }
 }
