@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Windows;
 using TestBuilder.Data;
 using TestBuilder.Models;
@@ -7,24 +8,27 @@ namespace TestBuilder.Screens.Question;
 public class Answer
 {
     public int Id { get; set; }
-    public string Content { get; set; }
+    public string Content { get; set; } = "";
     public string? Image { get; set; }
 }
 
-public partial class CreateQuestion : Window
+public partial class CreateQuestion
 {
     private readonly TestDbContext _context = new();
-    private readonly List<Answer> _listAnswer = [];
+    private readonly ObservableCollection<Answer> _listAnswer;
 
     public CreateQuestion()
     {
         InitializeComponent();
-        _listAnswer.Add(new Answer
+        _listAnswer = new ObservableCollection<Answer>
         {
-            Id = 0,
-            Content = "",
-            Image = null
-        });
+            new()
+            {
+                Id = 0,
+                Content = "",
+                Image = null
+            }
+        };
         AnswerDataGrid.ItemsSource = _listAnswer;
         DataContext = this;
     }
@@ -34,20 +38,20 @@ public partial class CreateQuestion : Window
         Close();
     }
 
-    private void ButtonAddAnswer(object sender, RoutedEventArgs e)
+    private async void ButtonAddAnswer(object sender, RoutedEventArgs e)
     {
         var questionId = new Guid();
         
         var newQuestion = new Models.Question
         {
             QuestionId = questionId,
-            Text = ContentQuestion.Content.ToString() ?? "",
+            Text = ContentQuestion.TextBoxArea.Text,
             Image = null,
             Options = [],
             TestQuestions = null
         };
-        
-        _listAnswer.ForEach(answer =>
+
+        foreach (var answer in _listAnswer)
         {
             newQuestion.Options.Add(new Option
             {
@@ -56,12 +60,15 @@ public partial class CreateQuestion : Window
                 Image = answer.Image,
                 Question = newQuestion
             });
-        });
+        }
         
         _context.Questions.Add(newQuestion);
 
-        _context.SaveChanges();
-        
-        Console.WriteLine(_context.Questions.FirstOrDefault());
+        await _context.SaveChangesAsync();
+    }
+
+    private void ButtonRemoveAnswer(object sender, RoutedEventArgs e)
+    {
+        _listAnswer.RemoveAt(AnswerDataGrid.SelectedIndex);
     }
 }

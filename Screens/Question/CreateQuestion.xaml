@@ -57,7 +57,8 @@
                             <DataTemplate>
                                 <Button
                                     Content="Xoá"
-                                    Width="50" />
+                                    Width="50" 
+                                    Click="ButtonRemoveAnswer"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
