@@ -1,5 +1,5 @@
 namespace TestBuilder.Models;
-public abstract class Subject
+public class Subject
 {
     public int SubjectId { get; set; }
     public required string Name { get; set; }
