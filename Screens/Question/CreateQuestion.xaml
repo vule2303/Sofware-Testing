@@ -9,7 +9,8 @@
         Height="Auto"
         Width="500"
         d:DataContext="{ d:DesignInstance }"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="Height">
     <Grid>
         <StackPanel>
             <components:TextBoxAreaPlaceHolder
@@ -96,7 +97,7 @@
                     Click="ButtonClose" />
                 <Button
                     x:Name="ButtonAdd"
-                    Content="Thêm"
+                    Content="Xong"
                     Padding="5"
                     Click="ButtonAddAnswer" />
             </StackPanel>
