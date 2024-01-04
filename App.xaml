@@ -5,6 +5,7 @@
              StartupUri="MainWindow.xaml"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 
+
     <Application.Resources>
         <Style x:Key="TopButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>

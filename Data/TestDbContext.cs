@@ -24,6 +24,7 @@ public class TestDbContext : DbContext
     public virtual DbSet<Chapters> Chapters { get; set; }
     public virtual DbSet<ExamsSubjects> ExamsSubjects { get; set; }
 
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // Configure your database connection here
