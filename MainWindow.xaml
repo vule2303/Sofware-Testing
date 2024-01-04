@@ -36,7 +36,7 @@
                 
                 <!--Menu Icon-->
 
-                <Button Margin="20 28 0 35" Style="{StaticResource topButton}">
+                <Button Margin="20 28 0 35" Style="{StaticResource TopButton}">
                     <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15"/>
                 </Button>
 
@@ -60,49 +60,49 @@
                         
                         <!--Menubutton-->
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource MenuButton}">
                                 <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="HomeVariant" Style="{StaticResource menuButtonIcon}"/>
+                                    <Icon:PackIconMaterial Kind="HomeVariant" Style="{StaticResource MenuButtonIcon}"/>
                                     <TextBlock Text="Bảng điều khiển"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}" Background="#7b5cd6" Foreground="White">
+                            <Button Style="{StaticResource MenuButton}" Background="#7b5cd6" Foreground="White">
                                 <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="BookAlert" Style="{StaticResource menuButtonIcon}"/>
+                                    <Icon:PackIconMaterial Kind="BookAlert" Style="{StaticResource MenuButtonIcon}"/>
                                     <TextBlock Text="Môn học"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource MenuButton}">
                                 <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="BookOpenPageVariant" Style="{StaticResource menuButtonIcon}"/>
+                                    <Icon:PackIconMaterial Kind="BookOpenPageVariant" Style="{StaticResource MenuButtonIcon}"/>
                                     <TextBlock Text="Chương Học"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource MenuButton}">
                                 <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="FileQuestion" Style="{StaticResource menuButtonIcon}"/>
+                                    <Icon:PackIconMaterial Kind="FileQuestion" Style="{StaticResource MenuButtonIcon}"/>
                                     <TextBlock Text="Câu hỏi"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource MenuButton}">
                                 <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="Folder" Style="{StaticResource menuButtonIcon}"/>
+                                    <Icon:PackIconMaterial Kind="Folder" Style="{StaticResource MenuButtonIcon}"/>
                                     <TextBlock Text="Bộ đề"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource menuButton}">
+                            <Button Style="{StaticResource MenuButton}">
                                 <StackPanel Orientation="Horizontal">
-                                    <Icon:PackIconMaterial Kind="PencilBoxMultiple" Style="{StaticResource menuButtonIcon}"/>
+                                    <Icon:PackIconMaterial Kind="PencilBoxMultiple" Style="{StaticResource MenuButtonIcon}"/>
                                     <TextBlock Text="Kỳ thi"/>
                                 </StackPanel>
                             </Button>
@@ -130,17 +130,17 @@
                     <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
                                Panel.ZIndex="1" Text="Search here..."
                                Visibility="{Binding ElementName=txtSearch, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}"/>
-                    <TextBox x:Name="txtSearch" Style="{StaticResource textboxSearch}"/>
+                    <TextBox x:Name="txtSearch" Style="{StaticResource TextBoxSearch}"/>
                     <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15"
                                            VerticalAlignment="Center" Margin="0 0 15 0"
                                            Foreground="#b0b9c6" HorizontalAlignment="Right"/>
                 </Grid>
                 <!--Top Button-->
-                <Button Style="{StaticResource topButton}" Margin="0 0 20 0" Background="#dcdcdc" HorizontalAlignment="Right">
+                <Button Style="{StaticResource TopButton}" Margin="0 0 20 0" Background="#dcdcdc" HorizontalAlignment="Right">
                     <Icon:PackIconMaterial Kind="Cog"/>
                 </Button>
 
-                <Button Style="{StaticResource topButton}" Margin="0 0 55 0" HorizontalAlignment="Right">
+                <Button Style="{StaticResource TopButton}" Margin="0 0 55 0" HorizontalAlignment="Right">
                     <Icon:PackIconMaterial Kind="Bell"/>
                 </Button>
                 
@@ -148,7 +148,7 @@
                 <TextBlock Text="Môn học" Grid.Row="1" FontSize="22" FontWeight="SemiBold" Margin="0 20 0 0"
                            HorizontalAlignment="Left" Foreground="#121518"/>
                 <!--Add button-->
-                <Button Style="{StaticResource addButton}">
+                <Button Style="{StaticResource AddButton}">
                     <StackPanel Orientation="Horizontal">
                         <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0" />
                         <TextBlock Text="Thêm môn học"/>
@@ -179,11 +179,11 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Style="{StaticResource gridEditButton}">
-                                            <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                        <Button Style="{StaticResource GridEditButton}">
+                                            <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource GridButtonIcon}"/>
                                         </Button>
-                                        <Button Style="{StaticResource gridRemoveButton}">
-                                            <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
+                                        <Button Style="{StaticResource GridRemoveButton}">
+                                            <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource GridButtonIcon}"/>
                                         </Button>
                                     </StackPanel>
                                 </DataTemplate>
@@ -196,21 +196,21 @@
                 <Border Grid.Row="6" HorizontalAlignment="Right" BorderBrush="#dee4ec" BorderThickness="1"
                         CornerRadius="5" Padding="5" Background="White" Margin="0 10 10 10">
                     <StackPanel Orientation="Horizontal">
-                        <Button Style="{StaticResource pagingButton}">
-                            <Icon:PackIconMaterial Kind="ChevronLeft" Style="{StaticResource pagingButtonIcon}" />
+                        <Button Style="{StaticResource PagingButton}">
+                            <Icon:PackIconMaterial Kind="ChevronLeft" Style="{StaticResource PagingButtonIcon}" />
                         </Button>
                         <Rectangle Width="1" Fill="#dee4ec" Margin="3 7"/>
 
-                        <Button Style="{StaticResource pagingButton}" Content="1" Background="#6246ea" Foreground="White"/>
-                        <Button Style="{StaticResource pagingButton}" Content="2"/>
-                        <Button Style="{StaticResource pagingButton}" Content="3"/>
+                        <Button Style="{StaticResource PagingButton}" Content="1" Background="#6246ea" Foreground="White"/>
+                        <Button Style="{StaticResource PagingButton}" Content="2"/>
+                        <Button Style="{StaticResource PagingButton}" Content="3"/>
                         <TextBlock Text="...." Foreground="#6c7682" VerticalAlignment="Center" FontSize="15" Margin="10 0"/>
-                        <Button Style="{StaticResource pagingButton}" Content="8"/>
-                        <Button Style="{StaticResource pagingButton}" Content="9"/>
+                        <Button Style="{StaticResource PagingButton}" Content="8"/>
+                        <Button Style="{StaticResource PagingButton}" Content="9"/>
 
                         <Rectangle Width="1" Fill="#dee4ec" Margin="3 7"/>
-                        <Button Style="{StaticResource pagingButton}">
-                            <Icon:PackIconMaterial Kind="ChevronRight" Style="{StaticResource pagingButtonIcon}" />
+                        <Button Style="{StaticResource PagingButton}">
+                            <Icon:PackIconMaterial Kind="ChevronRight" Style="{StaticResource PagingButtonIcon}" />
                         </Button>
 
                     </StackPanel>

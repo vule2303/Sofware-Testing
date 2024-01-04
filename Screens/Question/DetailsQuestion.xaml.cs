@@ -51,7 +51,7 @@ public partial class DetailsQuestion
             _imagePath = question.Image!;
             ImageQuestion.Source = new BitmapImage(new Uri(question.Image!));
         }
-        question.Options.ForEach(a => _listAnswer.Add(new Answer
+        question.Options!.ForEach(a => _listAnswer.Add(new Answer
         {
             Content = a.Text,
             Image = a.Image
@@ -87,7 +87,7 @@ public partial class DetailsQuestion
 
             question.Content = ContentQuestion.TextBoxArea.Text;
             question.Image = _imagePath;
-            question.Options.Clear();
+            question.Options!.Clear();
             foreach (var answer in _listAnswer)
             {
                 question.Options.Add(new Option
