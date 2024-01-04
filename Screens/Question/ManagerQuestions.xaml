@@ -1,0 +1,60 @@
+<Window x:Class="TestBuilder.Screens.Question.ManagerQuestions"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        Title="Quản lý câu hỏi" Height="500" Width="500"
+        d:DataContext="{ d:DesignInstance }"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Quản lý câu hỏi"></TextBlock>
+        
+        <Button Grid.Row="1" Content="Thêm câu hỏi"
+                Click="ButtonCreateQuestion"
+                Width="100"
+                Height="20">
+        </Button>
+        
+        <DataGrid Grid.Row="2"
+                  x:Name="DataGridQuestion"
+                  ItemsSource="{Binding}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="True"
+                  MouseDoubleClick="DataGridQuestion_OnMouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Binding="{Binding QuestionId}"
+                    Header="Id" Width="50" />
+                <DataGridTextColumn
+                    Binding="{Binding Content}"
+                    Header="Nội dung" Width="*" />
+                <DataGridTextColumn
+                    Binding="{Binding Image}"
+                    Header="Image" Width="*" />
+
+                <DataGridTemplateColumn Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button
+                                Content="Xoá"
+                                Width="40"
+                                Click="ButtonRemoveAnswer" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+            <DataGrid.CommandBindings>
+                <CommandBinding Command="Delete" Executed="OnDelete"></CommandBinding>
+            </DataGrid.CommandBindings>
+        </DataGrid>
+    </Grid>
+</Window>

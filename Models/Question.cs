@@ -5,7 +5,9 @@ public partial class Question
 {
     [Key]
     public Guid QuestionId { get; set; }
-    public required string Text { get; set; }
+  
+    public required string Content { get; set; }
+  
     public string? Image { get; set; }
 
     // Navigation property

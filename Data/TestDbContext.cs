@@ -5,15 +5,25 @@ namespace TestBuilder.Data;
 
 public class TestDbContext : DbContext
 {
-    public DbSet<Question> Questions { get; set; }
-    public DbSet<Option> Options { get; set; }
-    public DbSet<Exam> Exams { get; set; }
-    public DbSet<Test> Tests { get; set; }
-    public DbSet<TestExams> TestExams { get; set; }
-    public DbSet<TestQuestions> TestQuestions { get; set; }
-    public DbSet<Subject> Subjects { get; set; }
-    public DbSet<Chapters> Chapters { get; set; }
-    public DbSet<ExamsSubjects> ExamsSubjects { get; set; }
+    public TestDbContext()
+    {
+    }
+
+    public TestDbContext(DbContextOptions<TestDbContext> options)
+        : base(options)
+    {
+    }
+    
+    public virtual DbSet<Question> Questions { get; set; }
+    public virtual DbSet<Option> Options { get; set; }
+    public virtual DbSet<Exam> Exams { get; set; }
+    public virtual DbSet<Test> Tests { get; set; }
+    public virtual DbSet<TestExams> TestExams { get; set; }
+    public virtual DbSet<TestQuestions> TestQuestions { get; set; }
+    public virtual DbSet<Subject> Subjects { get; set; }
+    public virtual DbSet<Chapters> Chapters { get; set; }
+    public virtual DbSet<ExamsSubjects> ExamsSubjects { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
