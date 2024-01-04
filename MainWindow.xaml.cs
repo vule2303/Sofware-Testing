@@ -6,16 +6,16 @@ namespace TestBuilder;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow
 {
     public MainWindow()
     {
         InitializeComponent();
     }
 
-    private void ButtonCreateQuestion(object sender, RoutedEventArgs e)
+    private void ButtonManagerQuestion(object sender, RoutedEventArgs e)
     {
-        var createQuestion = new CreateQuestion();
-        createQuestion.Show();
+        var managerQuestions = new ManagerQuestions();
+        managerQuestions.Show();
     }
 }

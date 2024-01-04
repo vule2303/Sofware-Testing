@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Test Builder" Height="450" Width="800">
+        Title="Test Builder" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button Content="Thêm câu hỏi"
-                Click="ButtonCreateQuestion"
-                Width="100"
-                Height="20"></Button>
+      <Button Content="Quản lý câu hỏi"
+                    Click="ButtonManagerQuestion"
+                    Width="100"
+                    Height="20">
+      </Button>
     </Grid>
 </Window>
