@@ -10,5 +10,5 @@ public partial class Chapters
     public required string Name { get; set; }
 
     // Navigation properties
-    public required Subject Subject { get; set; }
+    public  Subject? Subject { get; set; }
 }

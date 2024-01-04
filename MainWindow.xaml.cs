@@ -4,6 +4,7 @@ using System.Windows.Input;
 using TestBuilder.Models;
 using TestBuilder.Screens.Question;
 using TestBuilder.Screens.Test;
+using TestBuilder.Screens.Chapter;
 
 namespace TestBuilder;
 
@@ -106,5 +107,10 @@ public partial class MainWindow
     {
         var _ = new ManagerQuestion();
         ContentControl.Content = _;
+
+    private void ChapterScreen_Click(object sender, RoutedEventArgs e)
+    {
+        Window chapter = new MainChapter();
+        chapter.Show();
     }
 }
