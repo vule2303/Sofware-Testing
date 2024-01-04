@@ -3,14 +3,220 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
+        xmlns:local="clr-namespace:TestBuilder"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="Test Builder" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen">
-    <Grid>
-      <Button Content="Quản lý câu hỏi"
-                    Click="ButtonManagerQuestion"
-                    Width="100"
-                    Height="20">
-      </Button>
-    </Grid>
+        Title="Test Builder" Height="541" Width="800">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <Style x:Key="DataGridRowStyle1" TargetType="{x:Type DataGridRow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridRow}">
+                        <Grid/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
+    <Border Background="#eff2f7" CornerRadius="30" MouseDown="Border_MouseDown" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+        <Grid Margin="0,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--Left menu-->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <!--Menu Icon-->
+
+                <Button Margin="20 28 0 35" Style="{StaticResource topButton}">
+                    <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15"/>
+                </Button>
+
+                <Border Grid.Row="1" Background="#6246ea" CornerRadius="0 50 0 30">
+                    <DockPanel>
+                        <!--Menu Logo-->
+                        <Border Width="80" Height="80" Padding="3" Background="White" CornerRadius="100"
+                                DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="20 -30 0 0">
+                            <TextBlock Text="ES" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" FontWeight="SemiBold" Foreground="#6246ea"/>
+                        </Border>
+                        
+                        <!--Menu Titles-->
+                        <TextBlock Text="Examination System" Foreground="White" FontSize="20" FontWeight="SemiBold"
+                                   DockPanel.Dock="Top" TextAlignment="Center" Margin="5 25 0 10"/>
+                        <TextBlock Text="HKV" Foreground="#d0bfff" FontSize="14" FontWeight="SemiBold"
+            DockPanel.Dock="Top" TextAlignment="Center"/>
+
+                        <!--Menu Seprator-->
+                        <Separator Margin="25" DockPanel.Dock="Top" Height="0.8" Background="#d0bfff"/>
+                       
+                        
+                        <!--Menubutton-->
+                        <StackPanel DockPanel.Dock="Top">
+                            <Button Style="{StaticResource menuButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Icon:PackIconMaterial Kind="HomeVariant" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Bảng điều khiển"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Top">
+                            <Button Style="{StaticResource menuButton}" Background="#7b5cd6" Foreground="White">
+                                <StackPanel Orientation="Horizontal">
+                                    <Icon:PackIconMaterial Kind="BookAlert" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Môn học"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Top">
+                            <Button Style="{StaticResource menuButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Icon:PackIconMaterial Kind="BookOpenPageVariant" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Chương Học"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Top">
+                            <Button Style="{StaticResource menuButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Icon:PackIconMaterial Kind="FileQuestion" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Câu hỏi"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Top">
+                            <Button Style="{StaticResource menuButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Icon:PackIconMaterial Kind="Folder" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Bộ đề"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Top">
+                            <Button Style="{StaticResource menuButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Icon:PackIconMaterial Kind="PencilBoxMultiple" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Kỳ thi"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+            
+            
+            </Grid>
+            
+            <!--Main Section-->
+            <Grid Grid.Column="1" Margin="30 20 20 20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                
+                <!--Search Textbox-->
+                <Grid Width="300" HorizontalAlignment="Left">
+                    <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
+                               Panel.ZIndex="1" Text="Search here..."
+                               Visibility="{Binding ElementName=txtSearch, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}"/>
+                    <TextBox x:Name="txtSearch" Style="{StaticResource textboxSearch}"/>
+                    <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15"
+                                           VerticalAlignment="Center" Margin="0 0 15 0"
+                                           Foreground="#b0b9c6" HorizontalAlignment="Right"/>
+                </Grid>
+                <!--Top Button-->
+                <Button Style="{StaticResource topButton}" Margin="0 0 20 0" Background="#dcdcdc" HorizontalAlignment="Right">
+                    <Icon:PackIconMaterial Kind="Cog"/>
+                </Button>
+
+                <Button Style="{StaticResource topButton}" Margin="0 0 55 0" HorizontalAlignment="Right">
+                    <Icon:PackIconMaterial Kind="Bell"/>
+                </Button>
+                
+                <!--Page Title-->
+                <TextBlock Text="Môn học" Grid.Row="1" FontSize="22" FontWeight="SemiBold" Margin="0 20 0 0"
+                           HorizontalAlignment="Left" Foreground="#121518"/>
+                <!--Add button-->
+                <Button Style="{StaticResource addButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0" />
+                        <TextBlock Text="Thêm môn học"/>
+                    </StackPanel>
+                </Button>
+                <!--Seprator-->
+                <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 10 0 10" />
+                <!--Counter Title-->
+                <TextBlock Text="Tổng môn học : 15" Grid.Row="4" FontSize="18" FontWeight="SemiBold"
+                           Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBlock Text="Tổng môn học : 15" Grid.Row="4" FontSize="18" FontWeight="SemiBold"
+           Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                <!--Subject Datagrid-->
+                <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle2}" Grid.Row="5" x:Name="subjectsDataGrid">
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
+                            <DataGridCheckBoxColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <CheckBox Style="{StaticResource CheckBoxStyle1}"/>
+                                </DataTemplate>
+                            </DataGridCheckBoxColumn.HeaderTemplate>
+                        </DataGridCheckBoxColumn>
+                        <DataGridTextColumn Header="Mã môn học" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding SubjectId}"/>
+
+                        <DataGridTextColumn Header="Tên môn học" IsReadOnly="True" CanUserResize="False" Width="*" Binding="{Binding Name}"/>
+                        <DataGridTemplateColumn Header="Chức năng" IsReadOnly="True" Width="auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Style="{StaticResource gridEditButton}">
+                                            <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
+                                        </Button>
+                                        <Button Style="{StaticResource gridRemoveButton}">
+                                            <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                
+                <!--Pagination Section-->
+                <Border Grid.Row="6" HorizontalAlignment="Right" BorderBrush="#dee4ec" BorderThickness="1"
+                        CornerRadius="5" Padding="5" Background="White" Margin="0 10 10 10">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource pagingButton}">
+                            <Icon:PackIconMaterial Kind="ChevronLeft" Style="{StaticResource pagingButtonIcon}" />
+                        </Button>
+                        <Rectangle Width="1" Fill="#dee4ec" Margin="3 7"/>
+
+                        <Button Style="{StaticResource pagingButton}" Content="1" Background="#6246ea" Foreground="White"/>
+                        <Button Style="{StaticResource pagingButton}" Content="2"/>
+                        <Button Style="{StaticResource pagingButton}" Content="3"/>
+                        <TextBlock Text="...." Foreground="#6c7682" VerticalAlignment="Center" FontSize="15" Margin="10 0"/>
+                        <Button Style="{StaticResource pagingButton}" Content="8"/>
+                        <Button Style="{StaticResource pagingButton}" Content="9"/>
+
+                        <Rectangle Width="1" Fill="#dee4ec" Margin="3 7"/>
+                        <Button Style="{StaticResource pagingButton}">
+                            <Icon:PackIconMaterial Kind="ChevronRight" Style="{StaticResource pagingButtonIcon}" />
+                        </Button>
+
+                    </StackPanel>
+                </Border>
+                
+            </Grid>
+        </Grid>
+    </Border>
 </Window>

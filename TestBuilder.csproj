@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <PackageReference Include="EntityFramework" Version="6.4.4" />
+      <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">

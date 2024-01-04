@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace TestBuilder.Models;
-public partial class Subject
+
+public class Subject
+
 {
     [Key]
     public int SubjectId { get; set; }
