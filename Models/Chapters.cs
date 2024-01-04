@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace TestBuilder.Models;
-public  class Chapters
+
+public partial class Chapters
 {
     [Key]
     public int ChapterId { get; set; }

@@ -5,14 +5,19 @@ using TestBuilder.Data;
 
 namespace TestBuilder.Screens.Question;
 
-public partial class ManagerQuestions
+public partial class ManagerQuestion
 {
-    private readonly ObservableCollection<Models.Question> _listQuestions;
+    private ObservableCollection<Models.Question> _listQuestions = [];
     private readonly TestDbContext _context = new();
 
-    public ManagerQuestions()
+    public ManagerQuestion()
     {
         InitializeComponent();
+        LoadData();
+    }
+
+    private void LoadData()
+    {
         _listQuestions = new ObservableCollection<Models.Question>(_context.Questions.ToList());
         DataGridQuestion.ItemsSource = _listQuestions;
         DataContext = this;
@@ -35,11 +40,9 @@ public partial class ManagerQuestions
     {
         var createQuestion = new DetailsQuestion();
         createQuestion.Show();
-        Close();
-        createQuestion.Closed += (o, args) =>
+        createQuestion.Closed += (_, _) =>
         {
-            var _ = new ManagerQuestions();
-            _.Show();
+            LoadData();
         };
     }
 
