@@ -1,103 +1,100 @@
-﻿using System.Windows;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
-using System.Windows.Documents;
-using System.Windows.Media;
 using TestBuilder.Models;
-namespace TestBuilder;
-public partial class MainWindow : Window
 
+namespace TestBuilder;
+
+public partial class MainWindow
 {
-    private int sequenceNumber = 1;
     public MainWindow()
     {
         InitializeComponent();
-        var converter = new BrushConverter();
-        ObservableCollection<Subject> subjects = new ObservableCollection<Subject>();
+        var subjects = new ObservableCollection<Subject>
+        {
+            //Create datagrid subjects
+            new()
+            {
+                SubjectId = 1200068,
+                Name = "Toán Cao Cấp",
+                Chapters = [],
+                ExamsSubjects = []
+            },
+            new()
+            {
+                SubjectId = 1200668,
+                Name = "Lập Trình Window",
+                Chapters = [],
+                ExamsSubjects = []
+            },
+            new()
+            {
+                SubjectId = 1232068,
+                Name = "Lập Trình Android",
+                Chapters = [],
+                ExamsSubjects = []
+            },
+            new()
+            {
+                SubjectId = 1340068,
+                Name = "Lập Trình Web",
+                Chapters = [],
+                ExamsSubjects = []
+            },
+            new()
+            {
+                SubjectId = 1202368,
+                Name = "Quản Lý Dự Án",
+                Chapters = [],
+                ExamsSubjects = []
+            },
+            new()
+            {
+                SubjectId = 1234305,
+                Name = "Phát Triển Website",
+                Chapters = [],
+                ExamsSubjects = []
+            },
+            new()
+            {
+                SubjectId = 1460068,
+                Name = "Công Nghệ Phần Mềm",
+                Chapters = [],
+                ExamsSubjects = []
+            }
+        };
 
-
-        //Create datagrid subjects
-        subjects.Add(new Subject
-        {
-            SubjectId = 1200068,
-            Name = "Toán Cao Cấp",
-            Chapters = [],
-            ExamsSubjects = []
-        });
-        subjects.Add(new Subject
-        {
-            SubjectId = 1200668,
-            Name = "Lập Trình Window",
-            Chapters = [],
-            ExamsSubjects = []
-        });
-        subjects.Add(new Subject
-        {
-            SubjectId = 1232068,
-            Name = "Lập Trình Android",
-            Chapters = [],
-            ExamsSubjects = []
-        });
-        subjects.Add(new Subject
-        {
-            SubjectId = 1340068,
-            Name = "Lập Trình Web",
-            Chapters = [],
-            ExamsSubjects = []
-        });
-        subjects.Add(new Subject
-        {
-            SubjectId = 1202368,
-            Name = "Quản Lý Dự Án",
-            Chapters = [],
-            ExamsSubjects = []
-        });
-        subjects.Add(new Subject
-        {
-            SubjectId = 1234305,
-            Name = "Phát Triển Website",
-            Chapters = [],
-            ExamsSubjects = []
-        });
-        subjects.Add(new Subject
-        {
-            SubjectId = 1460068,
-            Name = "Công Nghệ Phần Mềm",
-            Chapters = [],
-            ExamsSubjects = []
-        });
-
-        subjectsDataGrid.ItemsSource = subjects;
+        SubjectsDataGrid.ItemsSource = subjects;
     }
 
 
-    private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void Border_MouseDown(object sender, MouseButtonEventArgs e)
     {
-        if(e.ChangedButton == MouseButton.Left)
+        if (e.ChangedButton == MouseButton.Left)
         {
-            this.DragMove();
+            DragMove();
         }
     }
-    private bool isMaximized = false;
-    private void Border_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+
+    private bool _isMaximized;
+
+    private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        if(e.ClickCount == 2)
+        if (e.ClickCount != 2) return;
+
+        if (_isMaximized)
         {
-            if (isMaximized)
-            {
-                this.WindowState = WindowState.Normal;
-                this.Width = 1080;
-                this.Height = 720;
+            WindowState = WindowState.Normal;
+            Width = 1080;
+            Height = 720;
 
-                isMaximized = false;
-            }
-            else{
-                this.WindowState = WindowState.Maximized;      
+            _isMaximized = false;
+        }
+        else
+        {
+            WindowState = WindowState.Maximized;
 
-                isMaximized = true;
-            }
+            _isMaximized = true;
         }
     }
 }
-
-

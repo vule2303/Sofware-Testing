@@ -32,22 +32,22 @@ namespace TestBuilder.View.UserControls
             get { return placeholder; }
             set { 
                 placeholder = value; 
-                tbPlaceholder.Text = placeholder;
+                TbPlaceholder.Text = placeholder;
             }
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            txtInput.Clear();
-            txtInput.Focus();
+            TxtInput.Clear();
+            TxtInput.Focus();
         }
 
         private void txtInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtInput.Text))
-                tbPlaceholder.Visibility = Visibility.Visible;
+            if (string.IsNullOrEmpty(TxtInput.Text))
+                TbPlaceholder.Visibility = Visibility.Visible;
             else
-                tbPlaceholder.Visibility = Visibility.Hidden;
+                TbPlaceholder.Visibility = Visibility.Hidden;
         }
     }
 }

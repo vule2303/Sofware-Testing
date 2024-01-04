@@ -19,4 +19,26 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Page Update="Components\buttonPreviousNav.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="Components\TextBox.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Components\buttonPreviousNav.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Components\TextBox.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
 </Project>

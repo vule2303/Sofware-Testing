@@ -16,7 +16,7 @@ namespace TestBuilder.View.UserControls
             get { return labelHeading; }
             set { 
                 labelHeading = value;
-                lbHeading.Text = labelHeading;
+                LbHeading.Text = labelHeading;
             }
         }
     }
