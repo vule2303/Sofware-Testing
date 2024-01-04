@@ -6,6 +6,7 @@ using System.Windows.Media;
 using TestBuilder.Models;
 namespace TestBuilder;
 public partial class MainWindow : Window
+
 {
     private int sequenceNumber = 1;
     public MainWindow()
@@ -69,6 +70,7 @@ public partial class MainWindow : Window
         subjectsDataGrid.ItemsSource = subjects;
     }
 
+
     private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if(e.ChangedButton == MouseButton.Left)
@@ -97,4 +99,5 @@ public partial class MainWindow : Window
         }
     }
 }
+
 

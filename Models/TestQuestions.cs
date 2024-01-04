@@ -1,8 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace TestBuilder.Models;
-public abstract class TestQuestions
+public partial class TestQuestions
 {
+    [Key]
     public int TestId { get; set; }
-    public int QuestionId { get; set; }
+    public Guid QuestionId { get; set; }
 
     // Navigation properties
     public required Test Test { get; set; }

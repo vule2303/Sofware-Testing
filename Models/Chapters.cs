@@ -1,6 +1,9 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace TestBuilder.Models;
-public abstract class Chapters
+public partial class Chapters
 {
+    [Key]
     public int ChapterId { get; set; }
     public int SubjectId { get; set; }
     public required string Name { get; set; }
