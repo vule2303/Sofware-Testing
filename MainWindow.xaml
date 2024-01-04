@@ -67,7 +67,8 @@
                             </Button>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource MenuButton}">
+                            <Button Style="{StaticResource MenuButton}"
+                                    Click="ChapterScreen_Click">
                                 <StackPanel Orientation="Horizontal">
                                     <icon:PackIconMaterial Kind="BookOpenPageVariant"
                                                            Style="{StaticResource MenuButtonIcon}" />

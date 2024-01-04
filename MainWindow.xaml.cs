@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using TestBuilder.Models;
+using TestBuilder.Screens.Chapter;
 
 namespace TestBuilder;
 
@@ -96,5 +97,11 @@ public partial class MainWindow
 
             _isMaximized = true;
         }
+    }
+
+    private void ChapterScreen_Click(object sender, RoutedEventArgs e)
+    {
+        Window chapter = new MainChapter();
+        chapter.Show();
     }
 }
