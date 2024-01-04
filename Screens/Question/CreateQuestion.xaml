@@ -8,7 +8,8 @@
         Title="Thêm câu hỏi"
         Height="Auto"
         Width="500"
-        d:DataContext="{ d:DesignInstance }">
+        d:DataContext="{ d:DesignInstance }"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel>
             <components:TextBoxAreaPlaceHolder
@@ -28,12 +29,12 @@
             <Image Height="Auto" Width="Auto"
                    x:Name="ImageQuestion" />
 
-            <ProgressBar
-                x:Name="UploadProgressBar"
-                Height="20"
-                Minimum="0"
-                Maximum="100"
-                Visibility="Collapsed" />
+            <!-- <ProgressBar -->
+            <!--     x:Name="UploadProgressBar" -->
+            <!--     Height="20" -->
+            <!--     Minimum="0" -->
+            <!--     Maximum="100" -->
+            <!--     Visibility="Collapsed" /> -->
 
             <TextBox
                 IsReadOnly="True"
@@ -62,7 +63,7 @@
                     <DataGridTextColumn
                         Binding="{Binding Image}"
                         Header="Hình ảnh"
-                        Width="*"/>
+                        Width="*" />
 
                     <DataGridTemplateColumn Width="105">
                         <DataGridTemplateColumn.CellTemplate>
@@ -71,8 +72,8 @@
                                     <Button
                                         Content="Chọn ảnh"
                                         Width="60"
-                                        Click="ButtonAddImageAnswer" 
-                                        Margin="0,0,5,0"/>
+                                        Click="ButtonAddImageAnswer"
+                                        Margin="0,0,5,0" />
                                     <Button
                                         Content="Xoá"
                                         Width="40"

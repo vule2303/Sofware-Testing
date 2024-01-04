@@ -13,9 +13,9 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private void ButtonCreateQuestion(object sender, RoutedEventArgs e)
+    private void ButtonManagerQuestion(object sender, RoutedEventArgs e)
     {
-        var createQuestion = new CreateQuestion();
-        createQuestion.Show();
+        var managerQuestions = new ManagerQuestions();
+        managerQuestions.Show();
     }
 }

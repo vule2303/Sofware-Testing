@@ -46,7 +46,7 @@ public partial class CreateQuestion
         var newQuestion = new Models.Question
         {
             QuestionId = questionId,
-            Text = ContentQuestion.TextBoxArea.Text,
+            Content = ContentQuestion.TextBoxArea.Text,
             Image = _imagePath,
             Options = [],
             TestQuestions = null
@@ -135,7 +135,7 @@ public partial class CreateQuestion
         }
     }
 
-    private OpenFileDialog? SelectImage()
+    private static OpenFileDialog? SelectImage()
     {
         var openFileDialog = new OpenFileDialog
         {
