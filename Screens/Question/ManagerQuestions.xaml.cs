@@ -33,7 +33,7 @@ public partial class ManagerQuestions
 
     private void ButtonCreateQuestion(object sender, RoutedEventArgs e)
     {
-        var createQuestion = new CreateQuestion();
+        var createQuestion = new DetailsQuestion();
         createQuestion.Show();
         Close();
         createQuestion.Closed += (o, args) =>
@@ -41,5 +41,13 @@ public partial class ManagerQuestions
             var _ = new ManagerQuestions();
             _.Show();
         };
+    }
+
+    private void DataGridQuestion_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (DataGridQuestion.SelectedItem is not Models.Question selectedQuestion) return;
+
+        var detailsQuestion = new DetailsQuestion(selectedQuestion.QuestionId);
+        detailsQuestion.Show();
     }
 }

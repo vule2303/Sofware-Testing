@@ -27,7 +27,8 @@
                   ItemsSource="{Binding}"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
-                  CanUserDeleteRows="True">
+                  CanUserDeleteRows="True"
+                  MouseDoubleClick="DataGridQuestion_OnMouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Binding="{Binding QuestionId}"

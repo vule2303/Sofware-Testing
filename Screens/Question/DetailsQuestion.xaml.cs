@@ -1,29 +1,61 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using TestBuilder.Data;
 using TestBuilder.Models;
 
 namespace TestBuilder.Screens.Question;
 
-public partial class CreateQuestion
+public partial class DetailsQuestion
 {
     private readonly TestDbContext _context = new();
-    private readonly ObservableCollection<Answer> _listAnswer;
+    private readonly ObservableCollection<Answer> _listAnswer = [];
     private string _imagePath = "";
+    private readonly Guid? _questionId;
 
-    public CreateQuestion()
+    public DetailsQuestion()
     {
         InitializeComponent();
-        _listAnswer = new ObservableCollection<Answer>
-        {
-            new()
+        _listAnswer =
+        [
+            new Answer
             {
                 Content = "Đáp án 1",
                 Image = null
             }
-        };
+        ];
+        AnswerDataGrid.ItemsSource = _listAnswer;
+        _questionId = null;
+        DataContext = this;
+    }
+
+    public DetailsQuestion(Guid questionId)
+    {
+        InitializeComponent();
+
+        _questionId = questionId;
+        var question = _context.Questions
+            .Include(q => q.Options)
+            .FirstOrDefault(q => q.QuestionId == questionId);
+        if (question is null)
+        {
+            MessageBox.Show("Không tìm thấy câu hỏi");
+            return;
+        }
+
+        ContentQuestion.TextBoxArea.Text = question.Content;
+        if (!string.IsNullOrEmpty(question.Image))
+        {
+            _imagePath = question.Image!;
+            ImageQuestion.Source = new BitmapImage(new Uri(question.Image!));
+        }
+        question.Options.ForEach(a => _listAnswer.Add(new Answer
+        {
+            Content = a.Text,
+            Image = a.Image
+        }));
         AnswerDataGrid.ItemsSource = _listAnswer;
         DataContext = this;
     }
@@ -33,7 +65,7 @@ public partial class CreateQuestion
         Close();
     }
 
-    private async void ButtonAddAnswer(object sender, RoutedEventArgs e)
+    private async void ButtonDoneAnswer(object sender, RoutedEventArgs e)
     {
         if (string.IsNullOrEmpty(ContentQuestion.TextBoxArea.Text))
         {
@@ -41,33 +73,62 @@ public partial class CreateQuestion
             return;
         }
 
-        var questionId = new Guid();
-
-        var newQuestion = new Models.Question
+        if (_questionId is not null)
         {
-            QuestionId = questionId,
-            Content = ContentQuestion.TextBoxArea.Text,
-            Image = _imagePath,
-            Options = [],
-            TestQuestions = null
-        };
+            var question = _context.Questions
+                .Include(q => q.Options)
+                .FirstOrDefault(q => q.QuestionId == _questionId);
 
-        foreach (var answer in _listAnswer)
+            if (question is null)
+            {
+                MessageBox.Show("Không tìm thấy câu hỏi");
+                return;
+            }
+
+            question.Content = ContentQuestion.TextBoxArea.Text;
+            question.Image = _imagePath;
+            question.Options.Clear();
+            foreach (var answer in _listAnswer)
+            {
+                question.Options.Add(new Option
+                {
+                    QuestionId = question.QuestionId,
+                    Text = answer.Content,
+                    Image = answer.Image,
+                    Question = question
+                });
+            }
+        }
+        else
         {
-            newQuestion.Options.Add(new Option
+            var questionId = new Guid();
+
+            var newQuestion = new Models.Question
             {
                 QuestionId = questionId,
-                Text = answer.Content,
-                Image = answer.Image,
-                Question = newQuestion
-            });
-        }
+                Content = ContentQuestion.TextBoxArea.Text,
+                Image = _imagePath,
+                Options = [],
+                TestQuestions = null
+            };
 
-        _context.Questions.Add(newQuestion);
+            foreach (var answer in _listAnswer)
+            {
+                newQuestion.Options.Add(new Option
+                {
+                    QuestionId = questionId,
+                    Text = answer.Content,
+                    Image = answer.Image,
+                    Question = newQuestion
+                });
+            }
+
+            _context.Questions.Add(newQuestion);
+        }
 
         await _context.SaveChangesAsync();
 
-        MessageBox.Show("Thêm thành công!");
+        MessageBox.Show("Đã lưu thành công!");
         Close();
     }
 

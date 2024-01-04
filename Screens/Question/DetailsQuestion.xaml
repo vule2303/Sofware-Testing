@@ -1,4 +1,4 @@
-<Window x:Class="TestBuilder.Screens.Question.CreateQuestion"
+<Window x:Class="TestBuilder.Screens.Question.DetailsQuestion"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -96,10 +96,10 @@
                     Margin="0,0,20,0"
                     Click="ButtonClose" />
                 <Button
-                    x:Name="ButtonAdd"
+                    x:Name="ButtonDone"
                     Content="Xong"
                     Padding="5"
-                    Click="ButtonAddAnswer" />
+                    Click="ButtonDoneAnswer" />
             </StackPanel>
         </StackPanel>
     </Grid>
