@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using TestBuilder.Data;
 
 namespace TestBuilder;
@@ -8,6 +10,12 @@ namespace TestBuilder;
 /// </summary>
 public partial class App
 {
+    public App()
+    {
+        var services = new ServiceCollection();
+        services.AddDbContext<TestDbContext>();
+    }
+    
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);

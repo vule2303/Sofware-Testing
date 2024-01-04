@@ -13,7 +13,7 @@ public class TestDbContext : DbContext
         : base(options)
     {
     }
-    
+
     public virtual DbSet<Question> Questions { get; set; }
     public virtual DbSet<Option> Options { get; set; }
     public virtual DbSet<Exam> Exams { get; set; }
@@ -37,48 +37,48 @@ public class TestDbContext : DbContext
             .WithMany(q => q.Options)
             .HasForeignKey(o => o.QuestionId);
 
-        modelBuilder.Entity<TestExams>()
-            .HasKey(te => new { te.TestId, te.ExamId });
+        modelBuilder.Entity<TestExams>(e =>
+        {
+            e.HasKey(te => new { te.TestId, te.ExamId });
 
-        modelBuilder.Entity<TestExams>()
-            .HasOne(te => te.Test)
-            .WithMany(t => t.TestExams)
-            .HasForeignKey(te => te.TestId);
+            e.HasOne(te => te.Test)
+                .WithMany(t => t.TestExams)
+                .HasForeignKey(te => te.TestId);
 
-        modelBuilder.Entity<TestExams>()
-            .HasOne(te => te.Exam)
-            .WithMany(e => e.TestExams)
-            .HasForeignKey(te => te.ExamId);
+            e.HasOne(te => te.Exam)
+                .WithMany(e2 => e2.TestExams)
+                .HasForeignKey(te => te.ExamId);
+        });
 
-        modelBuilder.Entity<TestQuestions>()
-            .HasKey(tq => new { tq.TestId, tq.QuestionId });
+        modelBuilder.Entity<TestQuestions>(e =>
+        {
+            e.HasKey(tq => new { tq.TestId, tq.QuestionId });
 
-        modelBuilder.Entity<TestQuestions>()
-            .HasOne(tq => tq.Test)
-            .WithMany(t => t.TestQuestions)
-            .HasForeignKey(tq => tq.TestId);
+            e.HasOne(tq => tq.Test)
+                .WithMany(t => t.TestQuestions)
+                .HasForeignKey(tq => tq.TestId);
 
-        modelBuilder.Entity<TestQuestions>()
-            .HasOne(tq => tq.Question)
-            .WithMany(q => q.TestQuestions)
-            .HasForeignKey(tq => tq.QuestionId);
+            e.HasOne(tq => tq.Question)
+                .WithMany(q => q.TestQuestions)
+                .HasForeignKey(tq => tq.QuestionId);
+        });
 
         modelBuilder.Entity<Chapters>()
             .HasOne(c => c.Subject)
             .WithMany(s => s.Chapters)
             .HasForeignKey(c => c.SubjectId);
 
-        modelBuilder.Entity<ExamsSubjects>()
-            .HasKey(es => new { es.ExamId, es.SubjectId });
+        modelBuilder.Entity<ExamsSubjects>(e =>
+        {
+            e.HasKey(es => new { es.ExamId, es.SubjectId });
 
-        modelBuilder.Entity<ExamsSubjects>()
-            .HasOne(es => es.Exam)
-            .WithMany(e => e.ExamsSubjects)
-            .HasForeignKey(es => es.ExamId);
+            e.HasOne(es => es.Exam)
+                .WithMany(e2 => e2.ExamsSubjects)
+                .HasForeignKey(es => es.ExamId);
 
-        modelBuilder.Entity<ExamsSubjects>()
-            .HasOne(es => es.Subject)
-            .WithMany(s => s.ExamsSubjects)
-            .HasForeignKey(es => es.SubjectId);
+            e.HasOne(es => es.Subject)
+                .WithMany(s => s.ExamsSubjects)
+                .HasForeignKey(es => es.SubjectId);
+        });
     }
 }
