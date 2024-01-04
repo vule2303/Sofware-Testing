@@ -11,7 +11,7 @@ namespace TestBuilder.Screens.Chapter
     public partial class MainChapter 
     {
         private readonly TestDbContext _context = new();
-        private List<Subject>? _subjects;
+        private List<Models.Subject>? _subjects;
         private List<Items>? _items;
         public class Items
         {
@@ -82,10 +82,10 @@ namespace TestBuilder.Screens.Chapter
 
         private void InitDataSubject()
         {
-            _subjects = new List<Subject>();
-            _context.Subjects.Add(new Subject(){ Name = "Toán"});
-            _context.Subjects.Add(new Subject(){ Name = "Anh"});
-            _context.Subjects.Add(new Subject(){ Name = "Lí"});
+            _subjects = new List<Models.Subject>();
+            _context.Subjects.Add(new Models.Subject(){ Name = "Toán"});
+            _context.Subjects.Add(new Models.Subject(){ Name = "Anh"});
+            _context.Subjects.Add(new Models.Subject(){ Name = "Lí"});
             _context.SaveChanges();
         }
 

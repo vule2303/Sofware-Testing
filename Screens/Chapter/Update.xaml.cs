@@ -23,7 +23,7 @@ namespace TestBuilder.Screens.Chapter
     public partial class UpdateChapter : Window
     {
         private readonly TestDbContext _context;
-        private readonly List<Subject>? _subjects;
+        private readonly List<Models.Subject>? _subjects;
         private readonly Items? _items;
         private readonly MainChapter _mainChapter;
         public class Items
@@ -33,7 +33,7 @@ namespace TestBuilder.Screens.Chapter
             public required string NameChapter { get; set; }
         }
 
-        public UpdateChapter(MainChapter.Items item, List<Subject> subjects, TestDbContext context, MainChapter mainChapter)
+        public UpdateChapter(MainChapter.Items item, List<Models.Subject> subjects, TestDbContext context, MainChapter mainChapter)
         {
             InitializeComponent();
             _items = new Items(){ IdChapter = item.IdChapter, NameChapter = item.NameChapter, IdSubject = item.IdSubject };
@@ -55,7 +55,7 @@ namespace TestBuilder.Screens.Chapter
                     if (NameChapter.Text != "")
                         chapter.Name = NameChapter.Text;
                     if (SelectedSubject.SelectedItem != null)
-                        chapter.SubjectId = (SelectedSubject.SelectedItem as Subject).SubjectId;
+                        chapter.SubjectId = (SelectedSubject.SelectedItem as Models.Subject).SubjectId;
                     _context.Chapters.Update(chapter);
                     _context.SaveChanges();
                 }
