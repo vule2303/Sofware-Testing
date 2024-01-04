@@ -8,31 +8,25 @@
         Title="Update Chapter" Height="300" Width="500">
     <Grid Margin="50">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="AUto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="49.189"/>
-            <RowDefinition Height="Auto" MinHeight="36.189"/>
-            <RowDefinition Height="Auto" MinHeight="0.28"/>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="92*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
+        <TextBox Grid.Row="0"
             x:Name="NameChapter"
             TextWrapping="Wrap"
             AcceptsReturn="True"
             AcceptsTab="True"
             BorderThickness="0,0,0,1"
-            FontSize="16" Height="24" Width="4"/>
-        <TextBlock 
-            
+            FontSize="16" />
+        <TextBlock Grid.Row="0" 
             IsHitTestVisible="False"
             FontSize="16"
             Text="Đặt tên chương"
-            Margin="50,0,-250,10"
             Foreground="DarkGray">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
@@ -52,18 +46,21 @@
             </TextBlock.Style>
         </TextBlock>
 
-        <ComboBox
-            Width="Auto"
+        <ComboBox Grid.Row="1" 
             x:Name="SelectedSubject" 
-            ItemsSource="{Binding Name}"   
+            ItemsSource="{Binding Path=__subjects}"   
+            DisplayMemberPath="Name"
+            SelectedIndex="0"
             BorderThickness="0,0,0,0"
-            FontSize="16" Background="{x:Null}" Margin="140,49,-140,4" Grid.RowSpan="2" />
+            FontSize="16" Background="{x:Null}"
+            Margin="0,20,0,0" />
 
         <Border 
-            Grid.Row="4"
-            Height="Auto"
+            Grid.Row="2"
+            Height="50"
+            Width="100"
             Background="#F291D0"
-            CornerRadius="10" Margin="140,6,-140,50">
+            CornerRadius="10" Margin="0,20,-0,0">
             <Button
                 Width="100"
                 FontSize="16"

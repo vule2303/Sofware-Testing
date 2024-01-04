@@ -5,15 +5,15 @@ namespace TestBuilder.Data;
 
 public class TestDbContext : DbContext
 {
-    public DbSet<Question>? Questions { get; set; }
-    public DbSet<Option>? Options { get; set; }
-    public DbSet<Exam>? Exams { get; set; }
-    public DbSet<Test>? Tests { get; set; }
-    public DbSet<TestExams>? TestExams { get; set; }
-    public DbSet<TestQuestions>? TestQuestions { get; set; }
-    public DbSet<Subject>? Subjects { get; set; }
-    public DbSet<Chapters>? Chapters { get; set; }
-    public DbSet<ExamsSubjects>? ExamsSubjects { get; set; }
+    public DbSet<Question> Questions { get; set; }
+    public DbSet<Option> Options { get; set; }
+    public DbSet<Exam> Exams { get; set; }
+    public DbSet<Test> Tests { get; set; }
+    public DbSet<TestExams> TestExams { get; set; }
+    public DbSet<TestQuestions> TestQuestions { get; set; }
+    public DbSet<Subject> Subjects { get; set; }
+    public DbSet<Chapters> Chapters { get; set; }
+    public DbSet<ExamsSubjects> ExamsSubjects { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

@@ -81,7 +81,9 @@
                        CornerRadius="10">
                    <ComboBox 
                              x:Name="SelectedSubject" 
-                             ItemsSource="{Binding Name}"   
+                             ItemsSource="{Binding Path=__subjects}"   
+                             DisplayMemberPath="Name"
+                             SelectedIndex="0"
                              BorderThickness="0,0,0,0"
                              FontSize="16" Background="{x:Null}"
                    />
