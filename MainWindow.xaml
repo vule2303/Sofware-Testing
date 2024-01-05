@@ -47,11 +47,11 @@
                         <TextBlock Text="HKV" Foreground="#d0bfff" FontSize="14" FontWeight="SemiBold"
                                    DockPanel.Dock="Top" TextAlignment="Center" />
 
-                        <!--Menu Seprator-->
+                        <!--Menu Separator-->
                         <Separator Margin="25" DockPanel.Dock="Top" Height="0.8" Background="#d0bfff" />
 
 
-                        <!--Menubutton-->
+                        <!--Menu button-->
                         <StackPanel DockPanel.Dock="Top">
                             <Button Style="{StaticResource MenuButton}">
                                 <StackPanel Orientation="Horizontal">
@@ -70,7 +70,7 @@
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Top">
                             <Button Style="{StaticResource MenuButton}"
-                                    Click="ChapterScreen_Click">
+                                    Click="ChapterScreenClick">
                                 <StackPanel Orientation="Horizontal">
                                     <icon:PackIconMaterial Kind="BookOpenPageVariant"
                                                            Style="{StaticResource MenuButtonIcon}" />
@@ -121,7 +121,7 @@
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
 
-                <!--Search Textbox-->
+                <!--Search TextBox-->
                 <Grid Width="300" HorizontalAlignment="Left">
                     <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
                                Panel.ZIndex="1" Text="Search here..."
@@ -152,7 +152,7 @@
                         <TextBlock Text="Thêm môn học" />
                     </StackPanel>
                 </Button>
-                <!--Seprator-->
+                <!--Separator-->
                 <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 10 0 10" />
                 <!--Counter Title-->
                 <TextBlock Text="Tổng môn học : 15" Grid.Row="4" FontSize="18" FontWeight="SemiBold"
