@@ -2,24 +2,12 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="SubjectWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\UserControls\buttonPreviousNav.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\UserControls\TextBox.xaml.cs">
+    <Compile Update="Components\SubjectDataPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="SubjectWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\UserControls\buttonPreviousNav.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\UserControls\TextBox.xaml">
+    <Page Update="Components\SubjectDataPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

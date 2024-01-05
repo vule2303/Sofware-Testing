@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                xmlns:components="clr-namespace:TestBuilder.Components"
+        
         mc:Ignorable="d"
         Title="Test Builder" Height="541" Width="800"
         SizeToContent="Height"
@@ -140,15 +142,16 @@
                 <Button Grid.Row="0" Style="{StaticResource TopButton}" Margin="0 0 55 0" HorizontalAlignment="Right">
                     <icon:PackIconMaterial Kind="Bell" />
                 </Button>
-
+                <!--Components-->
+                <!--<components:SubjectDataPage/> -->
                 <!--Page Title-->
                 <TextBlock Text="Môn học" Grid.Row="1" FontSize="22" FontWeight="SemiBold" Margin="0 20 0 0"
-                           HorizontalAlignment="Left" Foreground="#121518" />
+      HorizontalAlignment="Left" Foreground="#121518" />
                 <!--Add button-->
                 <Button Grid.Row="1" Style="{StaticResource AddButton}">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11"
-                                               Margin="0 1 8 0" />
+                          Margin="0 1 8 0" />
                         <TextBlock Text="Thêm môn học" />
                     </StackPanel>
                 </Button>
@@ -156,47 +159,46 @@
                 <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 10 0 10" />
                 <!--Counter Title-->
                 <TextBlock Text="Tổng môn học : 15" Grid.Row="4" FontSize="18" FontWeight="SemiBold"
-                           Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center" />
+      Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <TextBlock Text="Tổng môn học : 15" Grid.Row="4" FontSize="18" FontWeight="SemiBold"
-                           Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center" />
+      Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center" />
 
                 <!-- ~1~Subject Datagrid@1@ -->
-                <!-- <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" -->
-                <!--           ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" -->
-                <!--           RowStyle="{DynamicResource DataGridRowStyle2}" Grid.Row="5" x:Name="SubjectsDataGrid"> -->
-                <!--     <DataGrid.Columns> -->
-                <!--         <DataGridCheckBoxColumn CanUserResize="False" Width="auto" -->
-                <!--                                 ElementStyle="{StaticResource CheckBoxStyle1}"> -->
-                <!--             <DataGridCheckBoxColumn.HeaderTemplate> -->
-                <!--                 <DataTemplate> -->
-                <!--                     <CheckBox Style="{StaticResource CheckBoxStyle1}" /> -->
-                <!--                 </DataTemplate> -->
-                <!--             </DataGridCheckBoxColumn.HeaderTemplate> -->
-                <!--         </DataGridCheckBoxColumn> -->
-                <!--         <DataGridTextColumn Header="Mã môn học" IsReadOnly="True" CanUserResize="False" Width="*" -->
-                <!--                             Binding="{Binding SubjectId}" /> -->
-                <!-- -->
-                <!--         <DataGridTextColumn Header="Tên môn học" IsReadOnly="True" CanUserResize="False" Width="*" -->
-                <!--                             Binding="{Binding Name}" /> -->
-                <!--         <DataGridTemplateColumn Header="Chức năng" IsReadOnly="True" Width="auto"> -->
-                <!--             <DataGridTemplateColumn.CellTemplate> -->
-                <!--                 <DataTemplate> -->
-                <!--                     <StackPanel Orientation="Horizontal"> -->
-                <!--                         <Button Style="{StaticResource GridEditButton}"> -->
-                <!--                             <icon:PackIconMaterial Kind="PencilOutline" -->
-                <!--                                                    Style="{StaticResource GridButtonIcon}" /> -->
-                <!--                         </Button> -->
-                <!--                         <Button Style="{StaticResource GridRemoveButton}"> -->
-                <!--                             <icon:PackIconMaterial Kind="DeleteOutline" -->
-                <!--                                                    Style="{StaticResource GridButtonIcon}" /> -->
-                <!--                         </Button> -->
-                <!--                     </StackPanel> -->
-                <!--                 </DataTemplate> -->
-                <!--             </DataGridTemplateColumn.CellTemplate> -->
-                <!--         </DataGridTemplateColumn> -->
-                <!--     </DataGrid.Columns> -->
-                <!-- </DataGrid> -->
+                <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" 
+      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+      RowStyle="{DynamicResource DataGridRowStyle2}" Grid.Row="5" x:Name="subjectDataGrid">
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn CanUserResize="False" Width="auto" 
+                            ElementStyle="{StaticResource CheckBoxStyle1}">
+                            <DataGridCheckBoxColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <CheckBox Style="{StaticResource CheckBoxStyle1}" />
+                                </DataTemplate>
+                            </DataGridCheckBoxColumn.HeaderTemplate>
+                        </DataGridCheckBoxColumn>
+                        <DataGridTextColumn Header="Mã môn học" IsReadOnly="True" CanUserResize="False" Width="*" 
+                        Binding="{Binding SubjectId}" />
 
+                        <DataGridTextColumn Header="Tên môn học" IsReadOnly="True" CanUserResize="False" Width="*" 
+                        Binding="{Binding Name}" />
+                        <DataGridTemplateColumn Header="Chức năng" IsReadOnly="True" Width="auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Style="{StaticResource GridEditButton}">
+                                            <icon:PackIconMaterial Kind="PencilOutline" 
+                                               Style="{StaticResource GridButtonIcon}" />
+                                        </Button>
+                                        <Button Style="{StaticResource GridRemoveButton}">
+                                            <icon:PackIconMaterial Kind="DeleteOutline" 
+                                               Style="{StaticResource GridButtonIcon}" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
                 <!-- Show ManagerTest -->
                 <ContentControl Grid.Row="3" x:Name="ContentControl" />
 
