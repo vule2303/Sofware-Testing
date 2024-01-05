@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace TestBuilder.Models;
+
 public partial class Test
 {
     [Key]
