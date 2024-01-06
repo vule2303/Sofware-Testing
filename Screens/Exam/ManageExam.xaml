@@ -25,25 +25,35 @@
                 <DataGridTextColumn Header="Số đề thi" 
                                     Binding="{Binding Amount}"
                                     Width="*"
-                                    FontSize="16"/>
+                                    FontSize="16"
+                                    IsReadOnly="True"/>
                 
                 <DataGridTemplateColumn Width="Auto" 
                                         Header="Hành động" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="Sửa"
-                                        Width="50" 
+                                <Button Content="Xem chi tiết"
+                                        Width="Auto" 
                                         BorderThickness="0,0,1,0"
                                         Background="#F291D0"
-                                        Foreground="White" />
+                                        Foreground="White"
+                                        Padding="10,0,10,0" />
+                                
+                                <Button Content="Sửa"
+                                        Width="Auto" 
+                                        BorderThickness="0,0,1,0"
+                                        Background="#F291D0"
+                                        Foreground="White" 
+                                        Padding="10,0,10,0" />
                                 
                                 <Button Content="Xoá"
-                                        Width="50" 
+                                        Width="Auto" 
                                         BorderThickness="0,0,0,0"
                                         Background="#F291D0"
                                         Foreground="White"
-                                        Click="Delete" />
+                                        Click="Delete" 
+                                        Padding="10,0,10,0" />
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

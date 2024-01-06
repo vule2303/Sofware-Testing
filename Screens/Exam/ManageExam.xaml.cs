@@ -10,7 +10,7 @@ namespace TestBuilder.Screens.Exam
     public partial class ManageExam
     {
         private readonly TestDbContext _context = new ();
-        private readonly List<Items> _items;
+        private List<Items> _items;
 
         private  class Items
         {
@@ -22,7 +22,6 @@ namespace TestBuilder.Screens.Exam
         public ManageExam()
         {
             InitializeComponent();
-            _items = new List<Items>();
             InitData();
             LoadGrid();
             DataContext = this;
@@ -39,20 +38,12 @@ namespace TestBuilder.Screens.Exam
         {
             try
             {
-                var item = GridItems.SelectedItem as Items;
-                var testExam = _context.TestExams.Where(exam => item != null && exam.ExamId == item.ExamId).ToList();
-                _context.TestExams.RemoveRange(testExam);
-
-                var examSubject = _context.ExamsSubjects.Where(exam => item != null && exam.ExamId == item.ExamId)
-                    .ToList();
-                _context.ExamsSubjects.RemoveRange(examSubject);
-
+                var item = (GridItems.SelectedItem as Items)?.ExamId;
                 if (item != null)
                 {
-                    var exam = _context.Exams.FindAsync(item.ExamId);
+                    var exam = _context.Exams.FindAsync(item);
                     if (exam.Result != null) _context.Exams.Remove(exam.Result);
                 }
-
                 await _context.SaveChangesAsync();
                 LoadGrid();
             }
@@ -65,6 +56,7 @@ namespace TestBuilder.Screens.Exam
 
         private void LoadGrid()
         {
+            _items = new List<Items>();
             var listItem = _context.Exams.ToList();
             foreach (var item in listItem)
             {
