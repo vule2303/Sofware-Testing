@@ -17,10 +17,8 @@
                 x:Name="ContentQuestion" />
 
             <StackPanel Orientation="Horizontal">
-                <TextBox
-                    BorderThickness="0"
-                    IsReadOnly="True"
-                    Text="Hình ảnh"
+                <Label
+                    Content="Hình ảnh"
                     VerticalAlignment="Center"
                     Margin="5" />
                 <Button Content="Chọn ảnh trong máy"
@@ -37,11 +35,10 @@
             <!--     Maximum="100" -->
             <!--     Visibility="Collapsed" /> -->
 
-            <TextBox
-                IsReadOnly="True"
+            <Label
                 Margin="5"
                 BorderThickness="0"
-                Text="Đáp án" />
+                Content="Đáp án" />
 
             <DataGrid x:Name="AnswerDataGrid"
                       CanUserAddRows="True"

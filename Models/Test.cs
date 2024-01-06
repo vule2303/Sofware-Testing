@@ -9,6 +9,6 @@ public partial class Test
     public required string Title { get; set; }
 
     // Navigation properties
-    public List<TestExams>? TestExams { get; set; }
-    public List<TestQuestions>? TestQuestions { get; set; }
+    public List<TestExams>? TestExams { get; set; } = [];
+    public List<TestQuestions>? TestQuestions { get; set; } = [];
 }
