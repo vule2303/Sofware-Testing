@@ -8,11 +8,12 @@ namespace TestBuilder.Screens.Chapter
     /// <summary>
     /// Interaction logic for MainChapter.xaml
     /// </summary>
-    public partial class MainChapter 
+    public partial class MainChapter
     {
         private readonly TestDbContext _context = new();
         private List<Models.Subject>? _subjects;
         private List<Items>? _items;
+
         public class Items
         {
             public int IdChapter { get; init; }
@@ -20,16 +21,17 @@ namespace TestBuilder.Screens.Chapter
             public required string NameChapter { get; set; }
             public required string? NameSubject { get; set; }
         }
+
         public MainChapter()
         {
             InitializeComponent();
             InitDataSubject();
             InitDataChapter();
-            LoadSupject();
+            LoadSubject();
             LoadChapter();
             DataContext = this;
         }
-        
+
         private void Button_Create(object sender, RoutedEventArgs e)
         {
             try
@@ -52,7 +54,6 @@ namespace TestBuilder.Screens.Chapter
             {
                 MessageBox.Show(ex.Message);
             }
-           
         }
 
         private void UpdateItem(object sender, RoutedEventArgs e)
@@ -60,7 +61,7 @@ namespace TestBuilder.Screens.Chapter
             var item = GridItems.SelectedItem as Items;
             var subject = _subjects;
             Window insert = new UpdateChapter(item, subject, _context, this);
-            insert.Show();           
+            insert.Show();
         }
 
         private void RemoveItem(object sender, RoutedEventArgs e)
@@ -68,7 +69,7 @@ namespace TestBuilder.Screens.Chapter
             try
             {
                 var item = (GridItems.SelectedItem as Items)?.IdChapter;
-                var chapter =  _context.Chapters.FindAsync(item);
+                var chapter = _context.Chapters.FindAsync(item);
                 if (chapter.Result != null) _context.Chapters.Remove((chapter.Result));
                 _context.SaveChanges();
                 LoadChapter();
@@ -77,47 +78,47 @@ namespace TestBuilder.Screens.Chapter
             {
                 MessageBox.Show(ex.Message);
             }
-           
         }
 
         private void InitDataSubject()
         {
             _subjects = new List<Models.Subject>();
-            _context.Subjects.Add(new Models.Subject(){ Name = "Toán"});
-            _context.Subjects.Add(new Models.Subject(){ Name = "Anh"});
-            _context.Subjects.Add(new Models.Subject(){ Name = "Lí"});
+            _context.Subjects.Add(new Models.Subject() { Name = "Toán" });
+            _context.Subjects.Add(new Models.Subject() { Name = "Anh" });
+            _context.Subjects.Add(new Models.Subject() { Name = "Lí" });
             _context.SaveChanges();
         }
 
         private void InitDataChapter()
         {
-            _context.Chapters.Add(new Chapters(){SubjectId = 1, Name = "Chương 1"});
-            _context.Chapters.Add(new Chapters(){SubjectId = 1, Name = "Chương 2"});
-            _context.Chapters.Add(new Chapters(){SubjectId = 2, Name = "Chương 1"});
-            _context.Chapters.Add(new Chapters(){SubjectId = 2, Name = "Chương 2"});
-            _context.Chapters.Add(new Chapters(){SubjectId = 3, Name = "Chương 1"});
-            _context.Chapters.Add(new Chapters(){SubjectId = 3, Name = "Chương 2"});
+            _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Chương 1" });
+            _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Chương 2" });
+            _context.Chapters.Add(new Chapters() { SubjectId = 2, Name = "Chương 1" });
+            _context.Chapters.Add(new Chapters() { SubjectId = 2, Name = "Chương 2" });
+            _context.Chapters.Add(new Chapters() { SubjectId = 3, Name = "Chương 1" });
+            _context.Chapters.Add(new Chapters() { SubjectId = 3, Name = "Chương 2" });
             _context.SaveChanges();
         }
-        
+
         public void LoadChapter()
         {
-            _items = new List<Items>(); 
+            _items = new List<Items>();
             var items = _context.Chapters.Include(chapters => chapters.Subject).ToList();
-                foreach (var item in items)
+            foreach (var item in items)
+            {
+                _items.Add(new Items
                 {
-                    _items.Add(new Items
-                    {
-                        IdChapter = item.ChapterId,
-                        IdSubject = item.SubjectId,
-                        NameChapter = item.Name,
-                        NameSubject = item.Subject?.Name
-                    });
-                }
+                    IdChapter = item.ChapterId,
+                    IdSubject = item.SubjectId,
+                    NameChapter = item.Name,
+                    NameSubject = item.Subject?.Name
+                });
+            }
+
             GridItems.ItemsSource = _items;
         }
 
-        private void LoadSupject()
+        private void LoadSubject()
         {
             var subjects = _context.Subjects.ToList();
             _subjects = subjects;

@@ -13,7 +13,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Quản lý câu hỏi"></TextBlock>
+        <Label Content="Quản lý câu hỏi"></Label>
         
         <Button Grid.Row="1" Content="Thêm câu hỏi"
                 Click="ButtonCreateQuestion"
@@ -37,7 +37,7 @@
                     Header="Nội dung" Width="*" />
                 <DataGridTextColumn
                     Binding="{Binding Image}"
-                    Header="Image" Width="*" />
+                    Header="Hình ảnh" Width="*" />
 
                 <DataGridTemplateColumn Width="50">
                     <DataGridTemplateColumn.CellTemplate>

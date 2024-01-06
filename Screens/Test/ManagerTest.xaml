@@ -28,7 +28,8 @@
                      SelectionMode="Multiple"
                      x:Name="TestQuestionsListBox"
                      ItemsSource="{Binding}" />
-            <Button Content="Thêm bộ đề" 
+            <Button x:Name="Button"
+                    Content="Thêm bộ đề" 
                     Margin="10" 
                     HorizontalAlignment="Center" 
                     Padding="5 0"
@@ -38,7 +39,8 @@
         <DataGrid Grid.Row="2"
                   x:Name="TestDataGrid"
                   ItemsSource="{Binding}"
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False"
+                  MouseDoubleClick="TestDataGrid_Edit">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Mã đề" Width="Auto" Binding="{Binding TestId}" />
                 <DataGridTextColumn Header="Tên đề" Width="*" Binding="{Binding Title}" />

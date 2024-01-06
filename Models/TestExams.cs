@@ -6,6 +6,6 @@ public partial class TestExams
     public int ExamId { get; set; }
 
     // Navigation properties
-    public required Test Test { get; set; }
-    public required Exam Exam { get; set; }
+    public Test? Test { get; set; }
+    public  Exam? Exam { get; set; }
 }

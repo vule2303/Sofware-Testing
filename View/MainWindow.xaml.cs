@@ -5,15 +5,18 @@ using TestBuilder.Models;
 using TestBuilder.Screens.Question;
 using TestBuilder.Screens.Test;
 using TestBuilder.Screens.Chapter;
+using TestBuilder.Screens.Exam;
 
 namespace TestBuilder;
 
 public partial class MainWindow
 {
     private bool _isMaximized;
+
     public MainWindow()
     {
         InitializeComponent();
+        DragMove();
          // var subjects = new ObservableCollection<TestBuilder.Models.Subject>
          //         {
          //             new()
@@ -69,7 +72,6 @@ public partial class MainWindow
          //            subjectDataGrid.ItemsSource = subjects;
          
     }
-
     private void Border_MouseDown(object sender, MouseButtonEventArgs e)
     {
         if (e.ChangedButton == MouseButton.Left)
@@ -107,12 +109,18 @@ public partial class MainWindow
     private void ButtonQuestion(object sender, RoutedEventArgs e)
     {
         var _ = new ManagerQuestion();
-        ContentControl.Content = _;      
+        ContentControl.Content = _;
     }
-    private void ChapterScreen_Click(object sender, RoutedEventArgs e)
+
+    private void ChapterScreenClick(object sender, RoutedEventArgs e)
     {
         Window chapter = new MainChapter();
         chapter.Show();
+    }
 
+    private void GoToExamScreen(object sender, RoutedEventArgs e)
+    {
+        Window examScreen = new ManageExam();
+        examScreen.Show();
     }
 }

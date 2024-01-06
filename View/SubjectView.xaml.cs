@@ -1,10 +1,13 @@
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace TestBuilder.View;
 
 public partial class SubjectView : UserControl
 {
+
     public SubjectView()
     {
         InitializeComponent();
@@ -62,4 +65,5 @@ public partial class SubjectView : UserControl
                  };
                     subjectDataGrid.ItemsSource = subjects;
     }
+  
 }

@@ -120,7 +120,7 @@
                                     Binding="{Binding NameSubject}"
                                     Width="*"
                                     FontSize="16"/>
-                <DataGridTemplateColumn Width="Auto" Header="Hành động">
+                <DataGridTemplateColumn Width="Auto" Header="Hành động" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -145,6 +145,9 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+            <DataGrid.CommandBindings>
+                <CommandBinding Command="Delete" Executed="RemoveItem"/>
+            </DataGrid.CommandBindings>
         </DataGrid>
     </Grid>
 </Window>

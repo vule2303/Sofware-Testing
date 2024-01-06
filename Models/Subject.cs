@@ -12,4 +12,5 @@ public class Subject
     // Navigation properties
     public List<Chapters>? Chapters { get; set; }
     public List<ExamsSubjects>? ExamsSubjects { get; set; }
+    public List<Test> Tests { get; set; }
 }
