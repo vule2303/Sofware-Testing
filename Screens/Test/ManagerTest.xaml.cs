@@ -60,7 +60,8 @@ public partial class ManagerTest
         var test = new Models.Test
         {
             Title = TestName.Text,
-            TestQuestions = []
+            TestQuestions = [],
+            SubjectId = 1
         };
         var _ = _dbContext.Tests.Add(test).Entity;
         

@@ -3,6 +3,7 @@ using System.Windows.Input;
 using TestBuilder.Screens.Question;
 using TestBuilder.Screens.Test;
 using TestBuilder.Screens.Chapter;
+using TestBuilder.Screens.Exam;
 
 namespace TestBuilder;
 
@@ -111,5 +112,11 @@ public partial class MainWindow
     {
         Window chapter = new MainChapter();
         chapter.Show();
+    }
+
+    private void GoToExamScreen(object sender, RoutedEventArgs e)
+    {
+        Window examScreen = new ManageExam();
+        examScreen.Show();
     }
 }

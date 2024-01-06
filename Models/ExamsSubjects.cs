@@ -6,6 +6,6 @@ public partial class ExamsSubjects
     public int SubjectId { get; set; }
 
     // Navigation properties
-    public required Exam Exam { get; set; }
-    public required Subject Subject { get; set; }
+    public  Exam? Exam { get; set; }
+    public  Subject? Subject { get; set; }
 }

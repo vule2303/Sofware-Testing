@@ -81,5 +81,12 @@ public class TestDbContext : DbContext
                 .WithMany(s => s.ExamsSubjects)
                 .HasForeignKey(es => es.SubjectId);
         });
+
+        modelBuilder.Entity<Test>(e =>
+        {
+            e.HasOne(es => es.Subject)
+                .WithMany(s => s.Tests)
+                .HasForeignKey(es => es.SubjectId);
+        });
     }
 }

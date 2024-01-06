@@ -1,0 +1,77 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Class="TestBuilder.Screens.Exam.ManageExam"
+        mc:Ignorable="d"
+        Title="ManageExam" Height="400" Width="500">
+    <Grid>
+        <Label Content="QUẢN LÍ KÌ THI" HorizontalAlignment="Center" Margin="0,25,0,0" VerticalAlignment="Top"/>
+
+        <TextBox x:Name="TitleExam" HorizontalAlignment="Left" Margin="100,50,0,0" VerticalAlignment="Top" Width="168" />
+        <Button x:Name="Default"  Click="Insert" Content="Tạo" HorizontalAlignment="Left" Margin="300,50,0,0" VerticalAlignment="Top"/>
+        
+        <TextBox x:Name="TitleUpdate" HorizontalAlignment="Left" Margin="100,100,0,0" VerticalAlignment="Top" Width="168" Visibility="Hidden"/>
+        <Button x:Name="ButtonUpdate" Click="UpdateTitle" Content="Cập nhật" HorizontalAlignment="Left" Margin="300,100,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+        <Button x:Name="AddButton" Click="Add" Content="Tạo kì thi" HorizontalAlignment="Left" Margin="350,100,0,0" VerticalAlignment="Top" Visibility="Hidden" />
+
+        <DataGrid x:Name="GridItems"
+                  Margin="20,151,20,32" 
+                  Height="Auto"
+                  AutoGenerateColumns="False"
+                 >
+            
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                                    Header="Tên Kì thi"
+                                    Binding="{Binding ExamTitle}"
+                                    Width="*"
+                                    FontSize="16"/>
+                
+                <DataGridTextColumn Header="Số đề thi" 
+                                    Binding="{Binding Amount}"
+                                    Width="*"
+                                    FontSize="16"
+                                    IsReadOnly="True"/>
+                
+                <DataGridTemplateColumn Width="Auto" 
+                                        Header="Hành động" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Xem chi tiết"
+                                        Width="Auto" 
+                                        BorderThickness="0,0,1,0"
+                                        Background="#F291D0"
+                                        Foreground="White"
+                                        Padding="10,0,10,0" 
+                                        Click="View"/>
+                                
+                                <Button Content="Sửa"
+                                        Width="Auto" 
+                                        BorderThickness="0,0,1,0"
+                                        Background="#F291D0"
+                                        Foreground="White" 
+                                        Padding="10,0,10,0" 
+                                        Click="Update"/>
+                                
+                                <Button Content="Xoá"
+                                        Width="Auto" 
+                                        BorderThickness="0,0,0,0"
+                                        Background="#F291D0"
+                                        Foreground="White"
+                                        Click="Delete" 
+                                        Padding="10,0,10,0" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.CommandBindings>
+                <CommandBinding Command="Delete" Executed="Delete" />
+            </DataGrid.CommandBindings>
+        </DataGrid>
+      
+    </Grid>
+</Window>
