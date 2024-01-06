@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TestBuilder.Screens.Exam"
-        xmlns:UserControls="clr-namespace:TestBuilder.View.UserControls" x:Class="TestBuilder.Screens.Exam.ManageExam"
+        x:Class="TestBuilder.Screens.Exam.ManageExam"
         mc:Ignorable="d"
         Title="ManageExam" Height="450" Width="800">
     <Grid>
@@ -12,57 +11,48 @@
 
         <TextBox x:Name="TitleExam" HorizontalAlignment="Left" Margin="169,108,0,0" VerticalAlignment="Top" Width="168"/>
         <Button Click="Insert" Content="Tạo" HorizontalAlignment="Left" Margin="494,108,0,0" VerticalAlignment="Top"/>
-        <DataGrid
-           x:Name="GridItems"
-           Margin="20,151,20,32" 
-           Height="Auto"
-           AutoGenerateColumns="False">
+        <DataGrid x:Name="GridItems"
+                  Margin="20,151,20,32" 
+                  Height="Auto"
+                  AutoGenerateColumns="False">
+            
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Tên Kì thi"
-                             Binding="{Binding ExamTitle}"
-                             Width="*"
-                             FontSize="16"/>
-                <DataGridTextColumn Header="Môn học" 
-                             Binding="{Binding SubjectName}"
-                             Width="*"
-                             FontSize="16"/>
+                                    Binding="{Binding ExamTitle}"
+                                    Width="*"
+                                    FontSize="16"/>
+                
                 <DataGridTextColumn Header="Số đề thi" 
                                     Binding="{Binding Amount}"
                                     Width="*"
                                     FontSize="16"/>
-                <DataGridTemplateColumn Width="Auto" Header="Hành động" >
+                
+                <DataGridTemplateColumn Width="Auto" 
+                                        Header="Hành động" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button
-                              x:Name="btnInsert"
-                              Content="Sửa"
-                              Width="50" 
-                              BorderThickness="0,0,1,0"
-                              Background="#F291D0"
-                              Foreground="White"
-                              />
-                                <Button
-                              x:Name="btnUpdate"
-                              Content="Xoá"
-                              Width="50" 
-                              BorderThickness="0,0,0,0"
-                              Background="#F291D0"
-                              Foreground="White"
-                             />
+                                <Button Content="Sửa"
+                                        Width="50" 
+                                        BorderThickness="0,0,1,0"
+                                        Background="#F291D0"
+                                        Foreground="White" />
+                                
+                                <Button Content="Xoá"
+                                        Width="50" 
+                                        BorderThickness="0,0,0,0"
+                                        Background="#F291D0"
+                                        Foreground="White"
+                                        Click="Delete" />
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
             <DataGrid.CommandBindings>
-                <CommandBinding Command="Delete" />
+                <CommandBinding Command="Delete" Executed="Delete" />
             </DataGrid.CommandBindings>
         </DataGrid>
-        <ComboBox x:Name="ListSubject"
-                  ItemsSource="{Binding Path=__subjects}"   
-                  DisplayMemberPath="Name"
-                  SelectedIndex="0"
-                  HorizontalAlignment="Left" Margin="355,109,0,0" VerticalAlignment="Top" Width="120"/>
+      
     </Grid>
 </Window>
