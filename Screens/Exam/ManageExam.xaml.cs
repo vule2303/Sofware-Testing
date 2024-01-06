@@ -10,9 +10,9 @@ namespace TestBuilder.Screens.Exam
     public partial class ManageExam
     {
         private readonly TestDbContext _context = new ();
-        private List<Items> _items;
+        private List<Items>? _items;
 
-        private  class Items
+        public class Items
         {
             public int ExamId { get; init; }
             public  required string ExamTitle {  set; get; }
@@ -32,6 +32,13 @@ namespace TestBuilder.Screens.Exam
             _context.Exams.Add(new Models.Exam{Title = TitleExam.Text});
             _context.SaveChanges();
             LoadGrid();
+        }
+        
+        private void View(object sender, RoutedEventArgs e)
+        {
+            var item = GridItems.SelectedItem as Items;
+            Window examSubject = new ExamSubject(item, _context);
+            examSubject.Show();
         }
         
         private async void Delete(object sender, RoutedEventArgs e)
@@ -85,6 +92,7 @@ namespace TestBuilder.Screens.Exam
             _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 2, SubjectId = 3});
             _context.Tests.Add(new Models.Test(){ Title = "Test 1", SubjectId = 1});
             _context.Tests.Add(new Models.Test(){ Title = "Test 2" , SubjectId = 2});
+            _context.Tests.Add(new Models.Test(){ Title = "Test 3" , SubjectId = 2});
             _context.TestExams.Add(new TestExams(){TestId = 1, ExamId = 1});
             _context.TestExams.Add(new TestExams(){TestId = 2, ExamId = 1});
             _context.TestExams.Add(new TestExams(){TestId = 1, ExamId = 2});
