@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestBuilder.VewModel
+namespace TestBuilder.ViewModel
 {
-    class SubjectViewModel
+    class SubjectViewModel : Core.ViewModel
     {
+        
     }
 }

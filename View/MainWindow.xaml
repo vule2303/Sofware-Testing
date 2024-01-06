@@ -55,7 +55,7 @@
 
                         <!--Menubutton-->
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource MenuButton}">
+                            <Button Style="{StaticResource MenuButton}" Command="{Binding NavigateToHomeCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <icon:PackIconMaterial Kind="HomeVariant" Style="{StaticResource MenuButtonIcon}" />
                                     <TextBlock Text="Bảng điều khiển" />
@@ -63,7 +63,7 @@
                             </Button>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource MenuButton}" Background="#7b5cd6" Foreground="White">
+                            <Button Style="{StaticResource MenuButton}" Background="#7b5cd6" Foreground="White" Command="{Binding NavigateToSubjectsViewCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <icon:PackIconMaterial Kind="BookAlert" Style="{StaticResource MenuButtonIcon}" />
                                     <TextBlock Text="Môn học" />
@@ -143,91 +143,12 @@
                     <icon:PackIconMaterial Kind="Bell" />
                 </Button>
                 <!--Components-->
-                <!--<components:SubjectDataPage/> -->
-                <!--Page Title-->
-                <TextBlock Text="Môn học" Grid.Row="1" FontSize="22" FontWeight="SemiBold" Margin="0 20 0 0"
-      HorizontalAlignment="Left" Foreground="#121518" />
-                <!--Add button-->
-                <Button Grid.Row="1" Style="{StaticResource AddButton}">
-                    <StackPanel Orientation="Horizontal">
-                        <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11"
-                          Margin="0 1 8 0" />
-                        <TextBlock Text="Thêm môn học" />
-                    </StackPanel>
-                </Button>
-                <!--Seprator-->
-                <Separator Height="1" Grid.Row="3" Background="#dae2ea" Margin="0 10 0 10" />
-                <!--Counter Title-->
-                <TextBlock Text="Tổng môn học : 15" Grid.Row="4" FontSize="18" FontWeight="SemiBold"
-      Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                <TextBlock Text="Tổng môn học : 15" Grid.Row="4" FontSize="18" FontWeight="SemiBold"
-      Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center" />
-
-                <!-- ~1~Subject Datagrid@1@ -->
-                <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" 
-      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
-      RowStyle="{DynamicResource DataGridRowStyle2}" Grid.Row="5" x:Name="subjectDataGrid">
-                    <DataGrid.Columns>
-                        <DataGridCheckBoxColumn CanUserResize="False" Width="auto" 
-                            ElementStyle="{StaticResource CheckBoxStyle1}">
-                            <DataGridCheckBoxColumn.HeaderTemplate>
-                                <DataTemplate>
-                                    <CheckBox Style="{StaticResource CheckBoxStyle1}" />
-                                </DataTemplate>
-                            </DataGridCheckBoxColumn.HeaderTemplate>
-                        </DataGridCheckBoxColumn>
-                        <DataGridTextColumn Header="Mã môn học" IsReadOnly="True" CanUserResize="False" Width="*" 
-                        Binding="{Binding SubjectId}" />
-
-                        <DataGridTextColumn Header="Tên môn học" IsReadOnly="True" CanUserResize="False" Width="*" 
-                        Binding="{Binding Name}" />
-                        <DataGridTemplateColumn Header="Chức năng" IsReadOnly="True" Width="auto">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button Style="{StaticResource GridEditButton}">
-                                            <icon:PackIconMaterial Kind="PencilOutline" 
-                                               Style="{StaticResource GridButtonIcon}" />
-                                        </Button>
-                                        <Button Style="{StaticResource GridRemoveButton}">
-                                            <icon:PackIconMaterial Kind="DeleteOutline" 
-                                               Style="{StaticResource GridButtonIcon}" />
-                                        </Button>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <!-- Show ManagerTest -->
-                <ContentControl Grid.Row="3" x:Name="ContentControl" />
-
-                <!--Pagination Section-->
-                <Border Grid.Row="6" HorizontalAlignment="Right" BorderBrush="#dee4ec" BorderThickness="1"
-                        CornerRadius="5" Padding="5" Background="White" Margin="0 10 10 10">
-                    <StackPanel Orientation="Horizontal">
-                        <Button Style="{StaticResource PagingButton}">
-                            <icon:PackIconMaterial Kind="ChevronLeft" Style="{StaticResource PagingButtonIcon}" />
-                        </Button>
-                        <Rectangle Width="1" Fill="#dee4ec" Margin="3 7" />
-
-                        <Button Style="{StaticResource PagingButton}" Content="1" Background="#6246ea"
-                                Foreground="White" />
-                        <Button Style="{StaticResource PagingButton}" Content="2" />
-                        <Button Style="{StaticResource PagingButton}" Content="3" />
-                        <TextBlock Text="...." Foreground="#6c7682" VerticalAlignment="Center" FontSize="15"
-                                   Margin="10 0" />
-                        <Button Style="{StaticResource PagingButton}" Content="8" />
-                        <Button Style="{StaticResource PagingButton}" Content="9" />
-
-                        <Rectangle Width="1" Fill="#dee4ec" Margin="3 7" />
-                        <Button Style="{StaticResource PagingButton}">
-                            <icon:PackIconMaterial Kind="ChevronRight" Style="{StaticResource PagingButtonIcon}" />
-                        </Button>
-
-                    </StackPanel>
-                </Border>
-
+                <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}">
+                    
+                </ContentControl>
+                <!-- <components:SubjectDataPage Grid.Row="1"/> -->
+                
+                <ContentControl Grid.Row="1" x:Name="ContentControl"/>
             </Grid>
         </Grid>
     </Border>
