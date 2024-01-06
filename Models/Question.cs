@@ -10,6 +10,8 @@ public partial class Question
     public required string Content { get; set; }
   
     public string? Image { get; set; }
+    
+    public int? TestId { get; set; }
 
     // Navigation property
     public List<Option>? Options { get; set; }

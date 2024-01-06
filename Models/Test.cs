@@ -12,7 +12,5 @@ public partial class Test
     // Navigation properties
     public List<TestExams>? TestExams { get; set; }
     public List<TestQuestions>? TestQuestions { get; set; }
-    
     public Subject Subject { get; set; }
-    
 }

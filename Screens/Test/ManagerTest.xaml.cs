@@ -63,18 +63,21 @@ public partial class ManagerTest
             TestQuestions = [],
             SubjectId = 1
         };
+        var _ = _dbContext.Tests.Add(test).Entity;
+        
         foreach (var selectedItem in TestQuestionsListBox.SelectedItems)
         {
             var temp = new Guid(selectedItem.ToString()!);
+            var question = _dbContext.Questions.Find(temp)!;
+            question.TestId = _.TestId;
             test.TestQuestions.Add(new TestQuestions
             {
                 QuestionId = temp,
                 Test = test,
-                Question = _dbContext.Questions.Find(temp)!,
+                Question = question,
             });
         }
 
-        var _ = _dbContext.Tests.Add(test).Entity;
         _dbContext.SaveChanges();
 
         _listTest.Add(new TestDto
@@ -93,6 +96,63 @@ public partial class ManagerTest
         var test = (TestDto)TestDataGrid.SelectedItem;
         _dbContext.Tests.Remove(_dbContext.Tests.Find(test.TestId)!);
         _dbContext.SaveChanges();
+        LoadData();
+    }
+
+    private void TestDataGrid_Edit(object sender, MouseButtonEventArgs e)
+    {
+        TestQuestionsListBox.SelectedItems.Clear();
+        var test = (TestDto)TestDataGrid.SelectedItem;
+        TestName.Text = test.Title;
+        var list = _dbContext.Questions
+            .Where(q => q.TestId == test.TestId)
+            .ToList();
+        
+        list.ForEach(q =>
+        {
+            TestQuestionsListBox.SelectedItems.Add(q.QuestionId.ToString());
+        });
+        
+        Button.Content = "Cập nhật";
+        
+        Button.Click -= ButtonAdd;
+        Button.Click += ButtonUpdate;
+    }
+
+    private void ButtonUpdate(object sender, RoutedEventArgs e)
+    {
+        var _ = _dbContext.Tests.Find(((TestDto)TestDataGrid.SelectedItem).TestId);
+        if (_ is null)
+        {
+            MessageBox.Show("Không tìm thấy bộ đề");
+            TestQuestionsListBox.SelectedItems.Clear();
+            Button.Content = "Thêm bộ đề";
+            Button.Click -= ButtonUpdate;
+            Button.Click += ButtonAdd;
+            return;
+        }
+        _.TestQuestions!.Clear();
+        foreach (var selectedItem in TestQuestionsListBox.SelectedItems)
+        {
+            var temp = new Guid(selectedItem.ToString()!);
+            var question = _dbContext.Questions.Find(temp)!;
+            question.TestId = _.TestId;
+            _.TestQuestions.Add(new TestQuestions
+            {
+                QuestionId = temp,
+                Question = question,
+                TestId = _.TestId,
+                Test = _,
+            });
+        }
+
+        _dbContext.SaveChanges();
+
+        TestQuestionsListBox.SelectedItems.Clear();
+        TestName.Text = "";
+        Button.Content = "Thêm bộ đề";
+        Button.Click -= ButtonUpdate;
+        Button.Click += ButtonAdd;
         LoadData();
     }
 }
