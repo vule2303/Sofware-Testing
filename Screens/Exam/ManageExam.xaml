@@ -9,15 +9,22 @@
     <Grid>
         <Label Content="QUẢN LÍ KÌ THI" HorizontalAlignment="Center" Margin="0,25,0,0" VerticalAlignment="Top"/>
 
-        <TextBox x:Name="TitleExam" HorizontalAlignment="Left" Margin="100,108,0,0" VerticalAlignment="Top" Width="168"/>
-        <Button Click="Insert" Content="Tạo" HorizontalAlignment="Left" Margin="300,108,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TitleExam" HorizontalAlignment="Left" Margin="100,50,0,0" VerticalAlignment="Top" Width="168" />
+        <Button x:Name="Default"  Click="Insert" Content="Tạo" HorizontalAlignment="Left" Margin="300,50,0,0" VerticalAlignment="Top"/>
+        
+        <TextBox x:Name="TitleUpdate" HorizontalAlignment="Left" Margin="100,100,0,0" VerticalAlignment="Top" Width="168" Visibility="Hidden"/>
+        <Button x:Name="ButtonUpdate" Click="UpdateTitle" Content="Cập nhật" HorizontalAlignment="Left" Margin="300,100,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+        <Button x:Name="AddButton" Click="Add" Content="Tạo kì thi" HorizontalAlignment="Left" Margin="350,100,0,0" VerticalAlignment="Top" Visibility="Hidden" />
+
         <DataGrid x:Name="GridItems"
                   Margin="20,151,20,32" 
                   Height="Auto"
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False"
+                 >
             
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Tên Kì thi"
+                <DataGridTextColumn 
+                                    Header="Tên Kì thi"
                                     Binding="{Binding ExamTitle}"
                                     Width="*"
                                     FontSize="16"/>
@@ -46,7 +53,8 @@
                                         BorderThickness="0,0,1,0"
                                         Background="#F291D0"
                                         Foreground="White" 
-                                        Padding="10,0,10,0" />
+                                        Padding="10,0,10,0" 
+                                        Click="Update"/>
                                 
                                 <Button Content="Xoá"
                                         Width="Auto" 

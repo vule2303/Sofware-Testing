@@ -95,7 +95,8 @@
                             </Button>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource MenuButton}">
+                            <Button Click="GoToExamScreen"
+                                Style="{StaticResource MenuButton}">
                                 <StackPanel Orientation="Horizontal">
                                     <icon:PackIconMaterial Kind="PencilBoxMultiple"
                                                            Style="{StaticResource MenuButtonIcon}" />
