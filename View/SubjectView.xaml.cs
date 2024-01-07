@@ -33,6 +33,8 @@ public partial class SubjectView
         AddSubjectButton.Visibility = Visibility.Hidden;
         UpdateSubjectButton.Visibility = Visibility.Visible;
         VisibleAddButton.Visibility = Visibility.Visible;
+        var item = (SubjectDataGrid.SelectedItem as Subject)?.Name;
+        if (item != null) TxtAddSubject.Text = item;
     }
     
     private void RemoveClick(object sender, RoutedEventArgs e)
@@ -65,23 +67,19 @@ public partial class SubjectView
 
     private void UpdateSubject(object sender, RoutedEventArgs e)
     {
-        var item = SubjectDataGrid.ItemsSource as Subject;
-        var subject = _context.Subjects.Find(item.SubjectId);
-        MessageBox.Show(item.Name);
-        TxtAddSubject.Text = item.Name;
-        if (subject != null)
+        var item = (SubjectDataGrid.SelectedItem as Subject)?.SubjectId;
+        var subject = _context.Subjects.Find(item);
+        if (subject == null) return;
+        if (!string.IsNullOrEmpty(TxtAddSubject.Text))
         {
-            if (!string.IsNullOrEmpty(TxtAddSubject.Text))
-            {
-                subject.Name = TxtAddSubject.Text;
-                _context.SaveChanges();
-                LoadData();
-                TxtAddSubject.Text = "";
-                ClickVisible(sender, e);
-            }
-            else
-                MessageBox.Show("Vui lòng điền tên môn học");
+            subject.Name = TxtAddSubject.Text;
+            _context.SaveChanges();
+            LoadData();
+            TxtAddSubject.Text = "";
+            ClickVisible(sender, e);
         }
+        else
+            MessageBox.Show("Vui lòng điền tên môn học");
     }
 
     private void ClickVisible(object sender, RoutedEventArgs e)
