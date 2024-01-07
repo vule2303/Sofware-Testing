@@ -3,11 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:TestBuilder.View"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-           <Grid>
+             d:DesignHeight="800" d:DesignWidth="500">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisible" />
+    </UserControl.Resources>
+    <Grid>
                           <!--Page Title-->
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"></RowDefinition>
@@ -15,28 +17,46 @@
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
                     </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Text="Môn học" FontSize="22" FontWeight="SemiBold" Margin="0 20 0 0"
       HorizontalAlignment="Left" Foreground="#121518" />
                 <!--Add button-->
-                <Button Grid.Row="0"  Style="{StaticResource AddButton}">
+                <Button Click="AddSubject" x:Name="AddSubjectButton" Grid.Row="1" Style="{StaticResource AddButton}">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11"
                           Margin="0 1 8 0" />
                         <TextBlock Text="Thêm môn học" />
                     </StackPanel>
                 </Button>
+                          <TextBlock  Grid.Row="1" Margin="20 0" Width="300" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#b0b9c6" IsHitTestVisible="False"
+                                     Panel.ZIndex="1" Text="Nhập tên môn học..."
+                                     Visibility="{Binding ElementName=TxtAddSubject, Path=Text.IsEmpty, Converter={StaticResource BoolToVisible}}" />
+                          <TextBox Grid.Row="1" x:Name="TxtAddSubject" Width="300" HorizontalAlignment="Left" Style="{StaticResource TextBoxSearch}" />
+
+                <!--Add button-->
+                <Button Click="UpdateSubject" x:Name="UpdateSubjectButton" Grid.Row="1" Width="100" Margin="0 0 120 0" Visibility="Hidden" Style="{StaticResource AddButton}">
+                    <StackPanel Orientation="Horizontal">
+                                  <TextBlock Text="Cập nhật" />
+                    </StackPanel>
+                </Button>
+                <Button Click="ClickVisible" x:Name="VisibleAddButton" Grid.Row="1" Width="100" Visibility="Hidden" Style="{StaticResource AddButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Ẩn" />
+                    </StackPanel>
+                </Button>
+
                 <!--Seprator-->
-                <Separator Height="1" Grid.Row="1" Background="#dae2ea" Margin="0 10 0 10" />
+                <Separator Height="2" Grid.Row="2" Background="#dae2ea" Margin="0 10 0 10" />
                 <!--Counter Title-->
-                <TextBlock Text="Tổng môn học : 15" Grid.Row="2" FontSize="18" FontWeight="SemiBold"
+                <TextBlock Text="Tổng môn học : 15" Grid.Row="3" FontSize="18" FontWeight="SemiBold"
       Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center" />
                
 
                 <!-- ~1~Subject Datagrid@1@ -->
                 <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" 
       ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
-      RowStyle="{DynamicResource DataGridRowStyle2}" Grid.Row="3" x:Name="subjectDataGrid">
+      RowStyle="{DynamicResource DataGridRowStyle2}" Grid.Row="4" x:Name="SubjectDataGrid">
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn CanUserResize="False" Width="auto" 
                             ElementStyle="{StaticResource CheckBoxStyle1}">
@@ -55,11 +75,11 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Style="{StaticResource GridEditButton}">
+                                        <Button Click="EditClick" Style="{StaticResource GridEditButton}">
                                             <icon:PackIconMaterial Kind="PencilOutline" 
                                                Style="{StaticResource GridButtonIcon}" />
                                         </Button>
-                                        <Button Style="{StaticResource GridRemoveButton}">
+                                        <Button Click="RemoveClick" Style="{StaticResource GridRemoveButton}">
                                             <icon:PackIconMaterial Kind="DeleteOutline" 
                                                Style="{StaticResource GridButtonIcon}" />
                                         </Button>
@@ -68,12 +88,13 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
+                    <DataGrid.CommandBindings>
+                        <CommandBinding Command="Delete" Executed="RemoveClick"/>
+                    </DataGrid.CommandBindings>
                 </DataGrid>
-                <!-- Show ManagerTest -->
-                <ContentControl Grid.Row="4" x:Name="ContentControl"/>
 
                 <!--Pagination Section-->
-                <Border Grid.Row="4" HorizontalAlignment="Right" BorderBrush="#dee4ec" BorderThickness="1"
+                <Border Grid.Row="5" HorizontalAlignment="Right" BorderBrush="#dee4ec" BorderThickness="1"
                         CornerRadius="5" Padding="5" Background="White" Margin="0 10 10 10">
                     <StackPanel Orientation="Horizontal">
                         <Button Style="{StaticResource PagingButton}">
@@ -94,7 +115,6 @@
                         <Button Style="{StaticResource PagingButton}">
                             <icon:PackIconMaterial Kind="ChevronRight" Style="{StaticResource PagingButtonIcon}" />
                         </Button>
-
                     </StackPanel>
                 </Border>
                 </Grid>

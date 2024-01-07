@@ -106,7 +106,7 @@
             <Setter Property="Width" Value="150"/>
             <Setter Property="Height" Value="35"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="Margin" Value="0 20 0 0"/>
+            <Setter Property="Margin" Value="0 0 0 0"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Grid.Row" Value="1"/>
             <Setter Property="Template">
