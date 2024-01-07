@@ -51,6 +51,8 @@ public partial class SubjectView
 
     private void LoadData()
     {
+        SubjectLabel.Text = "Tổng môn học: ";
+        SubjectCount.Text = _context.Subjects.Count().ToString();
         _subjects = new List<Subject>();
         _subjects = _context.Subjects.ToList();
         SubjectDataGrid.ItemsSource = _subjects;
