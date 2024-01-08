@@ -24,7 +24,6 @@ namespace TestBuilder.Screens.Exam
         public ManageExam()
         {
             InitializeComponent();
-            InitData();
             LoadGrid();
             DataContext = this;
         }
@@ -125,29 +124,5 @@ namespace TestBuilder.Screens.Exam
             }
             GridItems.ItemsSource = _items;
         }
-        private void InitData()
-        {
-            _context.Subjects.Add(new Models.Subject(){Name = "Toán"});
-            _context.Subjects.Add(new Models.Subject(){Name = "Lí"});
-            _context.Subjects.Add(new Models.Subject(){Name = "Anh"});
-            _context.Exams.Add(new Models.Exam(){Title = "Thi học kì 1"});
-            _context.Exams.Add(new Models.Exam(){Title = "Thi học kì 2"});
-            _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 1, SubjectId = 1});
-            _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 1, SubjectId = 2});
-            _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 1, SubjectId = 3});
-            _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 2, SubjectId = 1});
-            _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 2, SubjectId = 2});
-            _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 2, SubjectId = 3});
-            _context.Tests.Add(new Models.Test(){ Title = "Test 1", SubjectId = 1});
-            _context.Tests.Add(new Models.Test(){ Title = "Test 2" , SubjectId = 2});
-            _context.Tests.Add(new Models.Test(){ Title = "Test 3" , SubjectId = 2});
-            _context.TestExams.Add(new TestExams(){TestId = 1, ExamId = 1});
-            _context.TestExams.Add(new TestExams(){TestId = 2, ExamId = 1});
-            _context.TestExams.Add(new TestExams(){TestId = 1, ExamId = 2});
-            _context.TestExams.Add(new TestExams(){TestId = 2, ExamId = 2});
-            _context.SaveChanges();
-        }
-
-      
     }
 }
