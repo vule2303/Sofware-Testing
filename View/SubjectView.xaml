@@ -19,32 +19,49 @@
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="QUẢN LÍ MÔN HỌC" FontSize="22" FontWeight="SemiBold" Margin="0 20 0 0"
-      HorizontalAlignment="Center" Foreground="#121518" />
-                <!--Add button-->
-                <Button Click="AddSubject" x:Name="AddSubjectButton" Grid.Row="1" Style="{StaticResource AddButton}">
-                    <StackPanel Orientation="Horizontal">
-                        <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11"
-                          Margin="0 1 8 0" />
-                        <TextBlock Text="Thêm môn học" />
-                    </StackPanel>
-                </Button>
-                          <TextBlock  Grid.Row="1" Margin="20 0" Width="300" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#b0b9c6" IsHitTestVisible="False"
-                                     Panel.ZIndex="1" Text="Nhập tên môn học..."
-                                     Visibility="{Binding ElementName=TxtAddSubject, Path=Text.IsEmpty, Converter={StaticResource BoolToVisible}}" />
-                          <TextBox Grid.Row="1" x:Name="TxtAddSubject" Width="300" HorizontalAlignment="Left" Style="{StaticResource TextBoxSearch}" />
+                <TextBlock Grid.Row="0" Text="QUẢN LÍ MÔN HỌC" FontSize="22" FontWeight="Bold" Margin="0 20 0 0"
+      HorizontalAlignment="Center"  Foreground="#6246ea"/>
+               
+        <GroupBox Grid.Row="1" 
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  BorderThickness="0,0,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+        
                 <!--Add button-->
-                <Button Click="UpdateSubject" x:Name="UpdateSubjectButton" Grid.Row="1" Width="100" Margin="0 0 120 0" Visibility="Hidden" Style="{StaticResource AddButton}">
-                    <StackPanel Orientation="Horizontal">
-                                  <TextBlock Text="Cập nhật" />
+                <Button x:Name="ButtonAction" Grid.Column="1" Click="AddSubject" Style="{StaticResource AddButton}" Margin="20 0 0 0">
+                    <StackPanel Orientation="Horizontal" >
+                        <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="16" Height="16"
+                                               Margin="5 1 5 0" x:Name="IconAction"/>
+                        <TextBlock x:Name="TextAction" Text="Thêm môn học" FontSize="16" FontWeight="Bold" Margin="5 0 5 0"/>
                     </StackPanel>
                 </Button>
-                <Button Click="ClickVisible" x:Name="VisibleAddButton" Grid.Row="1" Width="100" Visibility="Hidden" Style="{StaticResource AddButton}">
+                <TextBlock Grid.Column="0"  Margin="20 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                            FontSize="16" Foreground="#b0b9c6" IsHitTestVisible="False"
+                            Panel.ZIndex="1" Text="Nhập tên môn học..."
+                            Visibility="{Binding ElementName=TxtAddSubject, Path=Text.IsEmpty, Converter={StaticResource BoolToVisible}}" />
+                <TextBox Grid.Column="0"  x:Name="TxtAddSubject"  FontSize="16" Foreground="Black" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxSearch}" />
+
+                <Button x:Name="VisibleAddButton" Visibility="Hidden" Grid.Column="2" Click="ClickVisible" Style="{StaticResource AddButton}" 
+                        Margin="5 0 5 0"
+                        FontWeight="Bold"
+                        FontSize="16">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Ẩn" />
+                        <icon:PackIconMaterial Kind="Undo" VerticalAlignment="Center" Width="16" Height="16"
+                                                    Margin="20 0 20 0" />
                     </StackPanel>
                 </Button>
+            </Grid>
+        </GroupBox>          
 
                 <!--Seprator-->
                 <Separator Height="2" Grid.Row="2" Background="#dae2ea" Margin="0 10 0 10" />
