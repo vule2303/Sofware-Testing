@@ -74,8 +74,8 @@ public partial class MainWindow
 
     private void GoToExamScreen(object sender, RoutedEventArgs e)
     {
-        Window examScreen = new ManageExam();
-        examScreen.Show();
+        var _ = new ExamView();
+        ContentControl.Content = _;
     }
 
     private void LoadData()

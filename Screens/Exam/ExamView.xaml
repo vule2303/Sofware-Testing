@@ -3,10 +3,106 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:TestBuilder.Screens.Exam"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="500">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisible" />
+    </UserControl.Resources>
     <Grid>
+         <Grid.ColumnDefinitions>
+             <ColumnDefinition Width="*"/>
+         </Grid.ColumnDefinitions>
+         
+         <Grid.RowDefinitions>
+             <RowDefinition Height="Auto"/>
+             <RowDefinition Height="Auto"/>
+             <RowDefinition />
+         </Grid.RowDefinitions>
+         
+         <Label Grid.Row="0" Content="QUẢN LÍ KÌ THI" HorizontalAlignment="Center" FontSize="22" FontWeight="Bold" Foreground="#6246ea" VerticalAlignment="Top"/>
+
+         <GroupBox Grid.Row="1" 
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   BorderThickness="0,0,0,0">
+             <Grid>
+                 <Grid.ColumnDefinitions>
+                     <ColumnDefinition Width="*"/>
+                     <ColumnDefinition Width="Auto" />
+                 </Grid.ColumnDefinitions>
+
+                 <Grid.RowDefinitions>
+                     <RowDefinition Height="Auto"/>
+                 </Grid.RowDefinitions>
+                 <TextBox x:Name="TitleExam" Grid.Row="0" Grid.Column="0" FontSize="16" Foreground="Black" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxSearch}" />
+                 <TextBlock Grid.Row="0" Grid.Column="0" Margin="20 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="#b0b9c6"
+                            FontSize="16" IsHitTestVisible="False" Panel.ZIndex="1" Text="Nhập tên môn học..."
+                            Visibility="{Binding ElementName=NameChapter, Path=Text.IsEmpty, Converter={StaticResource BoolToVisible}}" />
+                 <Button x:Name="ButtonAction" Grid.Column="1" Click="Insert" Style="{StaticResource AddButton}" FontWeight="Bold">
+                     <StackPanel Orientation="Horizontal">
+                         <iconPacks:PackIconMaterial Kind="Plus" x:Name="IconAdd" VerticalAlignment="Center" Width="16" Height="16"
+                                                     Margin="5 1 5 0" />
+                         <TextBlock x:Name="ButtonName" Text="Thêm chương" VerticalAlignment="Center" FontSize="16"  Margin="5 0 5 0"/>
+                     </StackPanel>
+                 </Button>            </Grid>
+        </GroupBox>
         
+
+        <DataGrid Grid.Row="2" x:Name="GridItems"
+                  Height="Auto"
+                  AutoGenerateColumns="False"
+                 >
+            
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                                    Header="Tên Kì thi"
+                                    Binding="{Binding ExamTitle}"
+                                    Width="*"
+                                    FontSize="16"/>
+                
+                <DataGridTextColumn Header="Số đề thi" 
+                                    Binding="{Binding Amount}"
+                                    Width="*"
+                                    FontSize="16"
+                                    IsReadOnly="True"/>
+                
+                <DataGridTemplateColumn Width="Auto" 
+                                        Header="Hành động" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Xem chi tiết"
+                                        Width="Auto" 
+                                        BorderThickness="0,0,1,0"
+                                        Background="#F291D0"
+                                        Foreground="White"
+                                        Padding="10,0,10,0" 
+                                        Click="View"/>
+                                
+                                <Button Content="Sửa"
+                                        Width="Auto" 
+                                        BorderThickness="0,0,1,0"
+                                        Background="#F291D0"
+                                        Foreground="White" 
+                                        Padding="10,0,10,0" 
+                                        Click="Update"/>
+                                
+                                <Button Content="Xoá"
+                                        Width="Auto" 
+                                        BorderThickness="0,0,0,0"
+                                        Background="#F291D0"
+                                        Foreground="White"
+                                        Click="Delete" 
+                                        Padding="10,0,10,0" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGrid.CommandBindings>
+                <CommandBinding Command="Delete" Executed="Delete" />
+            </DataGrid.CommandBindings>
+        </DataGrid>
     </Grid>
 </UserControl>
