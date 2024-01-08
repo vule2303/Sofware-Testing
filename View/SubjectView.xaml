@@ -19,8 +19,8 @@
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="Môn học" FontSize="22" FontWeight="SemiBold" Margin="0 20 0 0"
-      HorizontalAlignment="Left" Foreground="#121518" />
+                <TextBlock Grid.Row="0" Text="QUẢN LÍ MÔN HỌC" FontSize="22" FontWeight="SemiBold" Margin="0 20 0 0"
+      HorizontalAlignment="Center" Foreground="#121518" />
                 <!--Add button-->
                 <Button Click="AddSubject" x:Name="AddSubjectButton" Grid.Row="1" Style="{StaticResource AddButton}">
                     <StackPanel Orientation="Horizontal">

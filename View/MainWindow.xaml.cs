@@ -1,14 +1,13 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using TestBuilder.Data;
 using TestBuilder.Models;
-using TestBuilder.Screens.Question;
-using TestBuilder.Screens.Test;
 using TestBuilder.Screens.Chapter;
 using TestBuilder.Screens.Exam;
+using TestBuilder.Screens.Question;
+using TestBuilder.Screens.Test;
 
-namespace TestBuilder;
+namespace TestBuilder.View;
 
 public partial class MainWindow
 {
@@ -20,6 +19,7 @@ public partial class MainWindow
         InitializeComponent();
         DragMove();
         LoadData();
+         
     }
     private void Border_MouseDown(object sender, MouseButtonEventArgs e)
     {
@@ -35,7 +35,6 @@ public partial class MainWindow
 
         if (_isMaximized)
         {
-            WindowState = WindowState.Normal;
             Width = 1080;
             Height = 720;
 
@@ -43,7 +42,6 @@ public partial class MainWindow
         }
         else
         {
-            WindowState = WindowState.Maximized;
 
             _isMaximized = true;
         }
@@ -63,8 +61,8 @@ public partial class MainWindow
 
     private void ChapterScreenClick(object sender, RoutedEventArgs e)
     {
-        Window chapter = new MainChapter();
-        chapter.Show();
+        var _ = new ChapterView();
+        ContentControl.Content = _;
     }
 
     private void GoToExamScreen(object sender, RoutedEventArgs e)
@@ -78,7 +76,7 @@ public partial class MainWindow
         _context.Subjects.Add(new Subject() { Name = "Toán" });
         _context.Subjects.Add(new Subject() { Name = "Anh" });
         _context.Subjects.Add(new Subject() { Name = "Lí" });
-        
+
         _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Chương 1" });
         _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Chương 2" });
         _context.Chapters.Add(new Chapters() { SubjectId = 2, Name = "Chương 1" });
