@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using MahApps.Metro.IconPacks;
 using Microsoft.EntityFrameworkCore;
 using TestBuilder.Data;
 using TestBuilder.Models;
@@ -50,19 +51,41 @@ public partial class ChapterView : UserControl
             }
         }
 
-        private void UpdateItem(object sender, RoutedEventArgs e)
+        private void EditClick(object sender, RoutedEventArgs e)
         {
-            /*var item = GridItems.SelectedItem as Items;
-            var subject = _subjects;
-            if (item != null)
+            ButtonName.Text = "Cập nhật";
+            IconAdd.Kind = PackIconMaterialKind.Pencil;
+            ButtonAction.Click -= Button_Create;
+            ButtonAction.Click += ButtonUpdate;
+            RollBackAdd.Visibility = Visibility.Visible;
+            
+            if (GridItems.SelectedItem is Items item)
             {
-                if (subject != null)
-                {
-                    Window insert = new UpdateChapter(item, subject, _context, this);
-                    insert.Show();
-                }
-            }*/
+                NameChapter.Text = item.NameChapter; 
+                SelectedSubject.SelectedItem = _subjects?.Find(x => x.SubjectId == item.IdSubject);
+            }
         }
+
+        private void ButtonUpdate(object sender, RoutedEventArgs e)
+        {
+            var item = GridItems.SelectedItem as Items;
+            var chapter = _context.Chapters.Find(item?.IdChapter);
+            if (chapter != null)
+            {
+                chapter.Name = NameChapter.Text;
+                chapter.SubjectId = ((Models.Subject)SelectedSubject.SelectedItem).SubjectId;
+                _context.SaveChanges();
+                LoadChapter();
+            }
+            
+            ButtonName.Text = "Thêm chương";
+            IconAdd.Visibility = Visibility.Visible;
+            RollBackAdd.Visibility = Visibility.Hidden;
+            ButtonAction.Click -= ButtonUpdate;
+            ButtonAction.Click += Button_Create;
+
+        }
+
         private void RemoveItem(object sender, RoutedEventArgs e)
         {
             try
@@ -100,4 +123,13 @@ public partial class ChapterView : UserControl
             _subjects = subjects;
             SelectedSubject.ItemsSource = _subjects;
         }
-    }
+
+        private void Button_RollBack(object sender, RoutedEventArgs e)
+        {
+            ButtonName.Text = "Thêm chương";
+            IconAdd.Visibility = Visibility.Visible;
+            ButtonAction.Click -= ButtonUpdate;
+            ButtonAction.Click += Button_Create;
+            RollBackAdd.Visibility = Visibility.Hidden;
+        }
+}

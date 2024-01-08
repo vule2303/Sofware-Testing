@@ -76,6 +76,8 @@ public partial class MainWindow
         _context.Subjects.Add(new Subject() { Name = "Toán" });
         _context.Subjects.Add(new Subject() { Name = "Anh" });
         _context.Subjects.Add(new Subject() { Name = "Lí" });
+        _context.Subjects.Add(new Subject() { Name = "Công nghệ phần mềm" });
+
 
         _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Chương 1" });
         _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Chương 2" });

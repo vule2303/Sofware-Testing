@@ -23,8 +23,8 @@
         <Label FontSize="22" 
                HorizontalAlignment="Center" 
                Margin="20"
-               Foreground="#121518"
-               FontWeight="SemiBold">
+               Foreground="#6246ea"
+               FontWeight="Bold">
             QUẢN LÍ CHƯƠNG
         </Label>
         <GroupBox Grid.Row="1" 
@@ -36,35 +36,47 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                
-                <TextBlock  Grid.Row="0" Margin="20 0" Width="200" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="#b0b9c6" IsHitTestVisible="False"
-                            Panel.ZIndex="1" Text="Nhập tên môn học..."
-                            Visibility="{Binding ElementName=NameChapter, Path=Text.IsEmpty, Converter={StaticResource BoolToVisible}}" />
-                <TextBox Grid.Row="0" Grid.Column="0" x:Name="NameChapter" Width="200" HorizontalAlignment="Left" Style="{StaticResource TextBoxSearch}" />
-                   <ComboBox Grid.Column="1"
-                             x:Name="SelectedSubject" 
-                             ItemsSource="{Binding Path=__subjects}"   
-                             DisplayMemberPath="Name"
-                             SelectedIndex="0"
-                             BorderThickness="0,0,0,0"
-                             Style="{StaticResource CustomComboBoxStyle}"
-                   />
-                <Button Grid.Column="2" Click="Button_Create" Style="{StaticResource AddButton}">
+        
+                <TextBlock Grid.Row="0" Margin="20 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="#b0b9c6"
+                           FontSize="16" IsHitTestVisible="False" Panel.ZIndex="1" Text="Nhập tên môn học..."
+                           Visibility="{Binding ElementName=NameChapter, Path=Text.IsEmpty, Converter={StaticResource BoolToVisible}}" />
+                <TextBox Grid.Row="0" Grid.Column="0" FontSize="16" Foreground="Black" x:Name="NameChapter" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxSearch}" />
+                <ComboBox Grid.Column="1"
+                          x:Name="SelectedSubject" 
+                          ItemsSource="{Binding Path=__subjects}"   
+                          DisplayMemberPath="Name"
+                          SelectedIndex="0"
+                          Width="Auto"
+                          Style="{StaticResource CustomComboBoxStyle}"
+                />
+                <Button x:Name="ButtonAction" Grid.Column="2" Click="Button_Create" Style="{StaticResource AddButton}" FontWeight="Bold">
                     <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11"
-                                               Margin="0 1 8 0" />
-                        <TextBlock Text="Thêm chương" />
+                        <iconPacks:PackIconMaterial Kind="Plus" x:Name="IconAdd" VerticalAlignment="Center" Width="16" Height="16"
+                                                    Margin="5 1 5 0" />
+                        <TextBlock x:Name="ButtonName" Text="Thêm chương" VerticalAlignment="Center" FontSize="16"  Margin="5 0 5 0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="RollBackAdd" Visibility="Hidden" Grid.Column="3" Click="Button_RollBack" Style="{StaticResource AddButton}" 
+                        Margin="5 0 5 0"
+                        FontWeight="Bold"
+                        FontSize="16">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconMaterial Kind="Undo" VerticalAlignment="Center" Width="16" Height="16"
+                                                    Margin="20 0 20 0" />
                     </StackPanel>
                 </Button>
             </Grid>
         </GroupBox>
+
         
         <DataGrid Style="{DynamicResource DataGridStyle1}" 
+                  FontSize="16"
                   CellStyle="{DynamicResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
                   RowStyle="{DynamicResource DataGridRowStyle2}" 
@@ -88,7 +100,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Click="UpdateItem" Style="{StaticResource GridEditButton}">
+                                        <Button Click="EditClick" Style="{StaticResource GridEditButton}">
                                             <iconPacks:PackIconMaterial Kind="PencilOutline" 
                                                Style="{StaticResource GridButtonIcon}" />
                                         </Button>
