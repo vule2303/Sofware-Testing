@@ -1,0 +1,121 @@
+<UserControl x:Class="TestBuilder.Screens.Chapter.ChapterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="500">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisible" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label FontSize="22" 
+               HorizontalAlignment="Center" 
+               Margin="20"
+               Foreground="#6246ea"
+               FontWeight="Bold">
+            QUẢN LÍ CHƯƠNG
+        </Label>
+        <GroupBox Grid.Row="1" 
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  BorderThickness="0,0,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+        
+                <TextBlock Grid.Row="0" Margin="20 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="#b0b9c6"
+                           FontSize="16" IsHitTestVisible="False" Panel.ZIndex="1" Text="Nhập tên môn học..."
+                           Visibility="{Binding ElementName=NameChapter, Path=Text.IsEmpty, Converter={StaticResource BoolToVisible}}" />
+                <TextBox Grid.Row="0" Grid.Column="0" FontSize="16" Foreground="Black" x:Name="NameChapter" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxSearch}" />
+                <ComboBox Grid.Column="1"
+                          x:Name="SelectedSubject" 
+                          ItemsSource="{Binding Path=__subjects}"   
+                          DisplayMemberPath="Name"
+                          SelectedIndex="0"
+                          Width="Auto"
+                          Style="{StaticResource CustomComboBoxStyle}"
+                />
+                <Button x:Name="ButtonAction" Grid.Column="2" Click="Button_Create" Style="{StaticResource AddButton}" FontWeight="Bold">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconMaterial Kind="Plus" x:Name="IconAdd" VerticalAlignment="Center" Width="16" Height="16"
+                                                    Margin="5 1 5 0" />
+                        <TextBlock x:Name="ButtonName" Text="Thêm chương" VerticalAlignment="Center" FontSize="16"  Margin="5 0 5 0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="RollBackAdd" Visibility="Hidden" Grid.Column="3" Click="Button_RollBack" Style="{StaticResource AddButton}" 
+                        Margin="5 0 5 0"
+                        FontWeight="Bold"
+                        FontSize="16">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconMaterial Kind="Undo" VerticalAlignment="Center" Width="16" Height="16"
+                                                    Margin="20 0 20 0" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </GroupBox>
+
+        
+        <DataGrid Style="{DynamicResource DataGridStyle1}" 
+                  FontSize="16"
+                  CellStyle="{DynamicResource DataGridCellStyle1}" 
+                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                  RowStyle="{DynamicResource DataGridRowStyle2}" 
+                  Grid.Row="2" 
+                  x:Name="GridItems">
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn CanUserResize="False" Width="auto" 
+                            ElementStyle="{StaticResource CheckBoxStyle1}">
+                            <DataGridCheckBoxColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <CheckBox Style="{StaticResource CheckBoxStyle1}" />
+                                </DataTemplate>
+                            </DataGridCheckBoxColumn.HeaderTemplate>
+                        </DataGridCheckBoxColumn>
+                        <DataGridTextColumn Header="Chương" IsReadOnly="True" CanUserResize="False" Width="*" 
+                        Binding="{Binding NameChapter}" />
+
+                        <DataGridTextColumn Header="Môn học" IsReadOnly="True" CanUserResize="False" Width="*" 
+                        Binding="{Binding NameSubject}" />
+                        <DataGridTemplateColumn Header="Hành động" IsReadOnly="True" Width="auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Click="EditClick" Style="{StaticResource GridEditButton}">
+                                            <iconPacks:PackIconMaterial Kind="PencilOutline" 
+                                               Style="{StaticResource GridButtonIcon}" />
+                                        </Button>
+                                        <Button Click="RemoveItem" Style="{StaticResource GridRemoveButton}">
+                                            <iconPacks:PackIconMaterial Kind="DeleteOutline" 
+                                               Style="{StaticResource GridButtonIcon}" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                    <DataGrid.CommandBindings>
+                        <CommandBinding Command="Delete" Executed="RemoveItem"/>
+                    </DataGrid.CommandBindings>
+                </DataGrid>
+    </Grid>
+</UserControl>
