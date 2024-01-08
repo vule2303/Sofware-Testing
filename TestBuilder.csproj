@@ -31,11 +31,6 @@
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
-      <Page Update="Screens\Subject\SubjectWindow.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
       <Page Update="MainWindow.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
@@ -48,9 +43,6 @@
         <SubType>Code</SubType>
       </Compile>
       <Compile Update="Components\TextBox.xaml.cs">
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="Screens\Subject\SubjectWindow.xaml.cs">
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>

@@ -1,4 +1,5 @@
 using System.Windows;
+using MahApps.Metro.IconPacks;
 using TestBuilder.Data;
 using TestBuilder.Models;
 
@@ -11,7 +12,6 @@ public partial class SubjectView
     public SubjectView()
     {
         InitializeComponent();
-        InitData();
         LoadData();
     }
     
@@ -30,8 +30,10 @@ public partial class SubjectView
     }
     private void EditClick(object sender, RoutedEventArgs e)
     {
-        AddSubjectButton.Visibility = Visibility.Hidden;
-        UpdateSubjectButton.Visibility = Visibility.Visible;
+        ButtonAction.Click -= AddSubject;
+        ButtonAction.Click += UpdateSubject;
+        IconAction.Kind = PackIconMaterialKind.Pencil;
+        TextAction.Text = "Câp nhật";
         VisibleAddButton.Visibility = Visibility.Visible;
         var item = (SubjectDataGrid.SelectedItem as Subject)?.Name;
         if (item != null) TxtAddSubject.Text = item;
@@ -58,14 +60,7 @@ public partial class SubjectView
         SubjectDataGrid.ItemsSource = _subjects;
 
     }
-    private void InitData()
-    {
-        _context.Add(new Subject(){Name = "Toán Cao Cấp"});
-        _context.Add(new Subject(){Name = "Lập Trình Window"});
-        _context.Add(new Subject(){Name = "Lập Trình Android"});
-        _context.Add(new Subject(){Name = "Lập Trình Web"});
-        _context.SaveChanges();
-    }
+   
 
     private void UpdateSubject(object sender, RoutedEventArgs e)
     {
@@ -86,8 +81,12 @@ public partial class SubjectView
 
     private void ClickVisible(object sender, RoutedEventArgs e)
     {
-        AddSubjectButton.Visibility = Visibility.Visible;
-        UpdateSubjectButton.Visibility = Visibility.Hidden;
         VisibleAddButton.Visibility = Visibility.Hidden;
+        TxtAddSubject.Text = "";
+        ButtonAction.Click -= UpdateSubject;
+        ButtonAction.Click += AddSubject;
+        IconAction.Kind = PackIconMaterialKind.Plus;
+        TextAction.Text = "Thêm môn học";
+
     }
 }

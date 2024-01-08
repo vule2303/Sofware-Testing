@@ -80,18 +80,20 @@ public partial class MainWindow
 
     private void LoadData()
     {
-        _context.Subjects.Add(new Subject() { Name = "Toán" });
-        _context.Subjects.Add(new Subject() { Name = "Anh" });
-        _context.Subjects.Add(new Subject() { Name = "Lí" });
-        _context.Subjects.Add(new Subject() { Name = "Công nghệ phần mềm" });
-
-
-        _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Chương 1" });
-        _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Chương 2" });
-        _context.Chapters.Add(new Chapters() { SubjectId = 2, Name = "Chương 1" });
-        _context.Chapters.Add(new Chapters() { SubjectId = 2, Name = "Chương 2" });
-        _context.Chapters.Add(new Chapters() { SubjectId = 3, Name = "Chương 1" });
-        _context.Chapters.Add(new Chapters() { SubjectId = 3, Name = "Chương 2" });
+        _context.Add(new Subject(){Name = "Toán Cao Cấp"});
+        _context.Add(new Subject(){Name = "Lập Trình Window"});
+        _context.Add(new Subject(){Name = "Lập Trình Android"});
+        _context.Add(new Subject(){Name = "Lập Trình Web"});
+       
+        _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Đạo hàm tích phân" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 2, Name = "Window Form" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 2, Name = "WPF" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 3, Name = "Kotlin" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 3, Name = "Android" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 4, Name = "HTML" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 4, Name = "CSS" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 4, Name = "Javascript" });
+        
         _context.SaveChanges();
     }
 
