@@ -6,8 +6,9 @@ using TestBuilder.Screens.Chapter;
 using TestBuilder.Screens.Exam;
 using TestBuilder.Screens.Question;
 using TestBuilder.Screens.Test;
+using TestBuilder.View;
 
-namespace TestBuilder.View;
+namespace TestBuilder;
 
 public partial class MainWindow
 {
@@ -64,6 +65,12 @@ public partial class MainWindow
         var _ = new ChapterView();
         ContentControl.Content = _;
     }
+    
+    private void GoToSubjectScreen(object sender, RoutedEventArgs e)
+    {
+        var _ = new SubjectView();
+        ContentControl.Content = _;
+    }
 
     private void GoToExamScreen(object sender, RoutedEventArgs e)
     {
@@ -87,4 +94,6 @@ public partial class MainWindow
         _context.Chapters.Add(new Chapters() { SubjectId = 3, Name = "Chương 2" });
         _context.SaveChanges();
     }
+
+
 }
