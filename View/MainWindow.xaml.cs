@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using TestBuilder.Data;
 using TestBuilder.Models;
 using TestBuilder.Screens.Question;
 using TestBuilder.Screens.Test;
@@ -11,66 +12,14 @@ namespace TestBuilder;
 
 public partial class MainWindow
 {
+    private readonly TestDbContext _context = new();
     private bool _isMaximized;
 
     public MainWindow()
     {
         InitializeComponent();
         DragMove();
-         // var subjects = new ObservableCollection<TestBuilder.Models.Subject>
-         //         {
-         //             new()
-         //             {
-         //                 SubjectId = 1200068,
-         //                 Name = "Toán Cao Cấp",
-         //                 Chapters = [],
-         //                 ExamsSubjects = []
-         //             },
-         //             new()
-         //             {
-         //                 SubjectId = 1200668,
-         //                 Name = "Lập Trình Window",
-         //                 Chapters = [],
-         //                 ExamsSubjects = []
-         //             },
-         //             new()
-         //             {
-         //                 SubjectId = 1232068,
-         //                 Name = "Lập Trình Android",
-         //                 Chapters = [],
-         //                 ExamsSubjects = []
-         //             },
-         //             new()
-         //             {
-         //                 SubjectId = 1340068,
-         //                 Name = "Lập Trình Web",
-         //                 Chapters = [],
-         //                 ExamsSubjects = []
-         //             },
-         //             new()
-         //             {
-         //                 SubjectId = 1202368,
-         //                 Name = "Quản Lý Dự Án",
-         //                 Chapters = [],
-         //                 ExamsSubjects = []
-         //             },
-         //             new()
-         //             {
-         //                 SubjectId = 1234305,
-         //                 Name = "Phát Triển Website",
-         //                 Chapters = [],
-         //                 ExamsSubjects = []
-         //             },
-         //             new()
-         //             {
-         //                 SubjectId = 1460068,
-         //                 Name = "Công Nghệ Phần Mềm",
-         //                 Chapters = [],
-         //                 ExamsSubjects = []
-         //             }
-         //         };
-         //            subjectDataGrid.ItemsSource = subjects;
-         
+        LoadData();
     }
     private void Border_MouseDown(object sender, MouseButtonEventArgs e)
     {
@@ -122,5 +71,20 @@ public partial class MainWindow
     {
         Window examScreen = new ManageExam();
         examScreen.Show();
+    }
+
+    private void LoadData()
+    {
+        _context.Subjects.Add(new Subject() { Name = "Toán" });
+        _context.Subjects.Add(new Subject() { Name = "Anh" });
+        _context.Subjects.Add(new Subject() { Name = "Lí" });
+        
+        _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Chương 1" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Chương 2" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 2, Name = "Chương 1" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 2, Name = "Chương 2" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 3, Name = "Chương 1" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 3, Name = "Chương 2" });
+        _context.SaveChanges();
     }
 }

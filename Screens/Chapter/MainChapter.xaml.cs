@@ -25,11 +25,8 @@ namespace TestBuilder.Screens.Chapter
         public MainChapter()
         {
             InitializeComponent();
-            InitDataSubject();
-            InitDataChapter();
             LoadSubject();
             LoadChapter();
-            DataContext = this;
         }
 
         private void Button_Create(object sender, RoutedEventArgs e)
@@ -60,10 +57,15 @@ namespace TestBuilder.Screens.Chapter
         {
             var item = GridItems.SelectedItem as Items;
             var subject = _subjects;
-            Window insert = new UpdateChapter(item, subject, _context, this);
-            insert.Show();
+            if (item != null)
+            {
+                if (subject != null)
+                {
+                    Window insert = new UpdateChapter(item, subject, _context, this);
+                    insert.Show();
+                }
+            }
         }
-
         private void RemoveItem(object sender, RoutedEventArgs e)
         {
             try
@@ -79,27 +81,6 @@ namespace TestBuilder.Screens.Chapter
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void InitDataSubject()
-        {
-            _subjects = new List<Models.Subject>();
-            _context.Subjects.Add(new Models.Subject() { Name = "Toán" });
-            _context.Subjects.Add(new Models.Subject() { Name = "Anh" });
-            _context.Subjects.Add(new Models.Subject() { Name = "Lí" });
-            _context.SaveChanges();
-        }
-
-        private void InitDataChapter()
-        {
-            _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Chương 1" });
-            _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Chương 2" });
-            _context.Chapters.Add(new Chapters() { SubjectId = 2, Name = "Chương 1" });
-            _context.Chapters.Add(new Chapters() { SubjectId = 2, Name = "Chương 2" });
-            _context.Chapters.Add(new Chapters() { SubjectId = 3, Name = "Chương 1" });
-            _context.Chapters.Add(new Chapters() { SubjectId = 3, Name = "Chương 2" });
-            _context.SaveChanges();
-        }
-
         public void LoadChapter()
         {
             _items = new List<Items>();
@@ -114,10 +95,8 @@ namespace TestBuilder.Screens.Chapter
                     NameSubject = item.Subject?.Name
                 });
             }
-
             GridItems.ItemsSource = _items;
         }
-
         private void LoadSubject()
         {
             var subjects = _context.Subjects.ToList();
