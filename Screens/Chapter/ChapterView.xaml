@@ -76,7 +76,6 @@
 
         
         <DataGrid Style="{DynamicResource DataGridStyle1}" 
-                  FontSize="16"
                   CellStyle="{DynamicResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
                   RowStyle="{DynamicResource DataGridRowStyle2}" 

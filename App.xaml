@@ -270,6 +270,7 @@
         </Style>
         <Style x:Key="DataGridStyle1" TargetType="{x:Type DataGrid}">
             <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="MaxHeight" Value="500"/>
             <Setter Property="Foreground" Value="#222528"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
@@ -285,7 +286,7 @@
             <Setter Property="CanUserDeleteRows" Value="False"/>
             <Setter Property="CanUserResizeRows" Value="False"/>
             <Setter Property="CanUserReorderColumns" Value="False"/>
-            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="ColumnWidth" Value="*"/>
             <Setter Property="GridLinesVisibility" Value="None"/>
             
@@ -335,7 +336,7 @@
                         <Condition Property="IsGrouping" Value="true"/>
                         <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
                     </MultiTrigger.Conditions>
-                    <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
                 </MultiTrigger>
             </Style.Triggers>
         </Style>
