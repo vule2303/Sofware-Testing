@@ -53,4 +53,17 @@ public partial class ManagerQuestion
         var detailsQuestion = new DetailsQuestion(selectedQuestion.QuestionId);
         detailsQuestion.Show();
     }
+
+   
+
+   
+
+
+    private void buttonEditQuestion(object sender, RoutedEventArgs e)
+    {
+        if (DataGridQuestion.SelectedItem is not Models.Question selectedQuestion) return;
+
+        var detailsQuestion = new DetailsQuestion(selectedQuestion.QuestionId);
+        detailsQuestion.Show();
+    }
 }

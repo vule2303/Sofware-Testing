@@ -12,118 +12,101 @@
     <Grid>
         <!--Page Title-->
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="QUẢN LÍ MÔN HỌC" FontSize="22" FontWeight="Bold" Margin="0 20 0 0"
-                   HorizontalAlignment="Center" Foreground="#6246ea" />
-
-        <GroupBox Grid.Row="1"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"
-                  BorderThickness="0,0,0,0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
+      HorizontalAlignment="Center"  Foreground="#6246ea"/>
+       <Grid Grid.Row="1">
+               
                 <!--Add button-->
-                <Button x:Name="ButtonAction" Grid.Column="1" Click="AddSubject" Style="{StaticResource AddButton}"
-                        Margin="20 0 0 0">
-                    <StackPanel Orientation="Horizontal">
-                        <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="16" Height="16"
-                                               Margin="5 1 5 0" x:Name="IconAction" />
-                        <TextBlock x:Name="TextAction" Text="Thêm môn học" FontSize="16" FontWeight="Bold"
-                                   Margin="5 0 5 0" />
-                    </StackPanel>
-                </Button>
-                <TextBlock Grid.Column="0" Margin="20 0" VerticalAlignment="Center" HorizontalAlignment="Stretch"
-                           FontSize="16" Foreground="#b0b9c6" IsHitTestVisible="False"
-                           Panel.ZIndex="1" Text="Nhập tên môn học..."
-                           Visibility="{Binding ElementName=TxtAddSubject, Path=Text.IsEmpty, Converter={StaticResource BoolToVisible}}" />
-                <TextBox Grid.Column="0" x:Name="TxtAddSubject" Foreground="Black"
-                         HorizontalAlignment="Stretch" Style="{StaticResource TextBoxSearch}" />
-
-                <Button x:Name="VisibleAddButton" Visibility="Hidden" Grid.Column="2" Click="ClickVisible"
-                        Style="{StaticResource AddButton}"
-                        Margin="5 0 5 0"
-                        FontWeight="Bold"
-                        FontSize="16">
-                    <StackPanel Orientation="Horizontal">
-                        <icon:PackIconMaterial Kind="Undo" VerticalAlignment="Center" Width="16" Height="16"
-                                               Margin="20 0 20 0" />
-                    </StackPanel>
-                </Button>
+                <Grid HorizontalAlignment="Right">
+                    <Button x:Name="ButtonAction" Click="AddSubject" Style="{StaticResource AddButton}" Padding="5 0" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal" >
+                            <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="12" Height="12"
+                                                   Margin="5 0 5 0" x:Name="IconAction"/>
+                            <TextBlock x:Name="TextAction" Text="Thêm môn học" FontSize="16" FontWeight="SemiBold" Margin="5 0 5 0"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="VisibleAddButton" Visibility="Hidden" Click="ClickVisible" Style="{StaticResource AddButton}"
+                            Margin="5 0 5 0"
+                            FontWeight="Bold"
+                            FontSize="16"
+                    >
+                        <StackPanel Orientation="Horizontal">
+                            <icon:PackIconMaterial Kind="Undo" VerticalAlignment="Center" Width="16" Height="16"
+                                                   Margin="20 0 20 0" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+               <Grid Width="300" HorizontalAlignment="Left">
+                   <TextBlock Margin="20 0" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                              FontSize="16" Foreground="#b0b9c6" IsHitTestVisible="False"
+                              Panel.ZIndex="1" Text="Nhập tên môn học..."
+                              Visibility="{Binding ElementName=TxtAddSubject, Path=Text.IsEmpty, Converter={StaticResource BoolToVisible}}" />
+                   <TextBox Grid.Column="0"  x:Name="TxtAddSubject"  FontSize="16" Foreground="Black" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxSearch}" />
+               </Grid>
+               
             </Grid>
-        </GroupBox>
-
         <!--Seprator-->
         <Separator Height="2" Grid.Row="2" Background="#dae2ea" Margin="0 10 0 10" />
         <!--Counter Title-->
-        <TextBlock Grid.Row="3" FontSize="18" FontWeight="SemiBold"
-                   Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <Run x:Name="SubjectLabel" />
-            <Run x:Name="SubjectCount" />
-        </TextBlock>
-
+         <TextBlock Grid.Row="3" FontSize="18" FontWeight="SemiBold"
+                            Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                    <Run x:Name="SubjectLabel" />
+                    <Run x:Name="SubjectCount" />
+                </TextBlock>
         <!-- ~1~Subject Datagrid@1@ -->
-        <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}"
-                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
-                  RowStyle="{DynamicResource DataGridRowStyle2}" Grid.Row="4" x:Name="SubjectDataGrid">
-            <DataGrid.Columns>
-                <DataGridCheckBoxColumn CanUserResize="False" Width="auto"
-                                        ElementStyle="{StaticResource CheckBoxStyle1}">
-                    <DataGridCheckBoxColumn.HeaderTemplate>
-                        <DataTemplate>
-                            <CheckBox Style="{StaticResource CheckBoxStyle1}" />
-                        </DataTemplate>
-                    </DataGridCheckBoxColumn.HeaderTemplate>
-                </DataGridCheckBoxColumn>
-                <DataGridTextColumn Header="Mã môn học" IsReadOnly="True" CanUserResize="False" Width="*"
-                                    Binding="{Binding SubjectId}" />
+         <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" 
+      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+      RowStyle="{DynamicResource DataGridRowStyle2}" Grid.Row="4" x:Name="SubjectDataGrid" MinHeight="200">
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn CanUserResize="False" Width="auto" 
+                            ElementStyle="{StaticResource CheckBoxStyle1}">
+                            <DataGridCheckBoxColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <CheckBox Style="{StaticResource CheckBoxStyle1}" />
+                                </DataTemplate>
+                            </DataGridCheckBoxColumn.HeaderTemplate>
+                        </DataGridCheckBoxColumn>
+                        <DataGridTextColumn Header="Mã môn học" IsReadOnly="True" CanUserResize="False" Width="*" 
+                        Binding="{Binding SubjectId}"/>
 
-                <DataGridTextColumn Header="Tên môn học" IsReadOnly="True" CanUserResize="False" Width="*"
-                                    Binding="{Binding Name}" />
-                <DataGridTemplateColumn Header="Chức năng" IsReadOnly="True" Width="auto">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Click="EditClick" Style="{StaticResource GridEditButton}">
-                                    <icon:PackIconMaterial Kind="PencilOutline"
-                                                           Style="{StaticResource GridButtonIcon}" />
-                                </Button>
-                                <Button Click="RemoveClick" Style="{StaticResource GridRemoveButton}">
-                                    <icon:PackIconMaterial Kind="DeleteOutline"
-                                                           Style="{StaticResource GridButtonIcon}" />
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-            <DataGrid.CommandBindings>
-                <CommandBinding Command="Delete" Executed="RemoveClick" />
-            </DataGrid.CommandBindings>
-        </DataGrid>
-
+                        <DataGridTextColumn Header="Tên môn học" IsReadOnly="True" CanUserResize="False" Width="*" 
+                        Binding="{Binding Name}" />
+                        <DataGridTemplateColumn Header="Chức năng" IsReadOnly="True" Width="auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Click="EditClick" Style="{StaticResource GridEditButton}">
+                                            <icon:PackIconMaterial Kind="PencilOutline" 
+                                               Style="{StaticResource GridButtonIcon}" />
+                                        </Button>
+                                        <Button Click="RemoveClick" Style="{StaticResource GridRemoveButton}">
+                                            <icon:PackIconMaterial Kind="DeleteOutline" 
+                                               Style="{StaticResource GridButtonIcon}" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                    <DataGrid.CommandBindings>
+                        <CommandBinding Command="Delete" Executed="RemoveClick"/>
+                    </DataGrid.CommandBindings>
+                </DataGrid>
         <!--Pagination Section-->
         <Border Grid.Row="5" HorizontalAlignment="Right" BorderBrush="#dee4ec" BorderThickness="1"
-                CornerRadius="5" Padding="5" Background="White" Margin="0 10 10 10">
-            <StackPanel Orientation="Horizontal">
-                <Button Style="{StaticResource PagingButton}">
-                    <icon:PackIconMaterial Kind="ChevronLeft" Style="{StaticResource PagingButtonIcon}" />
-                </Button>
-                <Rectangle Width="1" Fill="#dee4ec" Margin="3 7" />
+                        CornerRadius="5" Padding="5" Background="White" Margin="0 10 10 10">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource PagingButton}">
+                            <icon:PackIconMaterial Kind="ChevronLeft" Style="{StaticResource PagingButtonIcon}" />
+                        </Button>
+                        <Rectangle Width="1" Fill="#dee4ec" Margin="3 7" />
 
                 <Button Style="{StaticResource PagingButton}" Content="1" Background="#6246ea"
                         Foreground="White" />

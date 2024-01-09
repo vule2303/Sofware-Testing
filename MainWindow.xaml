@@ -118,11 +118,31 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                <!--Components-->
-                <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}" />
-                <!-- <components:SubjectDataPage Grid.Row="1"/> -->
 
-                <ContentControl Grid.Row="1" x:Name="ContentControl" />
+                <!--Search TextBox-->
+                <Grid Width="300" HorizontalAlignment="Left">
+                    <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
+                               Panel.ZIndex="1" Text="Search here..."
+                               Visibility="{Binding ElementName=TxtSearch, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
+                    <TextBox x:Name="TxtSearch" Style="{StaticResource TextBoxSearch}" />
+                    <icon:PackIconMaterial Kind="Magnify" Width="15" Height="15"
+                                           VerticalAlignment="Center" Margin="0 0 15 0"
+                                           Foreground="#b0b9c6" HorizontalAlignment="Right" />
+                </Grid>
+                <!--Top Button-->
+                <Button Grid.Row="0" Style="{StaticResource TopButton}" Margin="0 0 20 0" Background="#dcdcdc"
+                        HorizontalAlignment="Right">
+                    <icon:PackIconMaterial Kind="Cog" />
+                </Button>
+
+                <Button Grid.Row="0" Style="{StaticResource TopButton}" Margin="0 0 55 0" HorizontalAlignment="Right">
+                    <icon:PackIconMaterial Kind="Bell" />
+                </Button>
+                
+
+                <!-- <components:SubjectDataPage Grid.Row="1"/> -->
+             
+                <ContentControl Grid.Row="1" x:Name="ContentControl"/>
             </Grid>
         </Grid>
     </Border>

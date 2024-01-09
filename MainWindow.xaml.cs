@@ -81,42 +81,48 @@ public partial class MainWindow
 
     private void LoadData()
     {
-        // Môn học
-        _context.Subjects.Add(new Subject { Name = "Toán Cao Cấp" });
-        _context.Subjects.Add(new Subject { Name = "Lập Trình Window" });
-        _context.Subjects.Add(new Subject { Name = "Lập Trình Android" });
-        _context.Subjects.Add(new Subject { Name = "Lập Trình Web" });
+        _context.Add(new Subject(){Name = "Toán Cao Cấp"});
+        _context.Add(new Subject(){Name = "Lập Trình Window"});
+        _context.Add(new Subject(){Name = "Lập Trình Android"});
+        _context.Add(new Subject(){Name = "Lập Trình Web"});
+       
+        _context.Chapters.Add(new Chapters() { SubjectId = 1, Name = "Đạo hàm tích phân" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 2, Name = "Window Form" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 2, Name = "WPF" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 3, Name = "Kotlin" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 3, Name = "Android" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 4, Name = "HTML" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 4, Name = "CSS" });
+        _context.Chapters.Add(new Chapters() { SubjectId = 4, Name = "Javascript" });
+        
+        // questiondata
 
-        _context.Chapters.Add(new Chapters { SubjectId = 1, Name = "Đạo hàm tích phân" });
-        _context.Chapters.Add(new Chapters { SubjectId = 2, Name = "Window Form" });
-        _context.Chapters.Add(new Chapters { SubjectId = 2, Name = "WPF" });
-        _context.Chapters.Add(new Chapters { SubjectId = 3, Name = "Kotlin" });
-        _context.Chapters.Add(new Chapters { SubjectId = 3, Name = "Android" });
-        _context.Chapters.Add(new Chapters { SubjectId = 4, Name = "HTML" });
-        _context.Chapters.Add(new Chapters { SubjectId = 4, Name = "CSS" });
-        _context.Chapters.Add(new Chapters { SubjectId = 4, Name = "Javascript" });
+        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Hãy cho biết ai là nhà toán học đoạt giải nobel lần thứ 12?", Image = null });
+        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Hãy vẽ hình tròn.", Image = null });
+        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Giả phương trình x + 3y = 12", Image = null });
+        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Bạn hoàng là ai?", Image = null });
 
-        // Kỳ thi
-        _context.Exams.Add(new Exam { Title = "Kiểm tra giữa môn" });
-        _context.Exams.Add(new Exam { Title = "Báo cáo cuối môn" });
-
-        _context.ExamsSubjects.Add(new ExamsSubjects { ExamId = 1, SubjectId = 1 });
-        _context.ExamsSubjects.Add(new ExamsSubjects { ExamId = 1, SubjectId = 2 });
-        _context.ExamsSubjects.Add(new ExamsSubjects { ExamId = 1, SubjectId = 3 });
-        _context.ExamsSubjects.Add(new ExamsSubjects { ExamId = 1, SubjectId = 4 });
-        _context.ExamsSubjects.Add(new ExamsSubjects { ExamId = 2, SubjectId = 1 });
-        _context.ExamsSubjects.Add(new ExamsSubjects { ExamId = 2, SubjectId = 2 });
-        _context.ExamsSubjects.Add(new ExamsSubjects { ExamId = 2, SubjectId = 3 });
-        _context.ExamsSubjects.Add(new ExamsSubjects { ExamId = 2, SubjectId = 4 });
-
-        _context.Tests.Add(new Test { Title = "Đề thi 1", SubjectId = 1 });
-        _context.Tests.Add(new Test { Title = "Đề thi 1", SubjectId = 2 });
-        _context.Tests.Add(new Test { Title = "Đề thi 2", SubjectId = 2 });
-
-        _context.TestExams.Add(new TestExams { TestId = 1, ExamId = 1 });
-        _context.TestExams.Add(new TestExams { TestId = 2, ExamId = 1 });
-        _context.TestExams.Add(new TestExams { TestId = 1, ExamId = 2 });
-        _context.TestExams.Add(new TestExams { TestId = 2, ExamId = 2 });
+        
+        _context.Exams.Add(new Exam(){Title ="Kiểm tra giữa môn"});
+        _context.Exams.Add(new Exam(){Title = "Báo cáo cuối môn"});
+        
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 1, SubjectId = 1});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 1, SubjectId = 2});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 1, SubjectId = 3});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 1, SubjectId = 4});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 2, SubjectId = 1});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 2, SubjectId = 2});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 2, SubjectId = 3});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 2, SubjectId = 4});
+        
+        _context.Tests.Add(new Test(){ Title = "Đề thi 1", SubjectId = 1});
+        _context.Tests.Add(new Test(){ Title = "Đề thi 1" , SubjectId = 2});
+        _context.Tests.Add(new Test(){ Title = "Đề thi 2" , SubjectId = 2});
+        
+        _context.TestExams.Add(new TestExams(){TestId = 1, ExamId = 1});
+        _context.TestExams.Add(new TestExams(){TestId = 2, ExamId = 1});
+        _context.TestExams.Add(new TestExams(){TestId = 1, ExamId = 2});
+        _context.TestExams.Add(new TestExams(){TestId = 2, ExamId = 2});
 
         _context.SaveChanges();
     }
