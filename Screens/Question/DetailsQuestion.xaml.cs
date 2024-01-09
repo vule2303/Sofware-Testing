@@ -45,7 +45,7 @@ public partial class DetailsQuestion
             return;
         }
 
-        ContentQuestion.TextBoxArea.Text = question.Content;
+        TxtBoxQuestionDetail.Text = question.Content;
         if (!string.IsNullOrEmpty(question.Image))
         {
             _imagePath = question.Image!;
@@ -67,7 +67,7 @@ public partial class DetailsQuestion
 
     private async void ButtonDoneAnswer(object sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrEmpty(ContentQuestion.TextBoxArea.Text))
+        if (string.IsNullOrEmpty(TxtBoxQuestionDetail.Text))
         {
             MessageBox.Show("Vui lòng nhập dữ liệu");
             return;
@@ -85,7 +85,7 @@ public partial class DetailsQuestion
                 return;
             }
 
-            question.Content = ContentQuestion.TextBoxArea.Text;
+            question.Content = TxtBoxQuestionDetail.Text;
             question.Image = _imagePath;
             question.Options!.Clear();
             foreach (var answer in _listAnswer)
@@ -106,7 +106,7 @@ public partial class DetailsQuestion
             var newQuestion = new Models.Question
             {
                 QuestionId = questionId,
-                Content = ContentQuestion.TextBoxArea.Text,
+                Content = TxtBoxQuestionDetail.Text,
                 Image = _imagePath,
                 Options = [],
                 TestQuestions = null

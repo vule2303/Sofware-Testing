@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Controls;
 using MahApps.Metro.IconPacks;
 using TestBuilder.Data;
 using TestBuilder.Models;
@@ -34,6 +35,7 @@ public partial class SubjectView
         ButtonAction.Click += UpdateSubject;
         IconAction.Kind = PackIconMaterialKind.Pencil;
         TextAction.Text = "Câp nhật";
+        ButtonAction.Margin = new Thickness(0, 0, 70, 0);
         VisibleAddButton.Visibility = Visibility.Visible;
         var item = (SubjectDataGrid.SelectedItem as Subject)?.Name;
         if (item != null) TxtAddSubject.Text = item;
@@ -85,6 +87,7 @@ public partial class SubjectView
         TxtAddSubject.Text = "";
         ButtonAction.Click -= UpdateSubject;
         ButtonAction.Click += AddSubject;
+        ButtonAction.Margin = new Thickness(0, 0, 0, 0);
         IconAction.Kind = PackIconMaterialKind.Plus;
         TextAction.Text = "Thêm môn học";
 
