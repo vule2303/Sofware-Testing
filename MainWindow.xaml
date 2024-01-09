@@ -12,9 +12,9 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </Window.Resources>
 
-    <Border Background="#eff2f7" CornerRadius="30" MouseDown="Border_MouseDown"
+    <Border Background="#eff2f7" MouseDown="Border_MouseDown"
             MouseLeftButtonDown="Border_MouseLeftButtonDown">
-        <Grid Margin="0,0,10,0">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="*" />
@@ -22,21 +22,17 @@
             <!--Left menu-->
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <!--Menu Icon-->
+            
 
-                <Button Margin="20 28 0 35" Style="{StaticResource TopButton}">
-                    <icon:PackIconMaterial Kind="Menu" Width="15" Height="15" />
-                </Button>
-
-                <Border Grid.Row="1" Background="#6246ea" CornerRadius="0 50 0 30">
+                <Border Grid.Column="0" Background="#6246ea" CornerRadius="0 50 50 0">
                     <DockPanel>
                         <!--Menu Logo-->
                         <Border Width="80" Height="80" Padding="3" Background="White" CornerRadius="100"
-                                DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="20 -30 0 0">
+                                DockPanel.Dock="Top" HorizontalAlignment="Center" 
+                                Margin="0 20 0 0">
                             <TextBlock Text="ES" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40"
                                        FontWeight="SemiBold" Foreground="#6246ea" />
                         </Border>
@@ -106,12 +102,10 @@
                         </StackPanel>
                     </DockPanel>
                 </Border>
-
-
             </Grid>
 
             <!--Main Section-->
-            <Grid Grid.Column="1" Margin="30 20 20 20">
+            <Grid Grid.Column="1" Margin="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
@@ -121,26 +115,6 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-
-                <!--Search TextBox-->
-                <Grid Width="300" HorizontalAlignment="Left">
-                    <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
-                               Panel.ZIndex="1" Text="Search here..."
-                               Visibility="{Binding ElementName=TxtSearch, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
-                    <TextBox x:Name="TxtSearch" Style="{StaticResource TextBoxSearch}" />
-                    <icon:PackIconMaterial Kind="Magnify" Width="15" Height="15"
-                                           VerticalAlignment="Center" Margin="0 0 15 0"
-                                           Foreground="#b0b9c6" HorizontalAlignment="Right" />
-                </Grid>
-                <!--Top Button-->
-                <Button Grid.Row="0" Style="{StaticResource TopButton}" Margin="0 0 20 0" Background="#dcdcdc"
-                        HorizontalAlignment="Right">
-                    <icon:PackIconMaterial Kind="Cog" />
-                </Button>
-
-                <Button Grid.Row="0" Style="{StaticResource TopButton}" Margin="0 0 55 0" HorizontalAlignment="Right">
-                    <icon:PackIconMaterial Kind="Bell" />
-                </Button>
                 <!--Components-->
                 <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}">
                     
