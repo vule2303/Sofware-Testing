@@ -4,9 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:view="clr-namespace:TestBuilder.View"
+        
         mc:Ignorable="d"
         Title="Test Builder" Height="541" Width="800"
         SizeToContent="Height"
+       Loaded="homeView"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
@@ -15,12 +18,16 @@
     <Border Background="#eff2f7" CornerRadius="30" MouseDown="Border_MouseDown"
             MouseLeftButtonDown="Border_MouseLeftButtonDown">
         <Grid Margin="0,0,10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="149*"/>
+                <RowDefinition Height="26*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <!--Left menu-->
-            <Grid>
+            <Grid Grid.RowSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
@@ -53,7 +60,7 @@
 
                         <!--Menu button-->
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource MenuButton}" Command="{Binding NavigateToHomeCommand}">
+                            <Button Style="{StaticResource MenuButton}" Command="{Binding NavigateToHomeCommand}" Click="homeView">
                                 <StackPanel Orientation="Horizontal">
                                     <icon:PackIconMaterial Kind="HomeVariant" Style="{StaticResource MenuButtonIcon}" />
                                     <TextBlock Text="Bảng điều khiển" />
@@ -111,7 +118,7 @@
             </Grid>
 
             <!--Main Section-->
-            <Grid Grid.Column="1" Margin="30 20 20 20">
+            <Grid Grid.Column="1" Margin="30 20 20 20" Grid.RowSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
@@ -143,10 +150,10 @@
                 </Button>
                 <!--Components-->
                 <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}">
-                    
+
                 </ContentControl>
                 <!-- <components:SubjectDataPage Grid.Row="1"/> -->
-                
+
                 <ContentControl Grid.Row="1" x:Name="ContentControl"/>
             </Grid>
         </Grid>
