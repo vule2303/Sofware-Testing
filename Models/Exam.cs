@@ -2,10 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TestBuilder.Models;
 
-public partial class Exam
+public class Exam
 {
-    [Key]
-    public int ExamId { get; set; }
+    [Key] public int ExamId { get; set; }
     public required string Title { get; set; }
 
     // Navigation properties
