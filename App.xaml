@@ -71,7 +71,7 @@
             <Setter Property="Background" Value="#ffffff"/>
             <Setter Property="Foreground" Value="#b0b9c6"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="Padding" Value="15 10"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="0 10"/>
@@ -606,5 +606,45 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
+        <Style x:Key="ListBoxStyle" TargetType="ListBox">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#6246ea"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"> 
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                          VerticalScrollBarVisibility="Auto"
+                                          >
+                                <ItemsPresenter/>
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Foreground" Value="#6246ea"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+        
     </Application.Resources>
 </Application>
