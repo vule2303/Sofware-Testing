@@ -74,8 +74,8 @@ public partial class MainWindow
 
     private void GoToExamScreen(object sender, RoutedEventArgs e)
     {
-        Window examScreen = new ManageExam();
-        examScreen.Show();
+        var _ = new ExamView();
+        ContentControl.Content = _;
     }
 
     private void LoadData()
@@ -93,6 +93,28 @@ public partial class MainWindow
         _context.Chapters.Add(new Chapters() { SubjectId = 4, Name = "HTML" });
         _context.Chapters.Add(new Chapters() { SubjectId = 4, Name = "CSS" });
         _context.Chapters.Add(new Chapters() { SubjectId = 4, Name = "Javascript" });
+        
+        _context.Exams.Add(new Exam(){Title ="Kiểm tra giữa môn"});
+        _context.Exams.Add(new Exam(){Title = "Báo cáo cuối môn"});
+        
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 1, SubjectId = 1});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 1, SubjectId = 2});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 1, SubjectId = 3});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 1, SubjectId = 4});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 2, SubjectId = 1});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 2, SubjectId = 2});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 2, SubjectId = 3});
+        _context.ExamsSubjects.Add(new ExamsSubjects(){ExamId = 2, SubjectId = 4});
+        
+        _context.Tests.Add(new Test(){ Title = "Đề thi 1", SubjectId = 1});
+        _context.Tests.Add(new Test(){ Title = "Đề thi 1" , SubjectId = 2});
+        _context.Tests.Add(new Test(){ Title = "Đề thi 2" , SubjectId = 2});
+        
+        _context.TestExams.Add(new TestExams(){TestId = 1, ExamId = 1});
+        _context.TestExams.Add(new TestExams(){TestId = 2, ExamId = 1});
+        _context.TestExams.Add(new TestExams(){TestId = 1, ExamId = 2});
+        _context.TestExams.Add(new TestExams(){TestId = 2, ExamId = 2});
+        _context.SaveChanges();
         
         _context.SaveChanges();
     }
