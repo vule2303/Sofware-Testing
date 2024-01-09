@@ -173,27 +173,32 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#673ab7"/>
                   
                 </Trigger>
             </Style.Triggers>
-
         </Style>
         <Style x:Key="GridRemoveButton" TargetType="Button" BasedOn="{StaticResource GridEditButton}">
             <Setter Property="Background" Value="#d32f2f"/>
             <Setter Property="BorderBrush" Value="#b71c1c"/>
-        
-
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#f44336"/>
 
                 </Trigger>
             </Style.Triggers>
-
+        </Style>
+        
+        <Style x:Key="GridViewButton" TargetType="Button" BasedOn="{StaticResource GridEditButton}">
+            <Setter Property="Background" Value="#08f26e"/>
+            <Setter Property="BorderBrush" Value="#08f26e"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#059142"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="FocusVisual">
