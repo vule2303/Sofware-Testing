@@ -9,8 +9,8 @@ namespace TestBuilder.Screens.Test;
 
 public class TestDto
 {
-    public int TestId { get; set; }
-    public string Title { get; set; } = "";
+    public int TestId { get; init; }
+    public string Title { get; init; } = "";
     public int QuestionCount { get; set; }
 }
 
@@ -64,7 +64,7 @@ public partial class ManagerTest
             SubjectId = 1
         };
         var _ = _dbContext.Tests.Add(test).Entity;
-        
+
         foreach (var selectedItem in TestQuestionsListBox.SelectedItems)
         {
             var temp = new Guid(selectedItem.ToString()!);
@@ -74,7 +74,7 @@ public partial class ManagerTest
             {
                 QuestionId = temp,
                 Test = test,
-                Question = question,
+                Question = question
             });
         }
 
@@ -107,14 +107,11 @@ public partial class ManagerTest
         var list = _dbContext.Questions
             .Where(q => q.TestId == test.TestId)
             .ToList();
-        
-        list.ForEach(q =>
-        {
-            TestQuestionsListBox.SelectedItems.Add(q.QuestionId.ToString());
-        });
-        
+
+        list.ForEach(q => { TestQuestionsListBox.SelectedItems.Add(q.QuestionId.ToString()); });
+
         Button.Content = "Cập nhật";
-        
+
         Button.Click -= ButtonAdd;
         Button.Click += ButtonUpdate;
     }
@@ -131,6 +128,7 @@ public partial class ManagerTest
             Button.Click += ButtonAdd;
             return;
         }
+
         _.TestQuestions!.Clear();
         foreach (var selectedItem in TestQuestionsListBox.SelectedItems)
         {
@@ -142,7 +140,7 @@ public partial class ManagerTest
                 QuestionId = temp,
                 Question = question,
                 TestId = _.TestId,
-                Test = _,
+                Test = _
             });
         }
 
