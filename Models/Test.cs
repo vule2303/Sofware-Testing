@@ -2,10 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TestBuilder.Models;
 
-public partial class Test
+public class Test
 {
-    [Key]
-    public int TestId { get; set; }
+    [Key] public int TestId { get; set; }
+
     public required string Title { get; set; }
     public required int SubjectId { get; set; }
 
