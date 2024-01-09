@@ -108,21 +108,21 @@
                         </Button>
                         <Rectangle Width="1" Fill="#dee4ec" Margin="3 7" />
 
-                        <Button Style="{StaticResource PagingButton}" Content="1" Background="#6246ea"
-                                Foreground="White" />
-                        <Button Style="{StaticResource PagingButton}" Content="2" />
-                        <Button Style="{StaticResource PagingButton}" Content="3" />
-                        <TextBlock Text="...." Foreground="#6c7682" VerticalAlignment="Center" FontSize="15"
-                                   Margin="10 0" />
-                        <Button Style="{StaticResource PagingButton}" Content="8" />
-                        <Button Style="{StaticResource PagingButton}" Content="9" />
+                <Button Style="{StaticResource PagingButton}" Content="1" Background="#6246ea"
+                        Foreground="White" />
+                <Button Style="{StaticResource PagingButton}" Content="2" />
+                <Button Style="{StaticResource PagingButton}" Content="3" />
+                <TextBlock Text="...." Foreground="#6c7682" VerticalAlignment="Center" FontSize="15"
+                           Margin="10 0" />
+                <Button Style="{StaticResource PagingButton}" Content="8" />
+                <Button Style="{StaticResource PagingButton}" Content="9" />
 
-                        <Rectangle Width="1" Fill="#dee4ec" Margin="3 7" />
-                        <Button Style="{StaticResource PagingButton}">
-                            <icon:PackIconMaterial Kind="ChevronRight" Style="{StaticResource PagingButtonIcon}" />
-                        </Button>
-                    </StackPanel>
-                </Border>
-        </Grid>
+                <Rectangle Width="1" Fill="#dee4ec" Margin="3 7" />
+                <Button Style="{StaticResource PagingButton}">
+                    <icon:PackIconMaterial Kind="ChevronRight" Style="{StaticResource PagingButtonIcon}" />
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
 
 </UserControl>

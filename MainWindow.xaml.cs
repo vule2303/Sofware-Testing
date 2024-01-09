@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using TestBuilder.Data;
 using TestBuilder.Models;
@@ -15,23 +14,22 @@ public partial class MainWindow
 {
     private readonly TestDbContext _context = new();
     private bool _isMaximized;
+
     public MainWindow()
     {
-        InitializeComponent();  
+        InitializeComponent();
         LoadData();
+    }
 
-    }
-    private void homeView(object sender, RoutedEventArgs e)
+    private void HomeView(object sender, RoutedEventArgs e)
     {
-        var _homeView = new HomeView();
-        ContentControl.Content = _homeView;
+        var view = new HomeView();
+        ContentControl.Content = view;
     }
+
     private void Border_MouseDown(object sender, MouseButtonEventArgs e)
     {
-        if (e.ChangedButton == MouseButton.Left)
-        {
-            DragMove();
-        }
+        if (e.ChangedButton == MouseButton.Left) DragMove();
     }
 
     private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -47,7 +45,6 @@ public partial class MainWindow
         }
         else
         {
-
             _isMaximized = true;
         }
     }
@@ -69,7 +66,7 @@ public partial class MainWindow
         var _ = new ChapterView();
         ContentControl.Content = _;
     }
-    
+
     private void GoToSubjectScreen(object sender, RoutedEventArgs e)
     {
         var _ = new SubjectView();
@@ -127,9 +124,6 @@ public partial class MainWindow
         _context.TestExams.Add(new TestExams(){TestId = 1, ExamId = 2});
         _context.TestExams.Add(new TestExams(){TestId = 2, ExamId = 2});
 
-        
         _context.SaveChanges();
     }
-
-
 }
