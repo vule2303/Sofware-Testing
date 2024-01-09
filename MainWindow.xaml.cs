@@ -19,7 +19,7 @@ public partial class MainWindow
     {
         InitializeComponent();  
         LoadData();
-         
+
     }
     private void homeView(object sender, RoutedEventArgs e)
     {
@@ -98,6 +98,14 @@ public partial class MainWindow
         _context.Chapters.Add(new Chapters() { SubjectId = 4, Name = "CSS" });
         _context.Chapters.Add(new Chapters() { SubjectId = 4, Name = "Javascript" });
         
+        // questiondata
+
+        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Hãy cho biết ai là nhà toán học đoạt giải nobel lần thứ 12?", Image = null });
+        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Hãy vẽ hình tròn.", Image = null });
+        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Giả phương trình x + 3y = 12", Image = null });
+        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Bạn hoàng là ai?", Image = null });
+
+        
         _context.Exams.Add(new Exam(){Title ="Kiểm tra giữa môn"});
         _context.Exams.Add(new Exam(){Title = "Báo cáo cuối môn"});
         
@@ -118,7 +126,7 @@ public partial class MainWindow
         _context.TestExams.Add(new TestExams(){TestId = 2, ExamId = 1});
         _context.TestExams.Add(new TestExams(){TestId = 1, ExamId = 2});
         _context.TestExams.Add(new TestExams(){TestId = 2, ExamId = 2});
-        _context.SaveChanges();
+
         
         _context.SaveChanges();
     }

@@ -148,12 +148,9 @@
                 <Button Grid.Row="0" Style="{StaticResource TopButton}" Margin="0 0 55 0" HorizontalAlignment="Right">
                     <icon:PackIconMaterial Kind="Bell" />
                 </Button>
-                <!--Components-->
-                <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}">
-
-                </ContentControl>
+                
                 <!-- <components:SubjectDataPage Grid.Row="1"/> -->
-
+             
                 <ContentControl Grid.Row="1" x:Name="ContentControl"/>
             </Grid>
         </Grid>
