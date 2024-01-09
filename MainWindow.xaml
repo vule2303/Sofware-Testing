@@ -15,13 +15,10 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </Window.Resources>
 
-    <Border Background="#eff2f7" CornerRadius="30" MouseDown="Border_MouseDown"
+    <Border Background="#eff2f7" MouseDown="Border_MouseDown"
             MouseLeftButtonDown="Border_MouseLeftButtonDown">
-        <Grid Margin="0,0,10,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="149*"/>
-                <RowDefinition Height="26*"/>
-            </Grid.RowDefinitions>
+        <Grid>
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="*" />
@@ -29,21 +26,17 @@
             <!--Left menu-->
             <Grid Grid.RowSpan="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <!--Menu Icon-->
+            
 
-                <Button Margin="20 28 0 35" Style="{StaticResource TopButton}">
-                    <icon:PackIconMaterial Kind="Menu" Width="15" Height="15" />
-                </Button>
-
-                <Border Grid.Row="1" Background="#6246ea" CornerRadius="0 50 0 30">
+                <Border Grid.Column="0" Background="#6246ea" CornerRadius="0 50 50 0">
                     <DockPanel>
                         <!--Menu Logo-->
                         <Border Width="80" Height="80" Padding="3" Background="White" CornerRadius="100"
-                                DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="20 -30 0 0">
+                                DockPanel.Dock="Top" HorizontalAlignment="Center" 
+                                Margin="0 20 0 0">
                             <TextBlock Text="ES" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40"
                                        FontWeight="SemiBold" Foreground="#6246ea" />
                         </Border>
@@ -113,12 +106,11 @@
                         </StackPanel>
                     </DockPanel>
                 </Border>
-
-
             </Grid>
 
             <!--Main Section-->
-            <Grid Grid.Column="1" Margin="30 20 20 20" Grid.RowSpan="2">
+            <Grid Grid.Column="1" Margin="20">
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
@@ -128,6 +120,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
+
 
                 <!--Search TextBox-->
                 <Grid Width="300" HorizontalAlignment="Left">
@@ -149,6 +142,7 @@
                     <icon:PackIconMaterial Kind="Bell" />
                 </Button>
                 
+
                 <!-- <components:SubjectDataPage Grid.Row="1"/> -->
              
                 <ContentControl Grid.Row="1" x:Name="ContentControl"/>

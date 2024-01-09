@@ -4,8 +4,7 @@ namespace TestBuilder.Models;
 
 public partial class Option
 {
-    [Key]
-    public int OptionId { get; set; }
+    [Key] public int OptionId { get; set; }
     public Guid QuestionId { get; set; }
     public required string Text { get; set; }
     public string? Image { get; set; }
