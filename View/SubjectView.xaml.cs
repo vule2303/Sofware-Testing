@@ -8,26 +8,30 @@ namespace TestBuilder.View;
 public partial class SubjectView
 {
     private readonly TestDbContext _context = new();
-    private  List<Subject>? _subjects;
+    private List<Subject>? _subjects;
+
     public SubjectView()
     {
         InitializeComponent();
         LoadData();
     }
-    
-    
+
+
     private void AddSubject(object sender, RoutedEventArgs e)
     {
         if (!string.IsNullOrEmpty(TxtAddSubject.Text))
         {
-            _context.Subjects.Add(new Subject(){Name = TxtAddSubject.Text});
+            _context.Subjects.Add(new Subject() { Name = TxtAddSubject.Text });
             _context.SaveChanges();
             LoadData();
-            TxtAddSubject.Text="";
+            TxtAddSubject.Text = "";
         }
         else
+        {
             MessageBox.Show("Vui lòng nhập tên môn học");
+        }
     }
+
     private void EditClick(object sender, RoutedEventArgs e)
     {
         ButtonAction.Click -= AddSubject;
@@ -38,7 +42,7 @@ public partial class SubjectView
         var item = (SubjectDataGrid.SelectedItem as Subject)?.Name;
         if (item != null) TxtAddSubject.Text = item;
     }
-    
+
     private void RemoveClick(object sender, RoutedEventArgs e)
     {
         var item = (SubjectDataGrid.SelectedItem as Subject)?.SubjectId;
@@ -58,9 +62,8 @@ public partial class SubjectView
         _subjects = new List<Subject>();
         _subjects = _context.Subjects.ToList();
         SubjectDataGrid.ItemsSource = _subjects;
-
     }
-   
+
 
     private void UpdateSubject(object sender, RoutedEventArgs e)
     {
@@ -76,7 +79,9 @@ public partial class SubjectView
             ClickVisible(sender, e);
         }
         else
+        {
             MessageBox.Show("Vui lòng điền tên môn học");
+        }
     }
 
     private void ClickVisible(object sender, RoutedEventArgs e)
@@ -87,6 +92,5 @@ public partial class SubjectView
         ButtonAction.Click += AddSubject;
         IconAction.Kind = PackIconMaterialKind.Plus;
         TextAction.Text = "Thêm môn học";
-
     }
 }

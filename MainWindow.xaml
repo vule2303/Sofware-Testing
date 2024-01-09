@@ -4,15 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:view="clr-namespace:TestBuilder.View"
-        
+
         mc:Ignorable="d"
         Title="Test Builder" Height="541" Width="800"
         SizeToContent="Height"
-       Loaded="homeView"
+        Loaded="HomeView"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </Window.Resources>
 
     <Border Background="#eff2f7" MouseDown="Border_MouseDown"
@@ -29,13 +27,12 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-            
 
                 <Border Grid.Column="0" Background="#6246ea" CornerRadius="0 50 50 0">
                     <DockPanel>
                         <!--Menu Logo-->
                         <Border Width="80" Height="80" Padding="3" Background="White" CornerRadius="100"
-                                DockPanel.Dock="Top" HorizontalAlignment="Center" 
+                                DockPanel.Dock="Top" HorizontalAlignment="Center"
                                 Margin="0 20 0 0">
                             <TextBlock Text="ES" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40"
                                        FontWeight="SemiBold" Foreground="#6246ea" />
@@ -53,7 +50,8 @@
 
                         <!--Menu button-->
                         <StackPanel DockPanel.Dock="Top">
-                            <Button Style="{StaticResource MenuButton}" Command="{Binding NavigateToHomeCommand}" Click="homeView">
+                            <Button Style="{StaticResource MenuButton}" Command="{Binding NavigateToHomeCommand}"
+                                    Click="HomeView">
                                 <StackPanel Orientation="Horizontal">
                                     <icon:PackIconMaterial Kind="HomeVariant" Style="{StaticResource MenuButtonIcon}" />
                                     <TextBlock Text="Bảng điều khiển" />
@@ -96,7 +94,7 @@
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Top">
                             <Button Click="GoToExamScreen"
-                                Style="{StaticResource MenuButton}">
+                                    Style="{StaticResource MenuButton}">
                                 <StackPanel Orientation="Horizontal">
                                     <icon:PackIconMaterial Kind="PencilBoxMultiple"
                                                            Style="{StaticResource MenuButtonIcon}" />
@@ -121,12 +119,10 @@
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <!--Components-->
-                <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}">
-
-                </ContentControl>
+                <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentView}" />
                 <!-- <components:SubjectDataPage Grid.Row="1"/> -->
 
-                <ContentControl Grid.Row="1" x:Name="ContentControl"/>
+                <ContentControl Grid.Row="1" x:Name="ContentControl" />
             </Grid>
         </Grid>
     </Border>

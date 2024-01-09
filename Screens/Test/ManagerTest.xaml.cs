@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
@@ -18,13 +19,18 @@ public partial class ManagerTest
 {
     private readonly TestDbContext _dbContext = new();
     private readonly ObservableCollection<TestDto> _listTest = [];
+    private readonly List<Models.Question> _listQuestion;
+    private readonly int _questionsCount = 0;
 
     public ManagerTest()
     {
         InitializeComponent();
         LoadData();
-        TestQuestionsListBox.ItemsSource = new ObservableCollection<string>(
-            _dbContext.Questions.Select(q => q.QuestionId.ToString()));
+        _listQuestion = _dbContext.Questions.ToList();
+        TestQuestionsListBox.ItemsSource = new ObservableCollection<string>(_listQuestion.Select(q => q.Content));
+        _questionsCount = _listQuestion.Count;
+        QuestionLabel.Text = "Số lượng câu hỏi trong ngân hàng: ";
+        QuestionCount.Text = _questionsCount.ToString();
     }
 
     private void LoadData()
@@ -51,9 +57,31 @@ public partial class ManagerTest
             return;
         }
 
+        if (int.Parse(NumberOfQuestions.Text) > _questionsCount)
+        {
+            MessageBox.Show("Số lượng câu hỏi không thể lớn hơn số câu hỏi trong ngân hàng",
+                "Thông báo",
+                MessageBoxButton.OK);
+            return;
+        }
+
         if (TestQuestionsListBox.SelectedItems.Count == 0)
         {
-            MessageBox.Show("Bộ đề cần phải có câu hỏi", "Thông báo", MessageBoxButton.OK);
+            var result = MessageBox.Show("bạn có muốn tự động tạo câu hỏi?",
+                "Thông báo",
+                MessageBoxButton.OK, MessageBoxImage.Information,
+                MessageBoxResult.Cancel);
+
+            if (int.Parse(NumberOfQuestions.Text) == 0)
+            {
+                MessageBox.Show("Số lượng câu hỏi không thể bằng 0",
+                    "Thông báo",
+                    MessageBoxButton.OK);
+                return;
+            }
+
+            if (result == MessageBoxResult.OK) AutoGenerateTest();
+
             return;
         }
 
@@ -89,6 +117,32 @@ public partial class ManagerTest
 
         TestName.Text = "";
         TestQuestionsListBox.SelectedItems.Clear();
+    }
+
+    private void AutoGenerateTest()
+    {
+        var test = _dbContext.Tests.Add(new Models.Test
+        {
+            Title = TestName.Text,
+            TestExams = [],
+            TestQuestions = []
+        }).Entity;
+
+        var _ = _listQuestion;
+        while (test.TestQuestions!.Count != int.Parse(NumberOfQuestions.Text))
+        {
+            var index = new Random().Next(0, _.Count);
+            test.TestQuestions!.Add(new TestQuestions
+            {
+                TestId = 0,
+                QuestionId = _[index].QuestionId
+            });
+            _.RemoveAt(index);
+        }
+
+        TestName.Text = string.Empty;
+        _dbContext.SaveChanges();
+        LoadData();
     }
 
     private void OnDelete(object sender, ExecutedRoutedEventArgs e)
@@ -152,5 +206,11 @@ public partial class ManagerTest
         Button.Click -= ButtonUpdate;
         Button.Click += ButtonAdd;
         LoadData();
+    }
+
+    private void NumberOfQuestions_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+    {
+        var _ = new Regex("[^0-9]+");
+        e.Handled = _.IsMatch(e.Text);
     }
 }
