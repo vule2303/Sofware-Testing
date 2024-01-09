@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using TestBuilder.Data;
 using TestBuilder.Models;
@@ -14,13 +15,16 @@ public partial class MainWindow
 {
     private readonly TestDbContext _context = new();
     private bool _isMaximized;
-
     public MainWindow()
     {
-        InitializeComponent();
-        DragMove();
+        InitializeComponent();  
         LoadData();
          
+    }
+    private void homeView(object sender, RoutedEventArgs e)
+    {
+        var _homeView = new HomeView();
+        ContentControl.Content = _homeView;
     }
     private void Border_MouseDown(object sender, MouseButtonEventArgs e)
     {
