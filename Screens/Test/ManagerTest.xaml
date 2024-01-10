@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="500"
              d:DataContext="{ d:DesignInstance }">
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -42,6 +42,7 @@
                                FontSize="16" />
                     <TextBox Grid.Row="1" Grid.Column="1" x:Name="NumberOfQuestions" HorizontalAlignment="Stretch"
                              Style="{StaticResource TextBoxSearch}"
+                             Text="0"
                              PreviewTextInput="NumberOfQuestions_OnPreviewTextInput" />
                 </Grid>
             </StackPanel>
@@ -76,6 +77,7 @@
                 </StackPanel>
             </Button>
         </StackPanel>
+
         <DataGrid Style="{DynamicResource DataGridStyle1}"
                   CellStyle="{DynamicResource DataGridCellStyle1}"
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
@@ -94,14 +96,28 @@
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
+
                 <DataGridTextColumn Header="Mã đề" IsReadOnly="True" CanUserResize="False" Width="*"
                                     Binding="{Binding TestId}" />
-
                 <DataGridTextColumn Header="Tên đề" IsReadOnly="True" CanUserResize="False" Width="*"
                                     Binding="{Binding Title}" />
                 <DataGridTextColumn Header="Số lượng câu hỏi" IsReadOnly="True" Width="auto"
                                     Binding="{Binding QuestionCount}" />
+
+                <DataGridTemplateColumn Header="Chức năng" IsReadOnly="True" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Click="ButtonExportToWord" Style="{StaticResource GridEditButton}">
+                                    <iconPacks:PackIconMaterial Kind="Printer"
+                                                                Style="{StaticResource GridButtonIcon}" />
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
+
             <DataGrid.CommandBindings>
                 <CommandBinding Command="Delete" Executed="OnDelete" />
             </DataGrid.CommandBindings>

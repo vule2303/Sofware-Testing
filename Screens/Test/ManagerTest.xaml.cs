@@ -3,8 +3,10 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using TestBuilder.Data;
 using TestBuilder.Models;
+using Xceed.Words.NET;
 
 namespace TestBuilder.Screens.Test;
 
@@ -20,7 +22,7 @@ public partial class ManagerTest
     private readonly TestDbContext _dbContext = new();
     private readonly ObservableCollection<TestDto> _listTest = [];
     private readonly List<Models.Question> _listQuestion;
-    private readonly int _questionsCount = 0;
+    private readonly int _questionsCount;
 
     public ManagerTest()
     {
@@ -95,12 +97,11 @@ public partial class ManagerTest
 
         foreach (var selectedItem in TestQuestionsListBox.SelectedItems)
         {
-            var temp = new Guid(selectedItem.ToString()!);
-            var question = _dbContext.Questions.Find(temp)!;
+            var question = _dbContext.Questions.First(q => q.Content.Equals(selectedItem.ToString()));
             question.TestId = _.TestId;
             test.TestQuestions.Add(new TestQuestions
             {
-                QuestionId = temp,
+                QuestionId = question.QuestionId,
                 Test = test,
                 Question = question
             });
@@ -210,7 +211,66 @@ public partial class ManagerTest
 
     private void NumberOfQuestions_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
     {
-        var _ = new Regex("[^0-9]+");
+        var _ = OnlyNumber();
         e.Handled = _.IsMatch(e.Text);
     }
+
+    private void ButtonExportToWord(object sender, RoutedEventArgs e)
+    {
+        var _ = (TestDto)TestDataGrid.SelectedItem;
+        var questions = _dbContext.TestQuestions
+            .Include(ts => ts.Question)
+            .ThenInclude(question => question.Options)
+            .Where(ts => ts.TestId == _.TestId)
+            .ToList();
+
+        var saveDialog = new SaveFileDialog
+        {
+            Filter = "Word documents (*.docx)|*.docx",
+            DefaultExt = ".docx"
+        };
+
+        var result = saveDialog.ShowDialog();
+        if (result == false) return;
+
+        var index = 1;
+        var document = DocX.Create(saveDialog.FileName);
+
+        document.InsertParagraph(_.Title);
+
+        foreach (var ts in questions)
+        {
+            // Add question content.
+            document.InsertParagraph($"Câu {index++}: {ts.Question.Content}");
+            if (!string.IsNullOrEmpty(ts.Question.Image))
+            {
+                var image = document.AddImage(ts.Question.Image);
+                var picture = image.CreatePicture(100, 100);
+                document.InsertParagraph().AppendPicture(picture);
+            }
+
+            var currentChar = 'A';
+            if (ts.Question.Options is null) continue;
+
+            foreach (var o in ts.Question.Options)
+            {
+                var p = document.InsertParagraph($"{currentChar}: {o.Text}\n");
+
+                if (!string.IsNullOrEmpty(o.Image))
+                {
+                    var image = document.AddImage(o.Image);
+                    var picture = image.CreatePicture(100, 100);
+                    p.AppendPicture(picture);
+                }
+
+                currentChar++;
+            }
+        }
+
+        document.Save();
+        MessageBox.Show("Đã xuất file thành công");
+    }
+
+    [GeneratedRegex("[^0-9]+")]
+    private static partial Regex OnlyNumber();
 }
