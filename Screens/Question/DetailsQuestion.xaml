@@ -4,8 +4,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
-
-        xmlns:components="clr-namespace:TestBuilder.Components"
         mc:Ignorable="d"
         Title="Thêm câu hỏi"
         Height="Auto"
