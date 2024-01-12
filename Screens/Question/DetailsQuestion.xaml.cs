@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
@@ -12,8 +13,8 @@ public partial class DetailsQuestion
 {
     private readonly TestDbContext _context = new();
     private readonly ObservableCollection<Answer> _listAnswer = [];
-    private string _imagePath = "";
     private readonly Guid? _questionId;
+    private string _imagePath = "";
     public DetailsQuestion()
     {
         InitializeComponent();
@@ -52,6 +53,12 @@ public partial class DetailsQuestion
             ImageQuestion.Width = 270;
             ImageQuestion.Height = 200;
         }
+        if (!string.IsNullOrEmpty(question.Formula))
+        {
+            RawFormula.Text = question.Formula;
+            FormulaControl.Formula = question.Formula;
+        }
+
 
         question.Options!.ForEach(a => _listAnswer.Add(new Answer
         {
@@ -79,7 +86,7 @@ public partial class DetailsQuestion
         {
             var question = _context.Questions
                 .Include(q => q.Options)
-                .FirstOrDefault(q => q.QuestionId == _questionId);
+                .FirstOrDefault(q => q.QuestionId.Equals(_questionId));
 
             if (question is null)
             {
@@ -88,10 +95,10 @@ public partial class DetailsQuestion
             }
 
             question.Content = TxtBoxQuestionDetail.Text;
+            question.Formula = RawFormula.Text;
             question.Image = _imagePath;
             question.Options!.Clear();
             foreach (var answer in _listAnswer)
-            {
                 question.Options.Add(new Option
                 {
                     QuestionId = question.QuestionId,
@@ -99,7 +106,6 @@ public partial class DetailsQuestion
                     Image = answer.Image,
                     Question = question
                 });
-            }
         }
         else
         {
@@ -109,13 +115,13 @@ public partial class DetailsQuestion
             {
                 QuestionId = questionId,
                 Content = TxtBoxQuestionDetail.Text,
+                Formula = RawFormula.Text,
                 Image = _imagePath,
                 Options = [],
                 TestQuestions = null
             };
 
             foreach (var answer in _listAnswer)
-            {
                 newQuestion.Options.Add(new Option
                 {
                     QuestionId = questionId,
@@ -123,7 +129,6 @@ public partial class DetailsQuestion
                     Image = answer.Image,
                     Question = newQuestion
                 });
-            }
 
             _context.Questions.Add(newQuestion);
         }
@@ -206,5 +211,10 @@ public partial class DetailsQuestion
         };
 
         return openFileDialog.ShowDialog() != true ? null : openFileDialog;
+    }
+
+    private void UIElement_OnKeyUp(object sender, KeyEventArgs keyEventArgs)
+    {
+        FormulaControl.Formula = RawFormula.Text;
     }
 }

@@ -1,9 +1,17 @@
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using TestBuilder.Data;
 using TestBuilder.Models;
+using WpfMath;
+using WpfMath.Parsers;
+using WpfMath.Rendering;
+using XamlMath;
+using Xceed.Words.NET;
 
 namespace TestBuilder.Screens.Test;
 
@@ -18,13 +26,21 @@ public partial class ManagerTest
 {
     private readonly TestDbContext _dbContext = new();
     private readonly ObservableCollection<TestDto> _listTest = [];
+    private readonly List<Models.Question> _listQuestion;
+    private readonly int _questionsCount;
+
+    [GeneratedRegex("[^0-9]+")]
+    private static partial Regex OnlyNumber();
 
     public ManagerTest()
     {
         InitializeComponent();
         LoadData();
-        TestQuestionsListBox.ItemsSource = new ObservableCollection<string>(
-            _dbContext.Questions.Select(q => q.QuestionId.ToString()));
+        _listQuestion = _dbContext.Questions.ToList();
+        TestQuestionsListBox.ItemsSource = new ObservableCollection<string>(_listQuestion.Select(q => q.Content));
+        _questionsCount = _listQuestion.Count;
+        QuestionLabel.Text = "Số lượng câu hỏi trong ngân hàng: ";
+        QuestionCount.Text = _questionsCount.ToString();
     }
 
     private void LoadData()
@@ -51,9 +67,31 @@ public partial class ManagerTest
             return;
         }
 
+        if (int.Parse(NumberOfQuestions.Text) > _questionsCount)
+        {
+            MessageBox.Show("Số lượng câu hỏi không thể lớn hơn số câu hỏi trong ngân hàng",
+                "Thông báo",
+                MessageBoxButton.OK);
+            return;
+        }
+
         if (TestQuestionsListBox.SelectedItems.Count == 0)
         {
-            MessageBox.Show("Bộ đề cần phải có câu hỏi", "Thông báo", MessageBoxButton.OK);
+            var result = MessageBox.Show("bạn có muốn tự động tạo câu hỏi?",
+                "Thông báo",
+                MessageBoxButton.OK, MessageBoxImage.Information,
+                MessageBoxResult.Cancel);
+
+            if (int.Parse(NumberOfQuestions.Text) == 0)
+            {
+                MessageBox.Show("Số lượng câu hỏi không thể bằng 0",
+                    "Thông báo",
+                    MessageBoxButton.OK);
+                return;
+            }
+
+            if (result == MessageBoxResult.OK) AutoGenerateTest();
+
             return;
         }
 
@@ -67,12 +105,11 @@ public partial class ManagerTest
 
         foreach (var selectedItem in TestQuestionsListBox.SelectedItems)
         {
-            var temp = new Guid(selectedItem.ToString()!);
-            var question = _dbContext.Questions.Find(temp)!;
+            var question = _dbContext.Questions.First(q => q.Content.Equals(selectedItem.ToString()));
             question.TestId = _.TestId;
             test.TestQuestions.Add(new TestQuestions
             {
-                QuestionId = temp,
+                QuestionId = question.QuestionId,
                 Test = test,
                 Question = question
             });
@@ -89,6 +126,32 @@ public partial class ManagerTest
 
         TestName.Text = "";
         TestQuestionsListBox.SelectedItems.Clear();
+    }
+
+    private void AutoGenerateTest()
+    {
+        var test = _dbContext.Tests.Add(new Models.Test
+        {
+            Title = TestName.Text,
+            TestExams = [],
+            TestQuestions = []
+        }).Entity;
+
+        var _ = _listQuestion;
+        while (test.TestQuestions!.Count != int.Parse(NumberOfQuestions.Text))
+        {
+            var index = new Random().Next(0, _.Count);
+            test.TestQuestions!.Add(new TestQuestions
+            {
+                TestId = 0,
+                QuestionId = _[index].QuestionId
+            });
+            _.RemoveAt(index);
+        }
+
+        TestName.Text = string.Empty;
+        _dbContext.SaveChanges();
+        LoadData();
     }
 
     private void OnDelete(object sender, ExecutedRoutedEventArgs e)
@@ -108,7 +171,7 @@ public partial class ManagerTest
             .Where(q => q.TestId == test.TestId)
             .ToList();
 
-        list.ForEach(q => { TestQuestionsListBox.SelectedItems.Add(q.QuestionId.ToString()); });
+        list.ForEach(q => { TestQuestionsListBox.SelectedItems.Add(q.Content); });
 
         Button.Content = "Cập nhật";
 
@@ -152,5 +215,84 @@ public partial class ManagerTest
         Button.Click -= ButtonUpdate;
         Button.Click += ButtonAdd;
         LoadData();
+    }
+
+    private void NumberOfQuestions_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+    {
+        var _ = OnlyNumber();
+        e.Handled = _.IsMatch(e.Text);
+    }
+
+    private void ButtonExportToWord(object sender, RoutedEventArgs e)
+    {
+        var _ = (TestDto)TestDataGrid.SelectedItem;
+        var questions = _dbContext.TestQuestions
+            .Include(ts => ts.Question)
+            .ThenInclude(question => question.Options)
+            .Where(ts => ts.TestId == _.TestId)
+            .ToList();
+
+        var saveDialog = new SaveFileDialog
+        {
+            Filter = "Word documents (*.docx)|*.docx",
+            DefaultExt = ".docx"
+        };
+
+        var result = saveDialog.ShowDialog();
+        if (result == false) return;
+
+        var index = 1;
+        var document = DocX.Create(saveDialog.FileName);
+
+        document.InsertParagraph(_.Title);
+
+        foreach (var ts in questions)
+        {
+            // Add question content.
+            document.InsertParagraph($"Câu {index++}: {ts.Question.Content}");
+
+            if (!string.IsNullOrEmpty(ts.Question.Formula))
+            {
+                var parser = WpfTeXFormulaParser.Instance;
+                var formula = parser.Parse(ts.Question.Formula);
+                var pngBytes = formula.RenderToPng(50.0, 0.0, 0.0, "Arial");
+                using var stream = new MemoryStream(pngBytes);
+                var image = document.AddImage(stream, "image/png");
+                var picture = image.CreatePicture();
+                document.InsertParagraph().AppendPicture(picture);
+            }
+
+            if (!string.IsNullOrEmpty(ts.Question.Image))
+            {
+                var image = document.AddImage(ts.Question.Image);
+                var picture = image.CreatePicture(100, 100);
+                document.InsertParagraph().AppendPicture(picture);
+            }
+
+            var currentChar = 'A';
+            if (ts.Question.Options is null) continue;
+
+            foreach (var o in ts.Question.Options)
+            {
+                var p = document.InsertParagraph($"{currentChar}: {o.Text}\n");
+
+                if (!string.IsNullOrEmpty(o.Image))
+                {
+                    var image = document.AddImage(o.Image);
+                    var picture = image.CreatePicture(100, 100);
+                    p.AppendPicture(picture);
+                }
+
+                currentChar++;
+            }
+        }
+
+        document.Save();
+        MessageBox.Show("Đã xuất file thành công");
+    }
+
+    private void TestQuestionsListBox_OnSelected(object sender, RoutedEventArgs e)
+    {
+        NumberOfQuestions.Text = TestQuestionsListBox.SelectedItems.Count.ToString();
     }
 }

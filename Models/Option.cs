@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TestBuilder.Models;
 
-public partial class Option
+public class Option
 {
     [Key] public int OptionId { get; set; }
     public Guid QuestionId { get; set; }

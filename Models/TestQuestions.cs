@@ -5,9 +5,9 @@ namespace TestBuilder.Models;
 public class TestQuestions
 {
     [Key] public int TestId { get; set; }
-    public Guid QuestionId { get; set; }
+    public required Guid QuestionId { get; set; }
 
     // Navigation properties
-    public required Test Test { get; set; }
-    public required Question Question { get; set; }
+    public Test Test { get; set; }
+    public Question Question { get; set; }
 }
