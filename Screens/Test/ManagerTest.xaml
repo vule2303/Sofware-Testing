@@ -40,7 +40,8 @@
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Số lượng câu hỏi:" VerticalAlignment="Center"
                                Margin="0 0 20 0"
                                FontSize="16" />
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="NumberOfQuestions" HorizontalAlignment="Stretch"
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="NumberOfQuestions"
+                             HorizontalAlignment="Stretch" IsReadOnly="True"
                              Style="{StaticResource TextBoxSearch}"
                              Text="0"
                              PreviewTextInput="NumberOfQuestions_OnPreviewTextInput" />
@@ -59,7 +60,8 @@
                      SelectionMode="Multiple"
                      x:Name="TestQuestionsListBox"
                      ItemsSource="{Binding}"
-                     Style="{StaticResource ListBoxStyle}" />
+                     Style="{StaticResource ListBoxStyle}"
+                     SelectionChanged="TestQuestionsListBox_OnSelected" />
 
             <Button x:Name="Button"
                     Width="200"

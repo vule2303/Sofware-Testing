@@ -24,6 +24,9 @@ public partial class ManagerTest
     private readonly List<Models.Question> _listQuestion;
     private readonly int _questionsCount;
 
+    [GeneratedRegex("[^0-9]+")]
+    private static partial Regex OnlyNumber();
+
     public ManagerTest()
     {
         InitializeComponent();
@@ -163,7 +166,7 @@ public partial class ManagerTest
             .Where(q => q.TestId == test.TestId)
             .ToList();
 
-        list.ForEach(q => { TestQuestionsListBox.SelectedItems.Add(q.QuestionId.ToString()); });
+        list.ForEach(q => { TestQuestionsListBox.SelectedItems.Add(q.Content); });
 
         Button.Content = "Cập nhật";
 
@@ -271,6 +274,8 @@ public partial class ManagerTest
         MessageBox.Show("Đã xuất file thành công");
     }
 
-    [GeneratedRegex("[^0-9]+")]
-    private static partial Regex OnlyNumber();
+    private void TestQuestionsListBox_OnSelected(object sender, RoutedEventArgs e)
+    {
+        NumberOfQuestions.Text = TestQuestionsListBox.SelectedItems.Count.ToString();
+    }
 }
