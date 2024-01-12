@@ -3,54 +3,86 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300"
+             d:DesignHeight="500" d:DesignWidth="500"
              d:DataContext="{ d:DesignInstance }">
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Quản lý bộ đề"
-                   TextAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="28"
-                   FontWeight="SemiBold" />
+        <TextBlock FontSize="22" 
+                   HorizontalAlignment="Center" 
+                   Margin="0 20 0 20"
+                   Foreground="#6246ea"
+                   FontWeight="Bold"
+                   Text="QUẢN LÍ BỘ ĐỀ"/>
 
         <StackPanel Grid.Row="1">
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBlock Text="Tên bộ đề" Margin="0 0 10 0" />
-                <TextBox x:Name="TestName" MinWidth="210" />
+            <StackPanel HorizontalAlignment="Stretch" Margin="20 0 20 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Tên bộ đề:" VerticalAlignment="Center" Margin="0 0 20 0" FontSize="16" />
+                    <TextBox Grid.Column="1" x:Name="TestName" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxSearch}" />
+                </Grid>
             </StackPanel>
-            <ListBox Height="100"
+            <ListBox MinHeight="200"
+                     Margin="20"
                      SelectionMode="Multiple"
                      x:Name="TestQuestionsListBox"
-                     ItemsSource="{Binding}" />
-            <Button x:Name="Button"
-                    Content="Thêm bộ đề" 
-                    Margin="10" 
+                     ItemsSource="{Binding}" 
+                     Style="{StaticResource ListBoxStyle}"/>
+            
+            <Button x:Name="Button" 
+                    Width="200"
+                    Click="ButtonAdd" 
+                    Style="{StaticResource AddButton}" 
                     HorizontalAlignment="Center" 
-                    Padding="5 0"
-                    Click="ButtonAdd"></Button>
+                    FontWeight="Bold"
+                    Margin="0 0 0 20">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="16" Height="16"
+                                                Margin="5 1 5 0" />
+                    <TextBlock Text="Thêm bộ đề" VerticalAlignment="Center" FontSize="16"  Margin="5 0 5 0"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
-
-        <DataGrid Grid.Row="2"
+        <DataGrid Style="{DynamicResource DataGridStyle1}" 
+                  CellStyle="{DynamicResource DataGridCellStyle1}" 
+                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                  RowStyle="{DynamicResource DataGridRowStyle2}" 
+                  Grid.Row="2"
                   x:Name="TestDataGrid"
                   ItemsSource="{Binding}"
-                  AutoGenerateColumns="False"
-                  MouseDoubleClick="TestDataGrid_Edit">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Mã đề" Width="Auto" Binding="{Binding TestId}" />
-                <DataGridTextColumn Header="Tên đề" Width="*" Binding="{Binding Title}" />
-                <DataGridTextColumn Header="Số lượng câu hỏi" Width="Auto" Binding="{Binding QuestionCount}" />
-            </DataGrid.Columns>
-            
-            <DataGrid.CommandBindings>
-                <CommandBinding Command="Delete" Executed="OnDelete"></CommandBinding>
-            </DataGrid.CommandBindings>
-        </DataGrid>
+                  MouseDoubleClick="TestDataGrid_Edit"
+                  Margin="20 0 20 0">
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn CanUserResize="False" Width="auto" 
+                            ElementStyle="{StaticResource CheckBoxStyle1}">
+                            <DataGridCheckBoxColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <CheckBox Style="{StaticResource CheckBoxStyle1}" />
+                                </DataTemplate>
+                            </DataGridCheckBoxColumn.HeaderTemplate>
+                        </DataGridCheckBoxColumn>
+                        <DataGridTextColumn Header="Mã đề" IsReadOnly="True" CanUserResize="False" Width="*" 
+                                            Binding="{Binding TestId}"/>
+
+                        <DataGridTextColumn Header="Tên đề" IsReadOnly="True" CanUserResize="False" Width="*" 
+                                            Binding="{Binding Title}" />
+                        <DataGridTextColumn Header="Số lượng câu hỏi" IsReadOnly="True" Width="auto"
+                                            Binding="{Binding QuestionCount}" />
+                    </DataGrid.Columns>
+                    <DataGrid.CommandBindings>
+                        <CommandBinding Command="Delete" Executed="OnDelete"></CommandBinding>
+                    </DataGrid.CommandBindings>
+                </DataGrid>
     </Grid>
 </UserControl>

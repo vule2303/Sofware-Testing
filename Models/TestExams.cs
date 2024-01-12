@@ -7,5 +7,5 @@ public partial class TestExams
 
     // Navigation properties
     public Test? Test { get; set; }
-    public  Exam? Exam { get; set; }
+    public Exam? Exam { get; set; }
 }

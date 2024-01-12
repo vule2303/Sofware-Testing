@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 namespace TestBuilder.Models;
 
 public class Subject
-
 {
-    [Key]
-    public int SubjectId { get; set; }
+    [Key] public int SubjectId { get; set; }
     public required string? Name { get; set; }
 
     // Navigation properties
