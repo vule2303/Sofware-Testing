@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
@@ -277,5 +278,12 @@ public partial class ManagerTest
     private void TestQuestionsListBox_OnSelected(object sender, RoutedEventArgs e)
     {
         NumberOfQuestions.Text = TestQuestionsListBox.SelectedItems.Count.ToString();
+    }
+
+    private void View(object sender, RoutedEventArgs e)
+    {
+        var item = (TestDto)TestDataGrid.SelectedItem;
+        var _ = new TestQuestion(item);
+        _.ShowDialog();
     }
 }

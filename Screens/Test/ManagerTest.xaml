@@ -110,6 +110,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
+                                <Button Click="View"  Style="{StaticResource GridViewButton}">
+                                    <iconPacks:PackIconMaterial Kind="Eye"
+                                                                Style="{StaticResource GridButtonIcon}" />
+                                </Button>
                                 <Button Click="ButtonExportToWord" Style="{StaticResource GridEditButton}">
                                     <iconPacks:PackIconMaterial Kind="Printer"
                                                                 Style="{StaticResource GridButtonIcon}" />
