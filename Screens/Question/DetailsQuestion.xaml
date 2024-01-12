@@ -8,7 +8,7 @@
         xmlns:components="clr-namespace:TestBuilder.Components"
         mc:Ignorable="d"
         Title="Thêm câu hỏi"
-        Height="Auto"
+        Height="600"
         Width="500"
         d:DataContext="{ d:DesignInstance }"
         WindowStartupLocation="CenterScreen"
@@ -17,97 +17,117 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </Window.Resources>
     <Grid>
-        <StackPanel>
-           <Grid Width="300" HorizontalAlignment="Left">
-                <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
-                           Panel.ZIndex="1" Text="Search here..."
-                           Visibility="{Binding ElementName=TxtBoxQuestionDetail, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
-                <TextBox x:Name="TxtBoxQuestionDetail" Style="{StaticResource TextBoxSearch}" />
-            </Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+
+        <Grid Width="350" MaxWidth="400" HorizontalAlignment="Left" Margin="10 0 0 0 ">
+            <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
+                       Panel.ZIndex="1" Text="Nội dung..."
+                       Visibility="{Binding ElementName=TxtBoxQuestionDetail, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
+            <TextBox x:Name="TxtBoxQuestionDetail" Style="{StaticResource TextBoxSearch}" />
+        </Grid>
+        <Button Style="{StaticResource AddButton}" Grid.Row="0" HorizontalAlignment="Right" Margin="0 0 10 0"
+                Click="SelectAndUploadImage">
             <StackPanel Orientation="Horizontal">
-                <Button Style="{StaticResource AddButton}"
-                        Click="SelectAndUploadImage">
-                    <StackPanel Orientation="Horizontal" >
-                        <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="12" Height="12"
-                                               Margin="5 0 5 0" x:Name="IconAction"/>
-                        <TextBlock Text="Hình ảnh" FontSize="16" FontWeight="SemiBold" Margin="5 0 5 0"/>
-                    </StackPanel>
-                </Button>
+                <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="12" Height="12"
+                                       Margin="5 0 5 0" x:Name="IconAction" />
+                <TextBlock Text="Hình ảnh" FontSize="16" FontWeight="SemiBold" Margin="5 0 5 0" />
             </StackPanel>
+        </Button>
 
-            <Image Height="Auto" Width="Auto"
-                   x:Name="ImageQuestion" />
+        <Image Height="auto" Width="auto"
+               x:Name="ImageQuestion" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-            <!-- <ProgressBar -->
-            <!--     x:Name="UploadProgressBar" -->
-            <!--     Height="20" -->
-            <!--     Minimum="0" -->
-            <!--     Maximum="100" -->
-            <!--     Visibility="Collapsed" /> -->
+        <!-- <ProgressBar -->
+        <!--     x:Name="UploadProgressBar" -->
+        <!--     Height="20" -->
+        <!--     Minimum="0" -->
+        <!--     Maximum="100" -->
+        <!--     Visibility="Collapsed" /> -->
 
-            <Label
-                Margin="5"
-                BorderThickness="0"
-                Content="Đáp án" />
+        <Label Grid.Row="2"
+               FontSize="16"
+               FontWeight="SemiBold"
+               Margin="5"
+               BorderThickness="0"
+               Content="Đáp án" />
+        <!--DATA GRID-->
+        <DataGrid x:Name="AnswerDataGrid"
+                  Grid.Row="3"
+                  CanUserAddRows="True"
+                  CanUserDeleteRows="True"
+                  ItemsSource="{Binding}"
+                  AutoGenerateColumns="False"
+                  Style="{DynamicResource DataGridStyle1}"
+                  CellStyle="{DynamicResource DataGridCellStyle1}"
+                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                  RowStyle="{DynamicResource DataGridRowStyle2}" MinHeight="200">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter
+                        Property="FontWeight"
+                        Value="SemiBold" />
+                </Style>
+            </DataGrid.Resources>
 
-            <DataGrid x:Name="AnswerDataGrid"
-                      CanUserAddRows="True"
-                      CanUserDeleteRows="True"
-                      ItemsSource="{Binding}"
-                      AutoGenerateColumns="False">
-                <DataGrid.Resources>
-                    <Style TargetType="DataGridColumnHeader">
-                        <Setter
-                            Property="FontWeight"
-                            Value="SemiBold" />
-                    </Style>
-                </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Binding="{Binding Content}"
+                    Header="Nội dung"
+                    Width="*" />
+                <DataGridTextColumn
+                    Binding="{Binding Image}"
+                    Header="Hình ảnh"
+                    Width="*" />
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn
-                        Binding="{Binding Content}"
-                        Header="Nội dung"
-                        Width="*" />
-                    <DataGridTextColumn
-                        Binding="{Binding Image}"
-                        Header="Hình ảnh"
-                        Width="*" />
-
-                    <DataGridTemplateColumn Width="105">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button
-                                        Content="Chọn ảnh"
-                                        Width="60"
-                                        Click="ButtonAddImageAnswer"
-                                        Margin="0,0,5,0" />
-                                    <Button
-                                        Content="Xoá"
-                                        Width="40"
-                                        Click="ButtonRemoveAnswer" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-
-            <StackPanel
-                HorizontalAlignment="Center"
-                Orientation="Horizontal"
-                Margin="10">
-                <Button
-                    Content="Đóng"
-                    Padding="5"
-                    Margin="0,0,20,0"
-                    Click="ButtonClose" />
-                <Button
-                    x:Name="ButtonDone"
-                    Content="Xong"
-                    Padding="5"
-                    Click="ButtonDoneAnswer" />
-            </StackPanel>
+                <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button
+                                    Style="{StaticResource GridEditButton}"
+                                    Width="60"
+                                    Click="ButtonAddImageAnswer"
+                                    Margin="0,0,5,0">
+                                    <icon:PackIconMaterial Kind="Image"
+                                                           Style="{StaticResource GridButtonIcon}" />
+                                </Button>
+                                <Button
+                                    Style="{StaticResource GridRemoveButton}"
+                                    Width="40"
+                                    Click="ButtonRemoveAnswer">
+                                    <icon:PackIconMaterial Kind="DeleteOutline"
+                                                           Style="{StaticResource GridButtonIcon}" />
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <StackPanel Grid.Row="4"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Margin="10">
+            <Button
+                Content="Đóng"
+                Padding="5"
+                Margin="0,0,20,0"
+                Click="ButtonClose"
+                Style="{StaticResource GridRemoveButton}" />
+            <Button
+                x:Name="ButtonDone"
+                Content="Xong"
+                Padding="5"
+                Click="ButtonDoneAnswer"
+                Style="{StaticResource GridEditButton}" />
         </StackPanel>
     </Grid>
 </Window>

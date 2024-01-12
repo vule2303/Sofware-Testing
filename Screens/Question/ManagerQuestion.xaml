@@ -74,7 +74,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Click="buttonEditQuestion" Style="{StaticResource GridEditButton}">
+                                        <Button Click="ButtonEditQuestion" Style="{StaticResource GridEditButton}">
                                             <icon:PackIconMaterial Kind="PencilOutline" 
                                                Style="{StaticResource GridButtonIcon}" />
                                         </Button>

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using TestBuilder.Data;
 using TestBuilder.Models;
-
+using TestBuilder.View;
 namespace TestBuilder.Screens.Question;
 
 public partial class DetailsQuestion
@@ -14,7 +14,6 @@ public partial class DetailsQuestion
     private readonly ObservableCollection<Answer> _listAnswer = [];
     private string _imagePath = "";
     private readonly Guid? _questionId;
-
     public DetailsQuestion()
     {
         InitializeComponent();
@@ -48,9 +47,12 @@ public partial class DetailsQuestion
         TxtBoxQuestionDetail.Text = question.Content;
         if (!string.IsNullOrEmpty(question.Image))
         {
-            _imagePath = question.Image!;
+            _imagePath = question.Image;
             ImageQuestion.Source = new BitmapImage(new Uri(question.Image!));
+            ImageQuestion.Width = 270;
+            ImageQuestion.Height = 200;
         }
+
         question.Options!.ForEach(a => _listAnswer.Add(new Answer
         {
             Content = a.Text,
@@ -127,7 +129,6 @@ public partial class DetailsQuestion
         }
 
         await _context.SaveChangesAsync();
-
         MessageBox.Show("Đã lưu thành công!");
         Close();
     }
@@ -147,7 +148,8 @@ public partial class DetailsQuestion
         if (openFileDialog.ShowDialog() != true) return;
 
         _imagePath = openFileDialog.FileName;
-
+        ImageQuestion.Height = 200;
+        ImageQuestion.Width = 120;
         var bitmap = new BitmapImage(new Uri(_imagePath));
         ImageQuestion.Source = bitmap;
 
