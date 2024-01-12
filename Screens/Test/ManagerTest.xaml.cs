@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -6,6 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using TestBuilder.Data;
 using TestBuilder.Models;
+using WpfMath;
+using WpfMath.Parsers;
+using WpfMath.Rendering;
+using XamlMath;
 using Xceed.Words.NET;
 
 namespace TestBuilder.Screens.Test;
@@ -245,6 +250,18 @@ public partial class ManagerTest
         {
             // Add question content.
             document.InsertParagraph($"Câu {index++}: {ts.Question.Content}");
+
+            if (!string.IsNullOrEmpty(ts.Question.Formula))
+            {
+                var parser = WpfTeXFormulaParser.Instance;
+                var formula = parser.Parse(ts.Question.Formula);
+                var pngBytes = formula.RenderToPng(50.0, 0.0, 0.0, "Arial");
+                using var stream = new MemoryStream(pngBytes);
+                var image = document.AddImage(stream, "image/png");
+                var picture = image.CreatePicture();
+                document.InsertParagraph().AppendPicture(picture);
+            }
+
             if (!string.IsNullOrEmpty(ts.Question.Image))
             {
                 var image = document.AddImage(ts.Question.Image);

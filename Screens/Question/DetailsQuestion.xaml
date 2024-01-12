@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
         mc:Ignorable="d"
         Title="Thêm câu hỏi"
         Height="Auto"
@@ -13,22 +14,43 @@
         SizeToContent="Height">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisible" />
     </Window.Resources>
     <Grid>
         <StackPanel>
-           <Grid Width="300" HorizontalAlignment="Left">
+            <Grid Width="450" HorizontalAlignment="Left">
                 <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
-                           Panel.ZIndex="1" Text="Search here..."
+                           Panel.ZIndex="1" Text="Nội dung câu hỏi"
                            Visibility="{Binding ElementName=TxtBoxQuestionDetail, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
                 <TextBox x:Name="TxtBoxQuestionDetail" Style="{StaticResource TextBoxSearch}" />
             </Grid>
+
+            <StackPanel>
+                <Grid Width="450" HorizontalAlignment="Left">
+                    <TextBlock Margin="20 0" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                               Foreground="#b0b9c6" IsHitTestVisible="False"
+                               Panel.ZIndex="1" Text="Biểu thức (LaTeX)"
+                               Visibility="{Binding ElementName=RawFormula, Path=Text.IsEmpty,
+                               Converter={StaticResource BoolToVisible}}" />
+                    <TextBox x:Name="RawFormula" Foreground="Black" HorizontalAlignment="Stretch"
+                             Style="{StaticResource TextBoxSearch}"
+                             KeyUp="UIElement_OnKeyUp" />
+                </Grid>
+                <TextBlock Height="Auto" Margin="20">
+                    <controls:FormulaControl
+                        x:Name="FormulaControl"
+                        Formula="" />
+                </TextBlock>
+            </StackPanel>
+
             <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource AddButton}"
                         Click="SelectAndUploadImage">
-                    <StackPanel Orientation="Horizontal" >
-                        <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="12" Height="12"
-                                               Margin="5 0 5 0" x:Name="IconAction"/>
-                        <TextBlock Text="Hình ảnh" FontSize="16" FontWeight="SemiBold" Margin="5 0 5 0"/>
+                    <StackPanel Orientation="Horizontal">
+                        <icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center"
+                                               Width="12" Height="12"
+                                               Margin="5 0 5 0" />
+                        <TextBlock Text="Hình ảnh" FontSize="16" FontWeight="SemiBold" Margin="5 0 5 0" />
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -101,7 +123,6 @@
                     Margin="0,0,20,0"
                     Click="ButtonClose" />
                 <Button
-                    x:Name="ButtonDone"
                     Content="Xong"
                     Padding="5"
                     Click="ButtonDoneAnswer" />
