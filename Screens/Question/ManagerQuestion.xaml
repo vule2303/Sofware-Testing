@@ -54,47 +54,32 @@
             <Run x:Name="SubjectCount" />
         </TextBlock>
         <!-- ~1~Subject Datagrid@1@ -->
-
-        <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}"
-                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
-                  RowStyle="{DynamicResource DataGridRowStyle2}" Grid.Row="4" x:Name="DataGridQuestion"
-                  MouseDoubleClick="DataGridQuestion_OnMouseDoubleClick">
-            <DataGrid.Columns>
-                <DataGridCheckBoxColumn CanUserResize="False" Width="auto"
-                                        ElementStyle="{StaticResource CheckBoxStyle1}">
-                    <DataGridCheckBoxColumn.HeaderTemplate>
-                        <DataTemplate>
-                            <CheckBox Style="{StaticResource CheckBoxStyle1}" />
-                        </DataTemplate>
-                    </DataGridCheckBoxColumn.HeaderTemplate>
-                </DataGridCheckBoxColumn>
-
-
-                <DataGridTextColumn Header="Nội dung" IsReadOnly="True" CanUserResize="False" Width="*"
-                                    Binding="{Binding Content}" />
-                <DataGridTextColumn Header="Hình ảnh" IsReadOnly="True" CanUserResize="False" Width="*"
-                                    Binding="{Binding Image}" />
-                <DataGridTemplateColumn Header="Chức năng" IsReadOnly="True" Width="auto">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Click="buttonEditQuestion" Style="{StaticResource GridEditButton}">
-                                    <icon:PackIconMaterial Kind="PencilOutline"
-                                                           Style="{StaticResource GridButtonIcon}" />
-                                </Button>
-                                <Button Click="ButtonRemoveAnswer" Style="{StaticResource GridRemoveButton}">
-                                    <icon:PackIconMaterial Kind="DeleteOutline"
-                                                           Style="{StaticResource GridButtonIcon}" />
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-            <DataGrid.CommandBindings>
-                <CommandBinding Command="Delete" Executed="OnDelete" />
-            </DataGrid.CommandBindings>
-        </DataGrid>
+                        <DataGridTextColumn Header="Nội dung" IsReadOnly="True" CanUserResize="False" Width="*" 
+                        Binding="{Binding Content}" />
+                        <DataGridTextColumn Header="Hình ảnh" IsReadOnly="True" CanUserResize="False" Width="*" 
+                                            Binding="{Binding Image}" />
+                        <DataGridTemplateColumn Header="Chức năng" IsReadOnly="True" Width="auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Click="ButtonEditQuestion" Style="{StaticResource GridEditButton}">
+                                            <icon:PackIconMaterial Kind="PencilOutline" 
+                                               Style="{StaticResource GridButtonIcon}" />
+                                        </Button>
+                                        <Button Click="ButtonRemoveAnswer" Style="{StaticResource GridRemoveButton}">
+                                            <icon:PackIconMaterial Kind="DeleteOutline" 
+                                               Style="{StaticResource GridButtonIcon}" />
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                    <DataGrid.CommandBindings>
+                        <CommandBinding Command="Delete" Executed="OnDelete"/>
+                    </DataGrid.CommandBindings>
+                </DataGrid>
+        
 
         <!--Pagination Section-->
         <Border Grid.Row="5" HorizontalAlignment="Right" BorderBrush="#dee4ec" BorderThickness="1"
