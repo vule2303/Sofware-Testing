@@ -40,7 +40,10 @@ public partial class ManagerQuestion
     {
         var createQuestion = new DetailsQuestion();
         createQuestion.Show();
-        createQuestion.Closed += (_, _) => { LoadData(); };
+        createQuestion.Closed += (_, _) =>
+        {
+            LoadData();
+        };
     }
 
     private void DataGridQuestion_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -51,12 +54,16 @@ public partial class ManagerQuestion
         detailsQuestion.Show();
     }
 
-    private void ButtonEditQuestion(object sender, RoutedEventArgs e)
+   
+
+   
+
+
+    private void buttonEditQuestion(object sender, RoutedEventArgs e)
     {
         if (DataGridQuestion.SelectedItem is not Models.Question selectedQuestion) return;
 
         var detailsQuestion = new DetailsQuestion(selectedQuestion.QuestionId);
         detailsQuestion.Show();
-        detailsQuestion.Closed += (_, _) => { LoadData(); };
     }
 }
