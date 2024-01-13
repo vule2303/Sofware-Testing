@@ -49,8 +49,10 @@ public partial class DetailsQuestion
         TxtBoxQuestionDetail.Text = question.Content;
         if (!string.IsNullOrEmpty(question.Image))
         {
-            _imagePath = question.Image!;
+            _imagePath = question.Image;
             ImageQuestion.Source = new BitmapImage(new Uri(question.Image!));
+            ImageQuestion.Width = 270;
+            ImageQuestion.Height = 200;
         }
 
         if (!string.IsNullOrEmpty(question.Formula))
@@ -153,7 +155,8 @@ public partial class DetailsQuestion
         if (openFileDialog.ShowDialog() != true) return;
 
         _imagePath = openFileDialog.FileName;
-
+        ImageQuestion.Width = 270;
+        ImageQuestion.Height = 200;
         var bitmap = new BitmapImage(new Uri(_imagePath));
         ImageQuestion.Source = bitmap;
 
