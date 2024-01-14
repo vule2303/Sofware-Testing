@@ -29,7 +29,7 @@ public partial class TestQuestion
     {
         var listQuestion = EntityFrameworkQueryableExtensions
             .Include(_dbContext.TestQuestions.Include(question => question.Question),
-                testQuestions => testQuestions.Question).ToList();
+                testQuestions => testQuestions.Question.Options).ToList();
         _listQuestion = new ObservableCollection<Models.Question>(listQuestion
             .Where(q => q.TestId == _test.TestId)
             .Select(q => q.Question)
