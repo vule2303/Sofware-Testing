@@ -10,9 +10,8 @@ using TestBuilder.Data;
 using TestBuilder.Models;
 using WpfMath;
 using WpfMath.Parsers;
-using WpfMath.Rendering;
-using XamlMath;
 using Xceed.Words.NET;
+using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace TestBuilder.Screens.Test;
 
@@ -29,6 +28,8 @@ public partial class ManagerTest
     private readonly ObservableCollection<TestDto> _listTest = [];
     private readonly List<Models.Question> _listQuestion;
     private readonly int _questionsCount;
+    private ObservableCollection<Models.Question> _questions = new();
+
 
     [GeneratedRegex("[^0-9]+")]
     private static partial Regex OnlyNumber();
@@ -50,12 +51,13 @@ public partial class ManagerTest
         var tests = _dbContext.Tests.Include(t => t.TestQuestions).ToList();
         tests.ForEach(t =>
         {
-            _listTest.Add(new TestDto
-            {
-                TestId = t.TestId,
-                Title = t.Title,
-                QuestionCount = t.TestQuestions!.Count
-            });
+            if (t.TestQuestions != null)
+                _listTest.Add(new TestDto
+                {
+                    TestId = t.TestId,
+                    Title = t.Title,
+                    QuestionCount = t.TestQuestions.Count
+                });
         });
         TestDataGrid.ItemsSource = _listTest;
     }
@@ -299,8 +301,159 @@ public partial class ManagerTest
 
     private void View(object sender, RoutedEventArgs e)
     {
-        var item = (TestDto)TestDataGrid.SelectedItem;
-        var _ = new TestQuestion(item);
-        _.ShowDialog();
+        ManagePage.Visibility = Visibility.Hidden;
+        TestQuestionPage.Visibility = Visibility.Visible;
+        var _ = (TestDto)TestDataGrid.SelectedItem;
+        var listQuestion = _dbContext.TestQuestions.Include(question => question.Question)
+            .Include(testQuestions => testQuestions.Question.Options).Where(tq => tq.TestId == _.TestId).ToList();
+        _questions = new ObservableCollection<Models.Question>(listQuestion
+            .Select(q => q.Question)
+            .ToList());
+        TestLabel.Text = _.Title;
+        ListQuestionLabel.Text = "Số câu hỏi trong đề: ";
+        Amount.Text = _questions.Count.ToString();
+        QuestionsViewBox.ItemsSource = _questions;
+    }
+
+    private void ListBoxItem_MouseMove(object sender, MouseEventArgs e)
+    {
+        if (e.LeftButton == MouseButtonState.Pressed)
+        {
+            ListViewItem sourceListViewItem = (ListViewItem)sender;
+            DragDrop.DoDragDrop(QuestionsViewBox, sourceListViewItem, DragDropEffects.Move);
+        }
+    }
+
+    private void ListBoxItem_DragEnter(object sender, DragEventArgs e)
+    {
+        ListViewItem targetListViewItem = (ListViewItem)sender;
+        ListViewItem sourceListViewItem = (ListViewItem)e.Data!.GetData("System.Windows.Controls.ListViewItem");
+        if (sourceListViewItem == targetListViewItem)
+            return;
+        var targetItem = (Models.Question)targetListViewItem.Content;
+        var sourceItem = (Models.Question)sourceListViewItem.Content;
+
+        if (targetItem != null)
+        {
+            var targetItemIndex = _questions.IndexOf(targetItem);
+            if (sourceItem != null)
+            {
+                var sourceItemIndex = _questions.IndexOf(sourceItem);
+
+                Rectangle topRectangle = (Rectangle)targetListViewItem.Template.FindName("TopRectangle", targetListViewItem);
+                Rectangle bottomRectangle = (Rectangle)targetListViewItem.Template.FindName("BottomRectangle", targetListViewItem);
+
+                if (targetItemIndex < sourceItemIndex)
+                {
+                    topRectangle.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    bottomRectangle.Visibility = Visibility.Visible;
+                }
+            }
+        }
+    }
+
+    private void ListBoxItem_DragLeave(object sender, DragEventArgs e)
+    {
+        ListViewItem targetListViewItem = (ListViewItem)sender;
+        Rectangle topRectangle = (Rectangle)targetListViewItem.Template.FindName("TopRectangle", targetListViewItem);
+        Rectangle bottomRectangle = (Rectangle)targetListViewItem.Template.FindName("BottomRectangle", targetListViewItem);
+
+        topRectangle.Visibility = Visibility.Collapsed;
+        bottomRectangle.Visibility = Visibility.Collapsed;
+    }
+
+    private void ListBoxItem_Drop(object sender, DragEventArgs e)
+    {
+        ListViewItem targetListViewItem = (ListViewItem)sender;
+        ListViewItem sourceListViewItem = (ListViewItem)e.Data.GetData("System.Windows.Controls.ListViewItem");
+
+        Models.Question targetItem = (Models.Question)targetListViewItem.Content;
+        Models.Question sourceItem = (Models.Question)sourceListViewItem.Content;
+
+        var targetItemIndex = _questions.IndexOf(targetItem);
+        var sourceItemIndex = _questions.IndexOf(sourceItem);
+
+        Rectangle topRectangle = (Rectangle)targetListViewItem.Template.FindName("TopRectangle", targetListViewItem);
+        Rectangle bottomRectangle = (Rectangle)targetListViewItem.Template.FindName("BottomRectangle", targetListViewItem);
+
+        topRectangle.Visibility = Visibility.Collapsed;
+        bottomRectangle.Visibility = Visibility.Collapsed;
+
+        _questions.Move(sourceItemIndex, targetItemIndex);
+    }
+
+    private void MixQuestions(object sender, RoutedEventArgs e)
+    {
+        Random random = new Random();
+
+        int n = _questions.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = random.Next(n + 1);
+            (_questions[k], _questions[n]) = (_questions[n], _questions[k]);
+        }
+
+        QuestionsViewBox.ItemsSource = _questions;
+    }
+
+    private void ExportToWord(object sender, RoutedEventArgs e)
+    {
+        var questions = _questions.ToList();
+
+        var saveDialog = new SaveFileDialog
+        {
+            Filter = "Word documents (*.docx)|*.docx",
+            DefaultExt = ".docx"
+        };
+
+        var result = saveDialog.ShowDialog();
+        if (result == false) return;
+
+        var index = 1;
+        var document = DocX.Create(saveDialog.FileName);
+
+        document.InsertParagraph(TestLabel.Text);
+
+        foreach (var ts in questions)
+        {
+            document.InsertParagraph($"Câu {index++}: {ts.Content}");
+            if (!string.IsNullOrEmpty(ts.Image))
+            {
+                var image = document.AddImage(ts.Image);
+                var picture = image.CreatePicture(100, 100);
+                document.InsertParagraph().AppendPicture(picture);
+            }
+
+            var currentChar = 'A';
+            if (ts.Options is null) continue;
+
+            foreach (var o in ts.Options)
+            {
+                var p = document.InsertParagraph($"{currentChar}: {o.Text}\n");
+
+                if (!string.IsNullOrEmpty(o.Image))
+                {
+                    var image = document.AddImage(o.Image);
+                    var picture = image.CreatePicture(100, 100);
+                    p.AppendPicture(picture);
+                }
+
+                currentChar++;
+            }
+        }
+
+        document.Save();
+        MessageBox.Show("Đã xuất file thành công");
+    }
+
+
+    private void ButtonBack(object sender, RoutedEventArgs e)
+    {
+        ManagePage.Visibility = Visibility.Visible;
+        TestQuestionPage.Visibility = Visibility.Hidden;
     }
 }
