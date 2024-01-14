@@ -610,6 +610,7 @@
         
         <Style x:Key="ListBoxStyle" TargetType="ListBox">
             <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="BorderBrush" Value="#6246ea"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="Template">
@@ -644,8 +645,5 @@
             </Setter>
         </Style>
 
-
-
-        
     </Application.Resources>
 </Application>
