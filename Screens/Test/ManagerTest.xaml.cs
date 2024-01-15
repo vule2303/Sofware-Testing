@@ -195,12 +195,11 @@ public partial class ManagerTest
         _.TestQuestions!.Clear();
         foreach (var selectedItem in TestQuestionsListBox.SelectedItems)
         {
-            var temp = new Guid(selectedItem.ToString()!);
-            var question = _dbContext.Questions.Find(temp)!;
+            var question = _dbContext.Questions.First(q => q.Content.Equals(selectedItem));
             question.TestId = _.TestId;
             _.TestQuestions.Add(new TestQuestions
             {
-                QuestionId = temp,
+                QuestionId = question.QuestionId,
                 Question = question,
                 TestId = _.TestId,
                 Test = _
