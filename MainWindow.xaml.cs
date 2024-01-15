@@ -97,10 +97,10 @@ public partial class MainWindow
         
         // questiondata
 
-        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Hãy cho biết ai là nhà toán học đoạt giải nobel lần thứ 12?", Image = null });
-        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Hãy vẽ hình tròn.", Image = null });
-        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Giả phương trình x + 3y = 12", Image = null });
-        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Bạn hoàng là ai?", Image = null });
+        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Hãy cho biết ai là nhà toán học đoạt giải nobel lần thứ 12?", Image = null, Options = []});
+        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Hãy vẽ hình tròn.", Image = null, Options = [] });
+        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Giả phương trình x + 3y = 12", Image = null, Options = [] });
+        _context.Questions.Add(new Question(){ QuestionId = new Guid(), Content = "Bạn hoàng là ai?", Image = null, Options = [] });
 
         
         _context.Exams.Add(new Exam(){Title ="Kiểm tra giữa môn"});
