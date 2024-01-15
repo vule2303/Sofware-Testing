@@ -29,7 +29,7 @@ public partial class ManagerTest
     private readonly List<Models.Question> _listQuestion;
     private readonly int _questionsCount;
     private ObservableCollection<Models.Question> _questions = new();
-
+    private int _currentIndex = -1;
 
     [GeneratedRegex("[^0-9]+")]
     private static partial Regex OnlyNumber();
@@ -165,10 +165,11 @@ public partial class ManagerTest
         LoadData();
     }
 
-    private void TestDataGrid_Edit(object sender, MouseButtonEventArgs e)
+    private void TestDataGrid_Edit(object sender, RoutedEventArgs routedEventArgs)
     {
+        _currentIndex = TestDataGrid.SelectedIndex;
         TestQuestionsListBox.SelectedItems.Clear();
-        var test = (TestDto)TestDataGrid.SelectedItem;
+        var test = _listTest[_currentIndex];
         TestName.Text = test.Title;
         var list = _dbContext.Questions
             .Where(q => q.TestId == test.TestId)
@@ -176,22 +177,17 @@ public partial class ManagerTest
 
         list.ForEach(q => { TestQuestionsListBox.SelectedItems.Add(q.Content); });
 
-        Button.Content = "Cập nhật";
-
-        Button.Click -= ButtonAdd;
-        Button.Click += ButtonUpdate;
+        ToggleButton();
     }
 
     private void ButtonUpdate(object sender, RoutedEventArgs e)
     {
-        var _ = _dbContext.Tests.Find(((TestDto)TestDataGrid.SelectedItem).TestId);
+        var _ = _dbContext.Tests.Find(_listTest[_currentIndex].TestId);
         if (_ is null)
         {
             MessageBox.Show("Không tìm thấy bộ đề");
             TestQuestionsListBox.SelectedItems.Clear();
-            Button.Content = "Thêm bộ đề";
-            Button.Click -= ButtonUpdate;
-            Button.Click += ButtonAdd;
+            ToggleButton();
             return;
         }
 
@@ -213,10 +209,24 @@ public partial class ManagerTest
 
         TestQuestionsListBox.SelectedItems.Clear();
         TestName.Text = "";
-        Button.Content = "Thêm bộ đề";
-        Button.Click -= ButtonUpdate;
-        Button.Click += ButtonAdd;
+        ToggleButton();
         LoadData();
+    }
+
+    private void ToggleButton()
+    {
+        if (Button.Content.Equals("Thêm bộ đề"))
+        {
+            Button.Content = "Cập nhật";
+            Button.Click -= ButtonAdd;
+            Button.Click += ButtonUpdate;
+        }
+        else
+        {
+            Button.Content = "Thêm bộ đề";
+            Button.Click -= ButtonUpdate;
+            Button.Click += ButtonAdd;
+        }
     }
 
     private void NumberOfQuestions_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -318,15 +328,15 @@ public partial class ManagerTest
     {
         if (e.LeftButton == MouseButtonState.Pressed)
         {
-            ListViewItem sourceListViewItem = (ListViewItem)sender;
+            var sourceListViewItem = (ListViewItem)sender;
             DragDrop.DoDragDrop(QuestionsViewBox, sourceListViewItem, DragDropEffects.Move);
         }
     }
 
     private void ListBoxItem_DragEnter(object sender, DragEventArgs e)
     {
-        ListViewItem targetListViewItem = (ListViewItem)sender;
-        ListViewItem sourceListViewItem = (ListViewItem)e.Data!.GetData("System.Windows.Controls.ListViewItem");
+        var targetListViewItem = (ListViewItem)sender;
+        var sourceListViewItem = (ListViewItem)e.Data!.GetData("System.Windows.Controls.ListViewItem");
         if (sourceListViewItem == targetListViewItem)
             return;
         var targetItem = (Models.Question)targetListViewItem.Content;
@@ -339,26 +349,23 @@ public partial class ManagerTest
             {
                 var sourceItemIndex = _questions.IndexOf(sourceItem);
 
-                Rectangle topRectangle = (Rectangle)targetListViewItem.Template.FindName("TopRectangle", targetListViewItem);
-                Rectangle bottomRectangle = (Rectangle)targetListViewItem.Template.FindName("BottomRectangle", targetListViewItem);
+                var topRectangle = (Rectangle)targetListViewItem.Template.FindName("TopRectangle", targetListViewItem);
+                var bottomRectangle =
+                    (Rectangle)targetListViewItem.Template.FindName("BottomRectangle", targetListViewItem);
 
                 if (targetItemIndex < sourceItemIndex)
-                {
                     topRectangle.Visibility = Visibility.Visible;
-                }
                 else
-                {
                     bottomRectangle.Visibility = Visibility.Visible;
-                }
             }
         }
     }
 
     private void ListBoxItem_DragLeave(object sender, DragEventArgs e)
     {
-        ListViewItem targetListViewItem = (ListViewItem)sender;
-        Rectangle topRectangle = (Rectangle)targetListViewItem.Template.FindName("TopRectangle", targetListViewItem);
-        Rectangle bottomRectangle = (Rectangle)targetListViewItem.Template.FindName("BottomRectangle", targetListViewItem);
+        var targetListViewItem = (ListViewItem)sender;
+        var topRectangle = (Rectangle)targetListViewItem.Template.FindName("TopRectangle", targetListViewItem);
+        var bottomRectangle = (Rectangle)targetListViewItem.Template.FindName("BottomRectangle", targetListViewItem);
 
         topRectangle.Visibility = Visibility.Collapsed;
         bottomRectangle.Visibility = Visibility.Collapsed;
@@ -366,17 +373,17 @@ public partial class ManagerTest
 
     private void ListBoxItem_Drop(object sender, DragEventArgs e)
     {
-        ListViewItem targetListViewItem = (ListViewItem)sender;
-        ListViewItem sourceListViewItem = (ListViewItem)e.Data.GetData("System.Windows.Controls.ListViewItem");
+        var targetListViewItem = (ListViewItem)sender;
+        var sourceListViewItem = (ListViewItem)e.Data.GetData("System.Windows.Controls.ListViewItem");
 
-        Models.Question targetItem = (Models.Question)targetListViewItem.Content;
-        Models.Question sourceItem = (Models.Question)sourceListViewItem.Content;
+        var targetItem = (Models.Question)targetListViewItem.Content;
+        var sourceItem = (Models.Question)sourceListViewItem.Content;
 
         var targetItemIndex = _questions.IndexOf(targetItem);
         var sourceItemIndex = _questions.IndexOf(sourceItem);
 
-        Rectangle topRectangle = (Rectangle)targetListViewItem.Template.FindName("TopRectangle", targetListViewItem);
-        Rectangle bottomRectangle = (Rectangle)targetListViewItem.Template.FindName("BottomRectangle", targetListViewItem);
+        var topRectangle = (Rectangle)targetListViewItem.Template.FindName("TopRectangle", targetListViewItem);
+        var bottomRectangle = (Rectangle)targetListViewItem.Template.FindName("BottomRectangle", targetListViewItem);
 
         topRectangle.Visibility = Visibility.Collapsed;
         bottomRectangle.Visibility = Visibility.Collapsed;
@@ -386,13 +393,13 @@ public partial class ManagerTest
 
     private void MixQuestions(object sender, RoutedEventArgs e)
     {
-        Random random = new Random();
+        var random = new Random();
 
-        int n = _questions.Count;
+        var n = _questions.Count;
         while (n > 1)
         {
             n--;
-            int k = random.Next(n + 1);
+            var k = random.Next(n + 1);
             (_questions[k], _questions[n]) = (_questions[n], _questions[k]);
         }
 
@@ -448,7 +455,6 @@ public partial class ManagerTest
         document.Save();
         MessageBox.Show("Đã xuất file thành công");
     }
-
 
     private void ButtonBack(object sender, RoutedEventArgs e)
     {

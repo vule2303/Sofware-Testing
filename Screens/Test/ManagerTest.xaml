@@ -154,15 +154,8 @@
                         Style="{StaticResource AddButton}"
                         HorizontalAlignment="Center"
                         FontWeight="Bold"
-                        Margin="0 0 0 20">
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconMaterial Kind="Plus"
-                                                    VerticalAlignment="Center"
-                                                    Width="16" Height="16"
-                                                    Margin="5 1 5 0" />
-                        <TextBlock Text="Thêm bộ đề" VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
-                    </StackPanel>
-                </Button>
+                        Margin="0 0 0 20"
+                        Content="Thêm bộ đề" />
             </StackPanel>
 
             <DataGrid Style="{DynamicResource DataGridStyle1}"
@@ -172,7 +165,6 @@
                       Grid.Row="2"
                       x:Name="TestDataGrid"
                       ItemsSource="{Binding}"
-                      MouseDoubleClick="TestDataGrid_Edit"
                       Margin="20 0 20 0">
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn CanUserResize="False" Width="auto"
@@ -197,6 +189,10 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Button Click="View" Style="{StaticResource GridViewButton}">
                                         <iconPacks:PackIconMaterial Kind="Eye"
+                                                                    Style="{StaticResource GridButtonIcon}" />
+                                    </Button>
+                                    <Button Click="TestDataGrid_Edit" Style="{StaticResource GridEditButton}">
+                                        <iconPacks:PackIconMaterial Kind="Pencil"
                                                                     Style="{StaticResource GridButtonIcon}" />
                                     </Button>
                                     <Button Click="ButtonExportToWord" Style="{StaticResource GridEditButton}">
@@ -295,7 +291,7 @@
                 <TextBlock Text="Bạn có thể sắp xếp câu hỏi trước khi xuất file" Foreground="Gray" FontSize="11"
                            FontWeight="SemiBold" Margin="5 0 0 0" />
             </StackPanel>
-            
+
             <Button Grid.Row="5"
                     Click="ExportToWord"
                     Style="{StaticResource AddButton}" Margin="0 10 0 0" Padding="10 0"
