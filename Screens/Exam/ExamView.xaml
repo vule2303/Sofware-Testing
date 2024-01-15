@@ -114,6 +114,7 @@
                                 </Button>
                             </StackPanel>
                         </DataTemplate>
+
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>

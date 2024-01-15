@@ -4,15 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
-
         mc:Ignorable="d"
-        Title="Test Builder" Height="541" Width="800"
-        SizeToContent="Height"
+        Title="Test Builder" Height="800" Width="1000"
         Loaded="HomeView"
         WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-    </Window.Resources>
-
     <Border Background="#eff2f7" MouseDown="Border_MouseDown"
             MouseLeftButtonDown="Border_MouseLeftButtonDown">
         <Grid>
@@ -107,19 +102,24 @@
             </Grid>
 
             <!--Main Section-->
-            <Grid Grid.Column="1" Margin="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="auto" />
-                </Grid.RowDefinitions>
-             <!-- <components:SubjectDataPage Grid.Row="1"/> -->
-                <ContentControl Grid.Row="1" x:Name="ContentControl"/>
-            </Grid>
+            <ScrollViewer Grid.Column="1" 
+                          Margin="20"
+                          VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <!-- <components:SubjectDataPage Grid.Row="1"/> -->
+                    <ContentControl Grid.Row="1" x:Name="ContentControl" />
+                </Grid>
+
+            </ScrollViewer>
         </Grid>
     </Border>
 </Window>
