@@ -28,7 +28,7 @@ public partial class ManagerTest
     private readonly ObservableCollection<TestDto> _listTest = [];
     private readonly List<Models.Question> _listQuestion;
     private readonly int _questionsCount;
-    private ObservableCollection<Models.Question> _questions = new();
+    private ObservableCollection<Models.Question> _questions = [];
     private int _currentIndex = -1;
 
     [GeneratedRegex("[^0-9]+")]
@@ -36,13 +36,22 @@ public partial class ManagerTest
 
     public ManagerTest()
     {
-        InitializeComponent();
-        LoadData();
-        _listQuestion = _dbContext.Questions.ToList();
-        TestQuestionsListBox.ItemsSource = new ObservableCollection<string>(_listQuestion.Select(q => q.Content));
-        _questionsCount = _listQuestion.Count;
-        QuestionLabel.Text = "Số lượng câu hỏi trong ngân hàng: ";
-        QuestionCount.Text = _questionsCount.ToString();
+        try
+        {
+            InitializeComponent();
+            LoadData();
+            _listQuestion = _dbContext.Questions.ToList();
+            TestQuestionsListBox.ItemsSource = new ObservableCollection<string>(_listQuestion.Select(q => q.Content));
+            _questionsCount = _listQuestion.Count;
+            QuestionLabel.Text = "Số lượng câu hỏi trong ngân hàng: ";
+            QuestionCount.Text = _questionsCount.ToString();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            MessageBox.Show(e.Message);
+            throw;
+        }
     }
 
     private void LoadData()
@@ -51,7 +60,7 @@ public partial class ManagerTest
         var tests = _dbContext.Tests.Include(t => t.TestQuestions).ToList();
         tests.ForEach(t =>
         {
-            if (t.TestQuestions != null)
+            if (t.TestQuestions is not null)
                 _listTest.Add(new TestDto
                 {
                     TestId = t.TestId,
@@ -78,13 +87,8 @@ public partial class ManagerTest
             return;
         }
 
-        if (TestQuestionsListBox.SelectedItems.Count == 0)
+        if (CheckBoxAutoGenerateTest.IsChecked == true)
         {
-            var result = MessageBox.Show("bạn có muốn tự động tạo câu hỏi?",
-                "Thông báo",
-                MessageBoxButton.OK, MessageBoxImage.Information,
-                MessageBoxResult.Cancel);
-
             if (int.Parse(NumberOfQuestions.Text) == 0)
             {
                 MessageBox.Show("Số lượng câu hỏi không thể bằng 0",
@@ -93,27 +97,26 @@ public partial class ManagerTest
                 return;
             }
 
-            if (result == MessageBoxResult.OK) AutoGenerateTest();
+            AutoGenerateTest();
 
             return;
         }
 
-        var test = new Models.Test
+        var _ = _dbContext.Tests.Add(new Models.Test
         {
             Title = TestName.Text,
             TestQuestions = [],
             SubjectId = 1
-        };
-        var _ = _dbContext.Tests.Add(test).Entity;
+        }).Entity;
 
         foreach (var selectedItem in TestQuestionsListBox.SelectedItems)
         {
             var question = _dbContext.Questions.First(q => q.Content.Equals(selectedItem.ToString()));
             question.TestId = _.TestId;
-            test.TestQuestions.Add(new TestQuestions
+            _.TestQuestions!.Add(new TestQuestions
             {
                 QuestionId = question.QuestionId,
-                Test = test,
+                Test = _,
                 Question = question
             });
         }
@@ -227,6 +230,9 @@ public partial class ManagerTest
             Button.Click -= ButtonUpdate;
             Button.Click += ButtonAdd;
         }
+
+        CheckBoxAutoGenerateTest.IsChecked = false;
+        NumberOfQuestions.Text = "0";
     }
 
     private void NumberOfQuestions_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -326,11 +332,10 @@ public partial class ManagerTest
 
     private void ListBoxItem_MouseMove(object sender, MouseEventArgs e)
     {
-        if (e.LeftButton == MouseButtonState.Pressed)
-        {
-            var sourceListViewItem = (ListViewItem)sender;
-            DragDrop.DoDragDrop(QuestionsViewBox, sourceListViewItem, DragDropEffects.Move);
-        }
+        if (e.LeftButton != MouseButtonState.Pressed) return;
+
+        var sourceListViewItem = (ListViewItem)sender;
+        DragDrop.DoDragDrop(QuestionsViewBox, sourceListViewItem, DragDropEffects.Move);
     }
 
     private void ListBoxItem_DragEnter(object sender, DragEventArgs e)
@@ -342,23 +347,20 @@ public partial class ManagerTest
         var targetItem = (Models.Question)targetListViewItem.Content;
         var sourceItem = (Models.Question)sourceListViewItem.Content;
 
-        if (targetItem != null)
-        {
-            var targetItemIndex = _questions.IndexOf(targetItem);
-            if (sourceItem != null)
-            {
-                var sourceItemIndex = _questions.IndexOf(sourceItem);
+        if (targetItem == null) return;
+        var targetItemIndex = _questions.IndexOf(targetItem);
 
-                var topRectangle = (Rectangle)targetListViewItem.Template.FindName("TopRectangle", targetListViewItem);
-                var bottomRectangle =
-                    (Rectangle)targetListViewItem.Template.FindName("BottomRectangle", targetListViewItem);
+        if (sourceItem == null) return;
+        var sourceItemIndex = _questions.IndexOf(sourceItem);
 
-                if (targetItemIndex < sourceItemIndex)
-                    topRectangle.Visibility = Visibility.Visible;
-                else
-                    bottomRectangle.Visibility = Visibility.Visible;
-            }
-        }
+        var topRectangle = (Rectangle)targetListViewItem.Template.FindName("TopRectangle", targetListViewItem);
+        var bottomRectangle =
+            (Rectangle)targetListViewItem.Template.FindName("BottomRectangle", targetListViewItem);
+
+        if (targetItemIndex < sourceItemIndex)
+            topRectangle.Visibility = Visibility.Visible;
+        else
+            bottomRectangle.Visibility = Visibility.Visible;
     }
 
     private void ListBoxItem_DragLeave(object sender, DragEventArgs e)
@@ -460,5 +462,19 @@ public partial class ManagerTest
     {
         ManagePage.Visibility = Visibility.Visible;
         TestQuestionPage.Visibility = Visibility.Hidden;
+    }
+
+    private void CheckBoxAutoGenerateTest_OnChecked(object sender, RoutedEventArgs e)
+    {
+        NumberOfQuestions.IsEnabled = true;
+        TestQuestionsListBox.IsEnabled = false;
+        NumberOfQuestions.Text = "0";
+    }
+
+    private void CheckBoxAutoGenerateTest_OnUnchecked(object sender, RoutedEventArgs e)
+    {
+        NumberOfQuestions.IsEnabled = false;
+        TestQuestionsListBox.IsEnabled = true;
+        NumberOfQuestions.Text = "0";
     }
 }
